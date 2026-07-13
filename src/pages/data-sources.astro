@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'; import registry from '../../data/sources/source_registry.json';
+---
+<BaseLayout title="Data Sources | CourtScope"><section class="section"><div class="shell"><h1>Data sources</h1><p>Every published result must trace back to an acquired source artifact, checksum, normalization step, identity decision, methodology version, and publication receipt.</p>{registry.sources.map(s=><article class="card"><p class="eyebrow">{s.classification}</p><h2>{s.name}</h2><p><strong>Owner:</strong> {s.owner}</p><p><strong>Access:</strong> {s.accessMethod}</p><p><strong>Last verified:</strong> {s.lastVerified ?? "Not recorded"}</p><p><strong>Automation:</strong> {s.automationStatus ?? "Not configured"}</p><p><strong>Limitations:</strong> {s.limitations.join('; ')}</p></article>)}</div></section></BaseLayout>

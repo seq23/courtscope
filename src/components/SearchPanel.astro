@@ -1,0 +1,7 @@
+---
+const { lang='en' } = Astro.props;
+---
+<form class="search-panel" action={lang==='es'?'/es/cases':'/cases'} method="get">
+  <label for="q">{lang==='es'?'Buscar juez, tribunal, división, año electoral o número de caso':'Search judge, court, division, election year, or case number'}</label>
+  <div><input id="q" name="q" type="search" autocomplete="off" placeholder={lang==='es'?'Ej. FX-2025-0001':'Example: FX-2025-0001'} /><button type="submit">{lang==='es'?'Buscar':'Search'}</button></div>
+</form>

@@ -1,0 +1,3 @@
+id,publicCaseNumber,judgeSlug,court,division,disposition,sentenceType,sentenceLengthMonths,pleaTrial,offenseGroup,priorRecordBand,sourceId,collectedAt,verifiedAt,includedInModel,methodologyVersion,qualityFlags
+CS-FX-0001,FX-2025-0001,a-morgan,Shelby County Criminal Court,Division 1,Guilty plea,Probation,24,Plea,Property,Low,fixture-court-export,2026-07-01,2026-07-02,True,0.1.0-fixture,
+CS-FX-0002,FX-2025-0002,d-reed,Shelby County Criminal Court,Division 3,Trial conviction,Custodial,36,Trial,Drug,Medium,fixture-court-export,2026-07-01,2026-07-02,True,0.1.0-fixture,synthetic_fixture

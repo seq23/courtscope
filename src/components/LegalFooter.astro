@@ -1,0 +1,24 @@
+---
+const { lang='en' }=Astro.props;
+const p=lang==='es'?'/es':'';
+const es=lang==='es';
+const year=new Date().getFullYear();
+const groups=[
+  {title:es?'Explorar':'Explore',links:[['/judges',es?'Jueces':'Judges'],['/methodology',es?'Metodología':'Methodology'],['/data',es?'Datos':'Data'],['/data-sources',es?'Fuentes de datos':'Data Sources'],['/corrections',es?'Correcciones':'Corrections'],['/add-cities',es?'Agregar una ciudad':'Add a City']]},
+  {title:es?'Legal y privacidad':'Legal & Privacy',links:[['/privacy',es?'Privacidad':'Privacy Policy'],['/terms',es?'Términos':'Terms of Use'],['/legal/disclaimer',es?'Aviso legal':'Legal Disclaimer'],['/data-use',es?'Uso de datos':'Data Use & Licensing'],['/legal/takedown',es?'Retiro legal/privacidad':'Legal/Privacy Takedown'],['/accessibility',es?'Accesibilidad':'Accessibility']]},
+  {title:es?'Transparencia':'Transparency',links:[['/governance',es?'Gobernanza':'Governance'],['/funding-conflicts',es?'Fondos y conflictos':'Funding & Conflicts'],['/political-neutrality',es?'Neutralidad política':'Political Neutrality'],['/security',es?'Seguridad':'Security'],['/open-source',es?'Código abierto':'Open Source'],['/contact',es?'Contacto':'Contact']]}
+];
+---
+<footer class="legal-footer">
+  <div class="shell footer-main">
+    <section class="footer-brand" aria-labelledby="footer-about"><a class="wordmark footer-wordmark" href={`${p}/`}>CourtScope</a><h2 id="footer-about" class="sr-only">About CourtScope</h2><p>{es?'Proyecto cívico independiente y de código abierto para comprender patrones agregados en los resultados judiciales.':'An independent, open-source civic project for understanding aggregate patterns in court outcomes.'}</p><p class="footer-status"><strong>{es?'Estado público:':'Public status:'}</strong> {es?'Prelanzamiento. No se publican puntuaciones reales hasta que los datos oficiales y la metodología pasen todas las verificaciones.':'Prelaunch. No real scores are published until official data and methodology pass every release gate.'}</p></section>
+    {groups.map(g=><nav class="footer-nav" aria-label={g.title}><h2>{g.title}</h2>{g.links.map(([href,label])=><a href={`${p}${href}`}>{label}</a>)}</nav>)}
+  </div>
+  <div class="shell footer-disclosures">
+    <p>{es?'CourtScope no es un tribunal, agencia gubernamental, bufete de abogados ni autoridad electoral. La información no es asesoría legal ni el expediente judicial oficial. Verifique la información importante con el tribunal o secretario correspondiente.':'CourtScope is not a court, government agency, law firm, or election authority. Information is not legal advice and is not the official court record. Verify important information with the relevant court or clerk.'}</p>
+    <p>{es?'Los resultados estadísticos agregados no establecen intención, mala conducta ni la equidad de un caso individual. Las fuentes pueden estar retrasadas, incompletas, corregidas o no disponibles.':'Aggregate statistical results do not establish intent, misconduct, or the fairness of an individual case. Sources may be delayed, incomplete, corrected, or unavailable.'}</p>
+    <p>{es?'Las páginas en español se traducen automáticamente. La versión en inglés controla en caso de conflicto. La reutilización de datos se rige por los términos específicos de cada conjunto.':'Spanish pages are machine translated. English controls if wording conflicts. Dataset reuse is governed by dataset-specific terms.'}</p>
+    <p>{es?'Actualmente no hay donaciones, patrocinadores ni financiamiento organizacional. Ningún financiador o anunciante puede controlar las puntuaciones o la metodología.':'There are currently no donations, sponsors, or organizational funding. No funder or advertiser may control scores or methodology.'}</p>
+    <div class="footer-bottom"><span>© {year} CourtScope</span><span>{es?'Código bajo AGPL-3.0. Los datos conservan sus términos de origen.':'Code licensed under AGPL-3.0. Data retains source-specific terms.'}</span><a href="https://github.com/seq23/courtscope" rel="noopener noreferrer">GitHub</a></div>
+  </div>
+</footer>

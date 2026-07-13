@@ -1,0 +1,17 @@
+{
+  "cases-fixture.csv": {
+    "sha256": "2dd96325b96f4d3bdbbed563009f34261b3a56206a51c62c6cd8f53b91a61407",
+    "bytes": 591,
+    "classification": "SYNTHETIC_FIXTURE"
+  },
+  "cases-fixture.json": {
+    "sha256": "6dae61ec0c858f8a0144e1b6c078ad00dfb7cb3ad3a0ea1016c09213572c09f4",
+    "bytes": 1303,
+    "classification": "SYNTHETIC_FIXTURE"
+  },
+  "cases-fixture.parquet": {
+    "sha256": "c4f6aaa948059ab33ac1545a2f329b56e9266356a8e2450a45b952e9304859e2",
+    "bytes": 5289,
+    "classification": "SYNTHETIC_FIXTURE"
+  }
+}

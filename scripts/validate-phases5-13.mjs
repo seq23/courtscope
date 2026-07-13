@@ -1,0 +1,9 @@
+import fs from 'node:fs';import path from 'node:path';
+const req=['model/courtscope_model/engine.py','model/courtscope_model/sensitivity.py','model/run_model.py','data/methodology/model_card_v1.json','data/corrections/status_machine.json','data/cities/expansion_contract.json','data/admin/emergency_state.json','data/releases/release_manifest.json','src/lib/admin/security.ts','src/lib/admin/actions.ts','src/pages/api/admin/login.ts','src/pages/api/admin/actions.ts','src/pages/api/corrections/report.ts','src/pages/admin/corrections.astro','src/pages/admin/add-cities.astro','docs/PHASES_5_13_IMPLEMENTATION.md','docs/HOSTILE_REVIEW_ALL_13_PHASES.md','migrations/0003_phases5_13.sql'];
+const miss=req.filter(f=>!fs.existsSync(f));if(miss.length){console.error('Missing',miss);process.exit(1)}
+const forbidden=[];for(const root of ['src','scripts','model','docs','data']){if(!fs.existsSync(root))continue;for(const f of walk(root)){const t=fs.readFileSync(f,'utf8');if(/ADMIN_PASSWORD\s*=\s*[^<\s]/.test(t)||/github_pat_[A-Za-z0-9_]+/.test(t))forbidden.push(f)}}
+if(forbidden.length){console.error('Potential secrets',forbidden);process.exit(1)}
+const rel=JSON.parse(fs.readFileSync('data/releases/release_manifest.json','utf8'));if(rel.public_launch_allowed!==false){console.error('Public launch must remain blocked');process.exit(1)}
+const model=JSON.parse(fs.readFileSync('data/methodology/model_card_v1.json','utf8'));if(!String(model.status).includes('SYNTHETIC')){console.error('Model truth boundary missing');process.exit(1)}
+console.log(`Phase 5-13 validator PASS (${req.length} required artifacts)`);
+function* walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())yield*walk(p);else if(/\.(ts|js|mjs|py|md|json|sql)$/.test(e.name))yield p}}

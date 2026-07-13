@@ -1,0 +1,4 @@
+---
+import health from '../../data/health/system_health.json';
+---
+<section class="card"><p class="eyebrow">System Health</p><h2>{health.state.replaceAll('_',' ')}</h2><div class="stat-grid"><div><strong>{health.sources.healthy}</strong><span>fixture source healthy</span></div><div><strong>{health.records.realCases}</strong><span>real cases</span></div><div><strong>{health.scores.published}</strong><span>published real scores</span></div></div><ul>{health.warnings.map((w)=><li>{w}</li>)}</ul></section>

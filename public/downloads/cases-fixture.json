@@ -1,0 +1,45 @@
+{
+  "classification": "SYNTHETIC_FIXTURE",
+  "records": [
+    {
+      "id": "CS-FX-0001",
+      "publicCaseNumber": "FX-2025-0001",
+      "judgeSlug": "a-morgan",
+      "court": "Shelby County Criminal Court",
+      "division": "Division 1",
+      "disposition": "Guilty plea",
+      "sentenceType": "Probation",
+      "sentenceLengthMonths": 24,
+      "pleaTrial": "Plea",
+      "offenseGroup": "Property",
+      "priorRecordBand": "Low",
+      "sourceId": "fixture-court-export",
+      "collectedAt": "2026-07-01",
+      "verifiedAt": "2026-07-02",
+      "includedInModel": true,
+      "methodologyVersion": "0.1.0-fixture",
+      "qualityFlags": []
+    },
+    {
+      "id": "CS-FX-0002",
+      "publicCaseNumber": "FX-2025-0002",
+      "judgeSlug": "d-reed",
+      "court": "Shelby County Criminal Court",
+      "division": "Division 3",
+      "disposition": "Trial conviction",
+      "sentenceType": "Custodial",
+      "sentenceLengthMonths": 36,
+      "pleaTrial": "Trial",
+      "offenseGroup": "Drug",
+      "priorRecordBand": "Medium",
+      "sourceId": "fixture-court-export",
+      "collectedAt": "2026-07-01",
+      "verifiedAt": "2026-07-02",
+      "includedInModel": true,
+      "methodologyVersion": "0.1.0-fixture",
+      "qualityFlags": [
+        "synthetic_fixture"
+      ]
+    }
+  ]
+}

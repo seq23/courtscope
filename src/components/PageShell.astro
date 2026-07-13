@@ -1,0 +1,9 @@
+---
+const { eyebrow, title, intro } = Astro.props;
+---
+<section class="prose-width py-12">
+  {eyebrow && <p class="font-semibold uppercase tracking-wide text-court-teal">{eyebrow}</p>}
+  <h1 class="font-serif text-4xl leading-tight text-court-blue md:text-5xl">{title}</h1>
+  {intro && <p class="mt-4 max-w-3xl text-lg leading-8">{intro}</p>}
+  <div class="mt-8"><slot /></div>
+</section>

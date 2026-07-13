@@ -1,0 +1,3 @@
+export const ACTIONS={rerun_ingestion:{confirm:false,paths:['data/runtime/**']},recalculate_scores:{confirm:true,paths:['data/scores/**']},rebuild_exports:{confirm:false,paths:['public/downloads/**']},pause_automation:{confirm:true,paths:['data/admin/**']},resume_automation:{confirm:true,paths:['data/admin/**']},emergency_stop:{confirm:true,paths:['data/admin/**']},rollback_dataset:{confirm:true,paths:['data/releases/**']},refresh_elections:{confirm:false,paths:['data/elections/**']}} as const;
+export type ActionId=keyof typeof ACTIONS;
+export function isActionId(v:string):v is ActionId{return Object.hasOwn(ACTIONS,v)}

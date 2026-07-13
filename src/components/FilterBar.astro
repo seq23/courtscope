@@ -1,0 +1,24 @@
+<form class="filter-bar" aria-label="Judge filters">
+  <label>Search judges<input id="judge-search" type="search" placeholder="Name or division" /></label>
+  <label>Court<select id="court-filter"><option value="">All Courts</option><option>Shelby County Criminal Court</option><option>Shelby County General Sessions Criminal Court</option></select></label>
+  <label>Election year<select id="year-filter"><option value="">All years</option><option>2028</option><option>2030</option></select></label>
+  <label>Data strength<select id="strength-filter"><option value="">All strengths</option><option>Strong</option><option>Moderate</option><option>Limited</option><option>Not Enough Data</option></select></label>
+</form>
+<script is:inline>
+const q=document.querySelector('#judge-search');
+const c=document.querySelector('#court-filter');
+const y=document.querySelector('#year-filter');
+const strength=document.querySelector('#strength-filter');
+document.querySelector('.filter-bar').addEventListener('submit',(event)=>event.preventDefault());
+function apply(){
+  document.querySelectorAll('.judge-card').forEach((el)=>{
+    const text=(el.textContent||'').toLowerCase();
+    const okQ=!q.value||text.includes(q.value.toLowerCase());
+    const okC=!c.value||el.dataset.court===c.value;
+    const okY=!y.value||el.dataset.year===y.value;
+    const okS=!strength.value||el.dataset.strength===strength.value;
+    el.hidden=!(okQ&&okC&&okY&&okS);
+  });
+}
+[q,c,y,strength].forEach((el)=>el.addEventListener('input',apply));
+</script>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /cases/
+
+Sitemap: https://courtscope.org/sitemap-index.xml

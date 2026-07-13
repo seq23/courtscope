@@ -1,0 +1,4 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'; import FixtureBanner from '../components/FixtureBanner.astro'; import FilterBar from '../components/FilterBar.astro'; import JudgeCard from '../components/JudgeCard.astro'; import { fixtureJudges } from '../lib/fixtures';
+---
+<BaseLayout title="Judges by Fairness Score | CourtScope"><section class="section"><div class="shell"><p class="eyebrow">Shelby County, Tennessee</p><h1>Judges by Fairness Score</h1><p class="lede">Browse aggregate fixture results by court, election year, and data strength.</p><FixtureBanner/><FilterBar/><div class="grid grid-2">{fixtureJudges.map(j=><JudgeCard judge={j}/>)}</div></div></section></BaseLayout>

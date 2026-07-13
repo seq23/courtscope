@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const error=Astro.url.searchParams.get('error'); const next=Astro.url.searchParams.get('next')||'/admin';
+---
+<BaseLayout title="Admin sign in | CourtScope" noindex={true}><section class="section"><div class="prose-width"><p class="eyebrow">Owner operations</p><h1>Sign in to CourtScope admin</h1><p>Admin access is server verified. The password is never stored in the browser or repository.</p>{error&&<div class="notice error" role="alert">The password was not accepted. Try again.</div>}<form class="card" method="post" action="/api/admin/login"><input type="hidden" name="next" value={next}/><label>Password<input name="password" type="password" autocomplete="current-password" required/></label><div class="actions" style="margin-top:1rem"><button type="submit">Sign in securely</button><a class="button secondary" href="/">Return to site</a></div></form></div></section></BaseLayout>
