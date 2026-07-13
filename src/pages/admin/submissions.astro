@@ -1,0 +1,107 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCloudflareEnv } from '../../lib/cloudflare-env';
+import { ensureCitySubmissionSchema, humanBytes, type CitySubmissionRow } from '../../lib/city-submissions';
+
+interface SubmissionView {
+  submission: CitySubmissionRow;
+  batchId: string;
+  actionable: boolean;
+}
+
+const env = getCloudflareEnv();
+let submissions: CitySubmissionRow[] = [];
+let storageMessage = '';
+if (!env.DB || !env.EVIDENCE_BUCKET) {
+  storageMessage = 'D1 or private R2 storage is not configured in this deployment.';
+} else {
+  try {
+    await ensureCitySubmissionSchema(env.DB);
+    const result = await env.DB.prepare('SELECT * FROM city_submissions ORDER BY submitted_at DESC LIMIT 100').all<CitySubmissionRow>();
+    submissions = result.results || [];
+  } catch (error) {
+    storageMessage = `Submission storage could not be read: ${error instanceof Error ? error.message : 'unknown error'}`;
+  }
+}
+const purgeEligibleCount = submissions.filter((submission) => submission.retention_delete_at && submission.retention_delete_at <= new Date().toISOString() && ['PUBLISHED','REJECTED'].includes(submission.status) && submission.object_key).length;
+const views: SubmissionView[] = submissions.map((submission) => {
+  let batchId = '—';
+  try {
+    const manifest = JSON.parse(submission.manifest_json) as { batch_id?: string };
+    batchId = String(manifest.batch_id || '—');
+  } catch {
+    batchId = 'Invalid stored manifest';
+  }
+  return {
+    submission,
+    batchId,
+    actionable: ['RECEIVED', 'UNDER_REVIEW', 'FAILED'].includes(submission.status),
+  };
+});
+---
+<BaseLayout title="City submissions | CourtScope Admin" noindex={true}>
+  <section class="section"><div class="shell">
+    <p class="eyebrow">Admin · Private intake</p>
+    <h1>City-data submissions</h1>
+    <p class="lede">Review public uploads before anything enters Git history. Only complete, de-identified packages should be dispatched to the repository pipeline.</p>
+    <div class="actions"><a class="button secondary" href="/admin">Command center</a><a class="button secondary" href="/add-cities">Public upload page</a>{purgeEligibleCount > 0 && <button id="purge-eligible" class="danger" type="button">Purge {purgeEligibleCount} eligible private upload(s)</button>}</div><div id="purge-result" class="form-result" aria-live="polite"></div>
+    {storageMessage && <div class="notice error"><strong>Configuration needed:</strong> {storageMessage}</div>}
+  </div></section>
+  <section class="section section-tint"><div class="shell">
+    {views.length ? <div class="submission-list">
+      {views.map(({ submission, batchId, actionable }) => <article class="card submission-card">
+        <div class="submission-card-head"><div><p class="eyebrow">{submission.status.replaceAll('_',' ')}</p><h2>{submission.city_name}, {submission.state}</h2><p><strong>Receipt:</strong> <code>{submission.id}</code></p></div><div class="submission-file"><strong>{humanBytes(submission.size_bytes)}</strong><span>{submission.original_filename}</span></div></div>
+        <div class="submission-meta-grid"><p><strong>County:</strong> {submission.county}</p><p><strong>Coverage:</strong> {submission.coverage_start}–{submission.coverage_end}</p><p><strong>Source:</strong> {submission.source_url ? <a href={submission.source_url} target="_blank" rel="noreferrer">{submission.source_agency}</a> : submission.source_agency}</p><p><strong>Contact:</strong> {submission.contact_name} · <a href={`mailto:${submission.contact_email}`}>{submission.contact_email}</a></p><p><strong>Batch:</strong> {batchId}</p><p><strong>Submitted:</strong> {new Date(submission.submitted_at).toLocaleString('en-US')}</p><p><strong>Retention:</strong> {submission.retention_delete_at ? `Eligible ${new Date(submission.retention_delete_at).toLocaleDateString('en-US')}` : 'Not scheduled'}</p></div>
+        {submission.object_key && <div class="actions"><a class="button secondary" href={`/api/admin/submission-download?id=${submission.id}`}>Download private ZIP</a></div>}{submission.review_note && <div class="notice"><strong>Latest note:</strong> {submission.review_note}</div>}
+        {actionable && <form class="submission-admin-form" data-submission={submission.id}>
+          <label>Admin note<textarea name="note" rows="2" maxlength="1000" placeholder="Reason, review result, or processing note"></textarea></label>
+          <div class="actions"><button type="button" data-action="mark_under_review" class="secondary">Mark under review</button><button type="button" data-action="dispatch">Approve and process</button><button type="button" data-action="reject" class="danger">Reject</button></div>
+          <div class="form-result" aria-live="polite"></div>
+        </form>}
+      </article>)}
+    </div> : !storageMessage && <div class="empty-state"><h2>No public submissions yet</h2><p>New uploads will appear here after they are stored in the private R2 intake lane.</p></div>}
+  </div></section>
+  <script is:inline>
+    document.querySelector('#purge-eligible')?.addEventListener('click', async () => {
+      if (!confirm('Permanently delete every private city upload whose retention date has passed?')) return;
+      const output = document.querySelector('#purge-result');
+      output.textContent = 'Purging eligible private uploads…';
+      try {
+        const response = await fetch('/api/admin/submissions', {
+          method: 'POST', headers: {'content-type':'application/json'},
+          body: JSON.stringify({ action: 'purge_eligible', confirmed: true }),
+        });
+        const data = await response.json();
+        output.textContent = data.message || data.error || `Status ${response.status}`;
+        output.className = `form-result notice ${response.ok ? 'success' : 'error'}`;
+        if (response.ok) setTimeout(() => location.reload(), 900);
+      } catch {
+        output.textContent = 'The purge request could not be completed.';
+        output.className = 'form-result notice error';
+      }
+    });
+    document.querySelectorAll('.submission-admin-form').forEach((form) => {
+      form.querySelectorAll('[data-action]').forEach((button) => button.addEventListener('click', async () => {
+        const action = button.dataset.action;
+        const destructive = action === 'reject' || action === 'dispatch';
+        if (destructive && !confirm(action === 'dispatch' ? 'Approve this private package for repository processing?' : 'Reject this submission and move it to the private rejected lane?')) return;
+        const output = form.querySelector('.form-result');
+        output.textContent = 'Working…';
+        try {
+          const response = await fetch('/api/admin/submissions', {
+            method: 'POST',
+            headers: {'content-type':'application/json'},
+            body: JSON.stringify({ submission_id: form.dataset.submission, action, note: new FormData(form).get('note'), confirmed: destructive }),
+          });
+          const data = await response.json();
+          output.textContent = data.message || data.error || `Status ${response.status}`;
+          output.className = `form-result notice ${response.ok ? 'success' : 'error'}`;
+          if (response.ok) setTimeout(() => location.reload(), 900);
+        } catch {
+          output.textContent = 'The admin request could not be completed.';
+          output.className = 'form-result notice error';
+        }
+      }));
+    });
+  </script>
+</BaseLayout>

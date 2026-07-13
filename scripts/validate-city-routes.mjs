@@ -8,7 +8,8 @@ const required = [
   'src/pages/es/[city]/index.astro', 'src/pages/es/[city]/judges/index.astro',
   'src/pages/es/[city]/judges/[judge].astro', 'src/pages/es/[city]/compare.astro',
   'src/pages/es/[city]/cases/index.astro', 'src/pages/es/[city]/cases/[caseId].astro',
-  'src/pages/es/[city]/data.astro',
+  'src/pages/es/[city]/data.astro', 'src/pages/add-cities.astro', 'src/pages/es/add-cities.astro',
+  'src/pages/admin/submissions.astro',
 ];
 for (const file of required) if (!fs.existsSync(file)) throw new Error(`Missing route source: ${file}`);
 const home = fs.readFileSync('src/pages/index.astro', 'utf8');

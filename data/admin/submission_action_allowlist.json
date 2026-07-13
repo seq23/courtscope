@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0",
+  "actions": [
+    {
+      "id": "mark_under_review",
+      "confirmationRequired": false,
+      "allowedStatuses": ["RECEIVED", "UNDER_REVIEW"],
+      "storageEffect": "D1_STATUS_ONLY"
+    },
+    {
+      "id": "reject",
+      "confirmationRequired": true,
+      "allowedStatuses": ["RECEIVED", "UNDER_REVIEW", "FAILED"],
+      "storageEffect": "MOVE_R2_TO_REJECTED_RETENTION"
+    },
+    {
+      "id": "dispatch",
+      "confirmationRequired": true,
+      "allowedStatuses": ["RECEIVED", "UNDER_REVIEW", "FAILED"],
+      "storageEffect": "DISPATCH_GITHUB_WORKFLOW"
+    },
+    {
+      "id": "purge_eligible",
+      "confirmationRequired": true,
+      "allowedStatuses": ["PUBLISHED", "REJECTED"],
+      "storageEffect": "DELETE_RETENTION_ELIGIBLE_R2_ONLY"
+    }
+  ]
+}

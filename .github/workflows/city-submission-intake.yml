@@ -1,0 +1,154 @@
+name: Process approved public city submission
+
+on:
+  workflow_dispatch:
+    inputs:
+      submission_id:
+        description: "Private city submission ID"
+        required: true
+        type: string
+      city_slug:
+        description: "Validated city slug"
+        required: true
+        type: string
+      batch_id:
+        description: "Validated batch ID"
+        required: true
+        type: string
+      receipt_id:
+        description: "Admin dispatch receipt ID"
+        required: true
+        type: string
+
+concurrency:
+  group: courtscope-public-submission-${{ inputs.submission_id }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  process-submission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      SUBMISSION_ID: ${{ inputs.submission_id }}
+      CITY_SLUG: ${{ inputs.city_slug }}
+      BATCH_ID: ${{ inputs.batch_id }}
+      RECEIPT_ID: ${{ inputs.receipt_id }}
+      COURTSCOPE_BASE_URL: https://courtscope.org
+      CITY_PIPELINE_SHARED_SECRET: ${{ secrets.CITY_PIPELINE_SHARED_SECRET }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Require pipeline secret
+        run: test -n "$CITY_PIPELINE_SHARED_SECRET"
+
+      - name: Download approved private package
+        run: |
+          curl --fail --silent --show-error --location \
+            -H "Authorization: Bearer $CITY_PIPELINE_SHARED_SECRET" \
+            "$COURTSCOPE_BASE_URL/api/internal/city-submissions/export?submission_id=$SUBMISSION_ID" \
+            --output /tmp/courtscope-city-submission.zip
+
+      - name: Safely stage package in repository intake
+        run: |
+          python3 - <<'PY'
+          import json, os, shutil, zipfile
+          from pathlib import Path
+
+          archive = Path('/tmp/courtscope-city-submission.zip')
+          temp = Path('/tmp/courtscope-city-submission')
+          target = Path('data/intake/incoming') / os.environ['CITY_SLUG'] / os.environ['BATCH_ID']
+          if target.exists():
+              raise SystemExit(f'Intake target already exists: {target}')
+          temp.mkdir(parents=True, exist_ok=True)
+          with zipfile.ZipFile(archive) as zf:
+              for info in zf.infolist():
+                  parts = Path(info.filename).parts
+                  if info.filename.startswith('/') or '..' in parts:
+                      raise SystemExit(f'Unsafe archive path: {info.filename}')
+              zf.extractall(temp)
+          manifests = list(temp.rglob('manifest.json'))
+          if len(manifests) != 1:
+              raise SystemExit('Submission ZIP must contain exactly one manifest.json')
+          root = manifests[0].parent
+          manifest = json.loads(manifests[0].read_text())
+          if manifest.get('city_slug') != os.environ['CITY_SLUG']:
+              raise SystemExit('Manifest city_slug does not match approved input')
+          if manifest.get('batch_id') != os.environ['BATCH_ID']:
+              raise SystemExit('Manifest batch_id does not match approved input')
+          target.parent.mkdir(parents=True, exist_ok=True)
+          shutil.copytree(root, target)
+          PY
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Process only the approved city package
+        run: |
+          set +e
+          PYTHONPATH=model python3 scripts/cities/process_city_batch.py "data/intake/incoming/$CITY_SLUG/$BATCH_ID"
+          CODE=$?
+          set -e
+          if [ "$CODE" -ne 0 ] && [ "$CODE" -ne 2 ]; then
+            exit "$CODE"
+          fi
+          python3 scripts/cities/sync_admin_status.py
+
+      - name: Run complete browserless verification
+        run: npm run verify
+
+      - name: Determine result
+        id: result
+        run: |
+          if [ -d "data/intake/processed/$CITY_SLUG/$BATCH_ID" ]; then
+            echo "status=PUBLISHED" >> "$GITHUB_OUTPUT"
+            echo "note=Package passed the repository pipeline and produced a published city release." >> "$GITHUB_OUTPUT"
+          elif [ -d "data/intake/rejected/$CITY_SLUG/$BATCH_ID" ]; then
+            echo "status=REJECTED" >> "$GITHUB_OUTPUT"
+            echo "note=Package was rejected by the repository completeness or publication gates." >> "$GITHUB_OUTPUT"
+          else
+            echo "status=FAILED" >> "$GITHUB_OUTPUT"
+            echo "note=Pipeline finished without a processed or rejected batch receipt." >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+
+      - name: Commit validated pipeline result
+        run: |
+          git config user.name "courtscope-submission-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data public/downloads
+          if git diff --cached --quiet; then
+            echo "No repository changes were produced."
+          else
+            git commit -m "data: process approved city submission $SUBMISSION_ID"
+            git push
+          fi
+
+      - name: Send private status callback
+        if: always()
+        env:
+          STATUS_FOR_CALLBACK: ${{ (job.status == 'success' && steps.result.outputs.status) || 'FAILED' }}
+          NOTE_FOR_CALLBACK: ${{ (job.status == 'success' && steps.result.outputs.note) || 'GitHub workflow failed before a final repository receipt was produced.' }}
+        run: |
+          python3 - <<'PY' > /tmp/status.json
+          import json, os
+          print(json.dumps({
+            'submission_id': os.environ['SUBMISSION_ID'],
+            'status': os.environ['STATUS_FOR_CALLBACK'],
+            'note': os.environ['NOTE_FOR_CALLBACK'],
+          }))
+          PY
+          curl --fail --silent --show-error \
+            -H "Authorization: Bearer $CITY_PIPELINE_SHARED_SECRET" \
+            -H "Content-Type: application/json" \
+            --data-binary @/tmp/status.json \
+            "$COURTSCOPE_BASE_URL/api/internal/city-submissions/status"

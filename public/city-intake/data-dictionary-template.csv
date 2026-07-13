@@ -1,0 +1,7 @@
+field_name,description,source_system,allowed_values,notes
+case_id,Stable public case identifier,Official court system,,Required
+judge_id,Stable judge identifier,Official court system,,Required
+judge_name,Judge display name,Official court system,,Required
+sentence_date,Date sentence was imposed,Official court system,YYYY-MM-DD,Required
+incarceration_to_serve,Whether incarceration must be served,Official court system,true|false,Required
+sentence_length_months,Length of custodial sentence in months,Official court system,number,Required for custodial cases

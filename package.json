@@ -1,6 +1,6 @@
 {
   "name": "courtscope",
-  "version": "2.0.0-prelaunch",
+  "version": "2.0.1-prelaunch",
   "private": true,
   "type": "module",
   "scripts": {

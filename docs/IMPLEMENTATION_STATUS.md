@@ -28,3 +28,8 @@
 - live Cloudflare deployment, runtime secrets, and persistent D1 correction storage;
 - browser-rendered visual journeys;
 - qualified-counsel clearance for publication of real judge-level findings.
+
+
+## Public city upload and admin credential repair — implemented
+
+The public Add a City page now accepts a complete de-identified ZIP into private R2 storage. D1 records the submission, `/admin/submissions` provides the owner review queue, approved submissions dispatch a dedicated GitHub workflow, and final packages move to processed or rejected retention. Admin login now distinguishes missing deployment secrets from an incorrect password. Production secrets and live provider workflow proof remain external configuration gates.

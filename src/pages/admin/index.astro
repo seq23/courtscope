@@ -4,6 +4,8 @@ import SystemHealth from '../../components/SystemHealth.astro';
 import pipeline from '../../../data/admin/city_pipeline_status.json';
 import cleanup from '../../../data/admin/cleanup_queue.json';
 import registry from '../../../data/cities/registry.json';
+import { getCloudflareEnv } from '../../lib/cloudflare-env';
+import { ensureCitySubmissionSchema } from '../../lib/city-submissions';
 
 interface PipelineBatch { citySlug: string; batchId: string; status: string; recordCount?: number; path: string; }
 interface CleanupItem { citySlug: string; batchId: string; eligibleAt: string; status: string; }
@@ -20,13 +22,27 @@ const operations = [
   ['emergency_stop', 'Emergency stop', 'Block all non-read-only admin actions until explicitly cleared.', true],
 ] as const;
 const summary = pipeline.summary;
+const env = getCloudflareEnv();
+let publicSubmissionCount = 0;
+let pendingSubmissionCount = 0;
+try {
+  if (env.DB) {
+    await ensureCitySubmissionSchema(env.DB);
+    const totals = await env.DB.prepare("SELECT COUNT(*) AS total, SUM(CASE WHEN status IN ('RECEIVED','UNDER_REVIEW','FAILED') THEN 1 ELSE 0 END) AS pending FROM city_submissions").first<{ total: number; pending: number }>();
+    publicSubmissionCount = Number(totals?.total || 0);
+    pendingSubmissionCount = Number(totals?.pending || 0);
+  }
+} catch {
+  publicSubmissionCount = 0;
+  pendingSubmissionCount = 0;
+}
 ---
 <BaseLayout title="Admin command center | CourtScope" noindex={true}>
   <section class="section"><div class="shell">
     <div class="admin-title-row"><div><p class="eyebrow">Owner control room</p><h1>Admin command center</h1><p class="lede">Operate the city data pipeline, review receipts, and control cleanup without editing repository files by hand.</p></div><form method="post" action="/api/admin/logout"><button class="secondary" type="submit">Sign out</button></form></div>
     <div class="notice"><strong>Provider-gated, not simulated.</strong> Buttons dispatch allowlisted GitHub workflows through a server-side token. A dispatch receipt means the job was requested—not that it finished successfully.</div>
-    <div class="admin-summary-grid"><article><span>Incoming</span><strong>{summary.incoming}</strong></article><article><span>Rejected</span><strong>{summary.rejected}</strong></article><article><span>Processed</span><strong>{summary.processed}</strong></article><article><span>Published cities</span><strong>{summary.publishedCities}</strong></article><article><span>Cleanup ready</span><strong>{summary.cleanupReady}</strong></article></div>
-    <div class="actions"><a class="button" href="/admin/add-cities">City intake guide</a><a class="button secondary" href="/admin/corrections">Corrections</a><a class="button secondary" href="/admin/cities">City registry</a></div>
+    <div class="admin-summary-grid"><article><span>Public submissions</span><strong>{publicSubmissionCount}</strong><small>{pendingSubmissionCount} need review</small></article><article><span>Repo incoming</span><strong>{summary.incoming}</strong></article><article><span>Rejected</span><strong>{summary.rejected}</strong></article><article><span>Processed</span><strong>{summary.processed}</strong></article><article><span>Published cities</span><strong>{summary.publishedCities}</strong></article><article><span>Cleanup ready</span><strong>{summary.cleanupReady}</strong></article></div>
+    <div class="actions"><a class="button" href="/admin/submissions">Review public uploads</a><a class="button secondary" href="/admin/add-cities">City intake guide</a><a class="button secondary" href="/admin/corrections">Corrections</a><a class="button secondary" href="/admin/cities">City registry</a></div>
     <SystemHealth />
   </div></section>
 

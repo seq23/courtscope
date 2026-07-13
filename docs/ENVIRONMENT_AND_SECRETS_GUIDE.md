@@ -1,16 +1,29 @@
 # Environment and Secrets Guide
 
-## Required production secrets
+## Required production Worker secrets
 
-- `ADMIN_PASSWORD_HASH` — PBKDF2-SHA256 formatted password hash;
-- `ADMIN_SESSION_SECRET` — strong session signing secret;
-- `COURTSCOPE_GITHUB_ADMIN_TOKEN` — fine-grained single-repository token for approved workflow dispatch;
-- `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` — deployment workflow only.
+Configure these exact encrypted secret names on the deployed `courtscope` Worker:
+
+- `ADMIN_PASSWORD_HASH` — PBKDF2-SHA256 formatted verifier for the owner password;
+- `ADMIN_SESSION_SECRET` — strong session-signing secret;
+- `GITHUB_ADMIN_TOKEN` — fine-grained, single-repository token for approved workflow dispatch;
+- `CITY_PIPELINE_SHARED_SECRET` — shared secret used only by the protected city-submission export and status endpoints.
+
+The previous GitHub Actions deployment used a source secret named `COURTSCOPE_GITHUB_ADMIN_TOKEN` and remapped it at deploy time. Cloudflare Git integration does not perform that remapping. The live Worker secret must therefore be named exactly `GITHUB_ADMIN_TOKEN`.
+
+## Required GitHub Actions secret
+
+- `CITY_PIPELINE_SHARED_SECRET` — must exactly match the Worker secret of the same name.
 
 ## Non-secret production configuration
 
-- `GITHUB_REPOSITORY` must identify `owner/repository` for admin dispatch.
+- `GITHUB_REPOSITORY` identifies `seq23/courtscope` and is stored in `wrangler.toml`;
+- `DB`, `EVIDENCE_BUCKET`, and `SESSION` are provider bindings, not plaintext secrets.
 
-## Rules
+## Password recovery and rotation
 
-Never commit secrets, `.dev.vars`, environment files, temporary worker-secret files, or provider tokens. The validator scans common token patterns. Local ignored secret state is not itself a failure; tracked, staged, or packaged secret exposure is.
+See `docs/ADMIN_PASSWORD_AND_CITY_UPLOAD_SETUP.md` and use `scripts/admin/generate-admin-secrets.mjs`. Never commit plaintext passwords, generated hashes, session secrets, shared secrets, provider tokens, `.dev.vars`, or environment files.
+
+## Deployment rule
+
+Cloudflare Git integration builds and deploys repository code, but runtime secret values remain separately configured provider state. A successful Git push does not prove that required Worker secrets exist.

@@ -360,3 +360,33 @@ dd { margin: 0; }
 .form-result { min-height: 1.5rem; color: var(--blue); font-size: .88rem; font-weight: 700; }
 .numbered-steps.compact { gap: .65rem; }
 .numbered-steps.compact li { padding-block: .65rem; }
+
+/* City submission intake */
+.upload-layout { display: grid; grid-template-columns: minmax(0,.85fr) minmax(420px,1.15fr); gap: clamp(2rem,5vw,4rem); align-items: start; }
+.upload-form { box-shadow: var(--shadow); border-top: 5px solid var(--teal); }
+.form-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; }
+.form-section-title { display: flex; gap: .9rem; align-items: flex-start; margin-top: .4rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.form-section-title:first-child { border-top: 0; padding-top: 0; }
+.form-section-title > span { display: inline-grid; place-items: center; width: 2rem; height: 2rem; flex: 0 0 auto; border-radius: 50%; background: var(--teal-soft); color: var(--teal); font-weight: 950; }
+.form-section-title h3 { margin-bottom: .18rem; }
+.form-section-title p { margin: 0; color: var(--muted); font-size: .88rem; }
+.file-drop { border: 2px dashed #9bb7b4; border-radius: .75rem; background: #f8fcfb; padding: 1rem; }
+.file-drop input { border: 0 !important; background: transparent !important; padding-left: 0 !important; }
+.attestation-list { display: grid; gap: .75rem; padding: 1rem; border-radius: .7rem; background: var(--paper); }
+.attestation-list label { grid-template-columns: auto 1fr; align-items: start; font-weight: 650; }
+.attestation-list input { width: auto !important; margin-top: .3rem; }
+.honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
+.submission-list { display: grid; gap: 1.25rem; }
+.submission-card { display: grid; gap: 1rem; }
+.submission-card-head { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; }
+.submission-card-head h2 { font-size: clamp(1.8rem,3vw,2.5rem); }
+.submission-file { display: grid; min-width: 160px; text-align: right; }
+.submission-file span { color: var(--muted); font-size: .82rem; overflow-wrap: anywhere; }
+.submission-meta-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .45rem 1rem; }
+.submission-meta-grid p { margin: 0; font-size: .9rem; }
+.submission-admin-form { display: grid; gap: .8rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.submission-admin-form label { display: grid; gap: .35rem; font-weight: 800; }
+.submission-admin-form textarea { width: 100%; border: 1px solid var(--line); border-radius: .55rem; padding: .7rem; }
+.admin-summary-grid article small { display: block; margin-top: .25rem; }
+@media (max-width: 900px) { .upload-layout { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .form-grid, .submission-meta-grid { grid-template-columns: 1fr; } .submission-card-head { flex-direction: column; } .submission-file { text-align: left; } }

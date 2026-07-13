@@ -5,6 +5,7 @@ export type CourtScopeEnv = {
   ADMIN_SESSION_SECRET?: string;
   GITHUB_ADMIN_TOKEN?: string;
   GITHUB_REPOSITORY?: string;
+  CITY_PIPELINE_SHARED_SECRET?: string;
   DB?: D1Database;
   EVIDENCE_BUCKET?: R2Bucket;
   SESSION?: KVNamespace;

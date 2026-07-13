@@ -1,18 +1,40 @@
 # City Data Pipeline Runbook
 
-## Input contract
+## Public receiving lane
 
-Place one complete de-identified package at:
+Users submit one complete, de-identified ZIP at `/add-cities`.
 
-`data/intake/incoming/<city-slug>/<batch-id>/`
+The Worker performs pre-storage checks for:
 
-Required files:
+- same-origin request;
+- 50 MB compressed limit and 75 MB declared expansion limit;
+- safe ZIP paths and executable-file ban;
+- one `manifest.json`;
+- matching city, county, state, source, and coverage fields;
+- every required completeness and privacy attestation;
+- declared CSV/JSON data file and data dictionary;
+- three-submission-per-connection daily limit.
+
+Passing uploads enter private R2 at `city-submissions/pending/<submission-id>/` and D1 status `RECEIVED`. They do not enter GitHub and do not become public.
+
+## Admin approval lane
+
+1. Owner signs in at `/admin/submissions`.
+2. Owner downloads and reviews the private ZIP.
+3. Owner marks it under review, rejects it, or approves it.
+4. Approval dispatches `.github/workflows/city-submission-intake.yml`.
+5. The workflow retrieves the package through a shared-secret-protected internal endpoint.
+6. The package is staged at `data/intake/incoming/<city-slug>/<batch-id>/`.
+
+## Repository input contract
+
+Each approved package must contain:
 
 - `manifest.json`;
 - one declared CSV or JSON data file;
 - one declared data dictionary file.
 
-## Process map
+## Repository process map
 
 1. Read the completeness contract.
 2. Validate manifest attestations.
@@ -25,15 +47,16 @@ Required files:
 9. If valid, generate city judges, public cases, release metadata, downloads, and registry state.
 10. Move the source package to processed retention.
 11. Refresh admin status and cleanup queue.
+12. Send the final result back to D1 and move the private R2 ZIP to `processed` or `rejected` retention.
 
 ## Rejection behavior
 
-A rejected batch moves to `data/intake/rejected/<city>/<batch>/` with `processing_receipt.json`. Rejection of one batch is isolated; other valid batches continue.
+A rejected repo batch moves to `data/intake/rejected/<city>/<batch>/` with `processing_receipt.json`. The corresponding private upload moves to `city-submissions/rejected/<submission-id>/` and receives a 30-day retention date.
 
 ## Cleanup behavior
 
-Review: `python3 scripts/cities/cleanup_processed.py`
+Repository review: `python3 scripts/cities/cleanup_processed.py`
 
-Execute: `python3 scripts/cities/cleanup_processed.py --execute --confirm DELETE_ELIGIBLE_PROCESSED_BATCHES`
+Repository execute: `python3 scripts/cities/cleanup_processed.py --execute --confirm DELETE_ELIGIBLE_PROCESSED_BATCHES`
 
-No other confirmation phrase is accepted.
+Private R2 uploads are purged from `/admin/submissions` only after their retention date passes. No other confirmation path is accepted.

@@ -27,7 +27,13 @@ Memphis is present as a clearly labeled synthetic fixture preview. It is not a p
 - `npm run verify`
 - `npm run test:model`
 - `npm run test:city-pipeline`
+- `printf %s "$PASSWORD" | node scripts/admin/generate-admin-secrets.mjs`
 
 Validation is browserless by design in this delivery. Live Cloudflare, GitHub workflow, official-record, and production-deployment proof remain separate.
 
 Start with [`docs/START_HERE_NEW_PERSON.md`](docs/START_HERE_NEW_PERSON.md).
+
+
+## Public city-data intake
+
+`/add-cities` accepts a complete de-identified ZIP into private R2 storage. `/admin/submissions` provides the protected review queue. Approved packages enter `.github/workflows/city-submission-intake.yml` and then the existing publish-or-reject repository pipeline.

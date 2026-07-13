@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0",
+  "version": "2.1.0",
   "authority": "scripts/validate-all.mjs",
   "principle": "Warnings do not block. Only material product, data, security, release, or internal validation failures block.",
   "validators": [
@@ -43,6 +43,12 @@
       "id": "city-routes",
       "command": "node scripts/validate-city-routes.mjs",
       "class": "journey",
+      "blocking": true
+    },
+    {
+      "id": "city-submissions",
+      "command": "node scripts/validate-city-submissions.mjs",
+      "class": "security-ops",
       "blocking": true
     },
     {

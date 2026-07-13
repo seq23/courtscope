@@ -1,5 +1,17 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-const error=Astro.url.searchParams.get('error'); const next=Astro.url.searchParams.get('next')||'/admin';
+import { getCloudflareEnv } from '../../lib/cloudflare-env';
+const error = Astro.url.searchParams.get('error');
+const setup = Astro.url.searchParams.get('setup');
+const next = Astro.url.searchParams.get('next') || '/admin';
+const env = getCloudflareEnv();
+const configured = Boolean(env.ADMIN_PASSWORD_HASH && env.ADMIN_SESSION_SECRET);
 ---
-<BaseLayout title="Admin sign in | CourtScope" noindex={true}><section class="section"><div class="prose-width"><p class="eyebrow">Owner operations</p><h1>Sign in to CourtScope admin</h1><p>Admin access is server verified. The password is never stored in the browser or repository.</p>{error&&<div class="notice error" role="alert">The password was not accepted. Try again.</div>}<form class="card" method="post" action="/api/admin/login"><input type="hidden" name="next" value={next}/><label>Password<input name="password" type="password" autocomplete="current-password" required/></label><div class="actions" style="margin-top:1rem"><button type="submit">Sign in securely</button><a class="button secondary" href="/">Return to site</a></div></form></div></section></BaseLayout>
+<BaseLayout title="Admin sign in | CourtScope" noindex={true}>
+  <section class="section"><div class="prose-width"><p class="eyebrow">Owner operations</p><h1>Sign in to CourtScope admin</h1><p>Admin access is server verified. The plaintext password is never stored in the browser or repository.</p>
+    {!configured && <div class="notice error" role="alert"><strong>Admin access is not configured in this deployment.</strong> Add the encrypted Worker secrets <code>ADMIN_PASSWORD_HASH</code> and <code>ADMIN_SESSION_SECRET</code>, then redeploy.</div>}
+    {setup === 'missing' && <div class="notice error" role="alert">The deployed Worker is missing its admin secrets. The password was not changed by the repository.</div>}
+    {error && <div class="notice error" role="alert">The password was not accepted by the currently deployed hash.</div>}
+    <form class="card stacked-form" method="post" action="/api/admin/login"><input type="hidden" name="next" value={next}/><label>Password<input name="password" type="password" autocomplete="current-password" required disabled={!configured}/></label><button type="submit" disabled={!configured}>Sign in securely</button><a class="button secondary" href="/">Return to site</a></form>
+  </div></section>
+</BaseLayout>

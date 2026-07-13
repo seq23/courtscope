@@ -1,0 +1,30 @@
+{
+  "city_slug": "example-city",
+  "city_name": "Example City",
+  "county": "Example County",
+  "state": "Example State",
+  "batch_id": "2026-07-13-official-export",
+  "source_agency": "Official court or clerk office",
+  "source_url": "https://official-government-source.example",
+  "source_id": "example-court-export",
+  "data_file": "cases.csv",
+  "data_dictionary_file": "data-dictionary.txt",
+  "coverage_start": "2018-01-01",
+  "coverage_end": "2025-12-31",
+  "judge_metadata": {
+    "official-judge-id": {"next_election_year": 2030}
+  },
+  "checks": {
+    "official_or_authorized_source": true,
+    "declared_court_scope_complete": true,
+    "stable_case_identifiers": true,
+    "judge_identity_crosswalk_complete": true,
+    "all_required_fields_present": true,
+    "date_coverage_documented": true,
+    "no_unexplained_coverage_gaps": true,
+    "data_dictionary_included": true,
+    "amendments_and_corrections_addressed": true,
+    "privacy_review_passed": true,
+    "public_projection_safe": true
+  }
+}

@@ -9,6 +9,7 @@ type Env = {
   ADMIN_SESSION_SECRET?: string;
   GITHUB_ADMIN_TOKEN?: string;
   GITHUB_REPOSITORY?: string;
+  CITY_PIPELINE_SHARED_SECRET?: string;
 };
 
 declare namespace App {

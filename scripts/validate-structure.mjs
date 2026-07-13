@@ -13,7 +13,10 @@ const required = [
   'src/pages/add-cities.astro', 'src/pages/[city]/index.astro', 'src/pages/[city]/judges/[judge].astro',
   'src/pages/[city]/cases/index.astro', 'src/pages/[city]/data.astro', 'src/pages/admin/index.astro',
   'scripts/cities/process_incoming.py', 'scripts/cities/test_city_pipeline.py', 'model/test_engine.py',
-  '.github/workflows/city-data-pipeline.yml', '.github/workflows/city-data-cleanup.yml'
+  '.github/workflows/city-data-pipeline.yml', '.github/workflows/city-data-cleanup.yml',
+  '.github/workflows/city-submission-intake.yml', 'src/pages/admin/submissions.astro',
+  'src/pages/api/city-submissions/index.ts', 'src/pages/api/admin/submission-download.ts',
+  'data/admin/submission_action_allowlist.json', 'migrations/0004_city_submissions.sql'
 ];
 const missing = required.filter((file) => !fs.existsSync(path.join(root, file)));
 if (missing.length) {
