@@ -1,0 +1,89 @@
+name: Validate and deploy CourtScope
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: courtscope-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    env:
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      WRANGLER_VERSION: "4.110.0"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci
+
+      - name: Validate repository
+        run: npm run validate:all
+
+      - name: Build Astro Worker
+        run: npm run build
+
+      - name: Apply D1 migrations
+        run: npx --yes wrangler@${WRANGLER_VERSION} d1 migrations apply DB --remote
+
+      - name: Write temporary Worker secrets
+        env:
+          ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
+          ADMIN_SESSION_SECRET: ${{ secrets.ADMIN_SESSION_SECRET }}
+          COURTSCOPE_GITHUB_ADMIN_TOKEN: ${{ secrets.COURTSCOPE_GITHUB_ADMIN_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          names = [
+              "ADMIN_PASSWORD_HASH",
+              "ADMIN_SESSION_SECRET",
+              "COURTSCOPE_GITHUB_ADMIN_TOKEN",
+          ]
+          missing = [name for name in names if not os.environ.get(name)]
+          if missing:
+              raise SystemExit(f"Missing GitHub secrets: {', '.join(missing)}")
+          with open(".worker-secrets.json", "w", encoding="utf-8") as handle:
+              json.dump({
+              "ADMIN_PASSWORD_HASH": os.environ["ADMIN_PASSWORD_HASH"],
+              "ADMIN_SESSION_SECRET": os.environ["ADMIN_SESSION_SECRET"],
+              "GITHUB_ADMIN_TOKEN": os.environ["COURTSCOPE_GITHUB_ADMIN_TOKEN"],
+          }, handle)
+          PY
+          chmod 600 .worker-secrets.json
+
+      - name: Deploy Worker
+        run: >
+          npx --yes wrangler@${WRANGLER_VERSION} deploy
+          --secrets-file .worker-secrets.json
+
+      - name: Remove temporary secrets
+        if: always()
+        run: rm -f .worker-secrets.json
+
+      - name: Smoke-test production
+        run: |
+          for path in / /methodology /data /admin/login; do
+            curl --fail --silent --show-error \
+              --retry 12 \
+              --retry-delay 5 \
+              --retry-all-errors \
+              "https://courtscope.org${path}" >/dev/null
+          done

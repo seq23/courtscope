@@ -1,10 +1,28 @@
 name = "courtscope"
-compatibility_date = "2026-07-01"
+main = "./dist/_worker.js/index.js"
+compatibility_date = "2026-07-12"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+preview_urls = true
+
+routes = [
+  { pattern = "courtscope.org", custom_domain = true },
+  { pattern = "www.courtscope.org", custom_domain = true }
+]
+
+[assets]
+binding = "ASSETS"
+directory = "./dist"
+run_worker_first = true
+not_found_handling = "404-page"
+
+[observability]
+enabled = true
 
 [[d1_databases]]
 binding = "DB"
 database_name = "courtscope"
-database_id = "SET_IN_CLOUDFLARE"
+database_id = "5a759f11-2aa5-4a46-bd33-ba5e95d124fc"
 
 [[r2_buckets]]
 binding = "EVIDENCE_BUCKET"
@@ -12,4 +30,4 @@ bucket_name = "courtscope-evidence"
 
 [[kv_namespaces]]
 binding = "SESSION"
-id = "SET_IN_CLOUDFLARE"
+id = "f7ea21c6731b49b8a29308bc998ec00a"
