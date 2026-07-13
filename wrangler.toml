@@ -1,5 +1,5 @@
 name = "courtscope"
-main = "./dist/_worker.js/index.js"
+main = "@astrojs/cloudflare/entrypoints/server"
 compatibility_date = "2026-07-12"
 compatibility_flags = ["nodejs_compat"]
 workers_dev = true
