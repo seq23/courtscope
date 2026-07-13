@@ -1,0 +1,74 @@
+---
+interface Props { lang?: 'en' | 'es'; }
+const { lang = 'en' } = Astro.props as Props;
+const es = lang === 'es';
+---
+<dialog id="onboarding-tour" class="tour-dialog" aria-labelledby="tour-title">
+  <form method="dialog" class="tour-shell">
+    <div class="tour-topline">
+      <span class="eyebrow">{es ? 'Nuevo aquí' : 'New here'}</span>
+      <button class="tour-close secondary" value="close" aria-label={es ? 'Cerrar' : 'Close'}>×</button>
+    </div>
+    <section class="tour-step" data-tour-step="0">
+      <p class="tour-count">1 / 4</p>
+      <h2 id="tour-title">{es ? '¿Qué es CourtScope?' : 'What is CourtScope?'}</h2>
+      <p>{es ? 'CourtScope examina muchos casos para encontrar brechas raciales en los resultados de sentencia.' : 'CourtScope examines many cases to find racial gaps in sentencing outcomes.'}</p>
+    </section>
+    <section class="tour-step" data-tour-step="1" hidden>
+      <p class="tour-count">2 / 4</p>
+      <h2>{es ? '¿Qué significa la puntuación?' : 'What does the score mean?'}</h2>
+      <div class="tour-scale">
+        <span class="scale-small">{es ? 'Baja: brechas más pequeñas' : 'Low: smaller gaps'}</span>
+        <span class="scale-moderate">{es ? 'Media: brechas moderadas' : 'Middle: moderate gaps'}</span>
+        <span class="scale-big">{es ? 'Alta: brechas más grandes' : 'High: bigger gaps'}</span>
+      </div>
+      <p>{es ? 'Una cifra más alta significa brechas raciales más grandes. Una cifra más baja significa brechas más pequeñas.' : 'A higher number means bigger racial gaps. A lower number means smaller gaps.'}</p>
+    </section>
+    <section class="tour-step" data-tour-step="2" hidden>
+      <p class="tour-count">3 / 4</p>
+      <h2>{es ? 'Lea el resumen de la tarjeta' : 'Read the card summary'}</h2>
+      <p>{es ? 'Abra “¿Por qué esta puntuación?” para ver encarcelamiento, duración de sentencia, fuerza de datos y las señales principales.' : 'Open “Why this score?” to see incarceration, sentence length, data strength, and the main signals.'}</p>
+    </section>
+    <section class="tour-step" data-tour-step="3" hidden>
+      <p class="tour-count">4 / 4</p>
+      <h2>{es ? 'Lo que no prueba' : 'What it does not prove'}</h2>
+      <p>{es ? 'Una brecha medida puede plantear preguntas, pero no prueba racismo, discriminación, intención o mala conducta.' : 'A measured gap can raise questions, but it does not prove racism, discrimination, intent, or misconduct.'}</p>
+      <p class="legal-limitation"><em>{es ? 'Lea siempre la fuerza de datos y la metodología junto con la puntuación.' : 'Always read the data strength and methodology with the score.'}</em></p>
+    </section>
+    <div class="tour-actions">
+      <button type="button" class="secondary" data-tour-back disabled>{es ? 'Atrás' : 'Back'}</button>
+      <button type="button" data-tour-next>{es ? 'Siguiente' : 'Next'}</button>
+      <button value="done" data-tour-done hidden>{es ? 'Elegir ciudad' : 'Choose a city'}</button>
+    </div>
+  </form>
+</dialog>
+<script is:inline>
+  const dialog = document.querySelector('#onboarding-tour');
+  const openers = document.querySelectorAll('[data-tour-open]');
+  if (dialog) {
+    const steps = [...dialog.querySelectorAll('[data-tour-step]')];
+    const back = dialog.querySelector('[data-tour-back]');
+    const next = dialog.querySelector('[data-tour-next]');
+    const done = dialog.querySelector('[data-tour-done]');
+    let index = 0;
+    const render = () => {
+      steps.forEach((step, stepIndex) => { step.hidden = stepIndex !== index; });
+      back.disabled = index === 0;
+      next.hidden = index === steps.length - 1;
+      done.hidden = index !== steps.length - 1;
+    };
+    openers.forEach((opener) => opener.addEventListener('click', () => {
+      index = 0;
+      render();
+      dialog.showModal();
+    }));
+    next?.addEventListener('click', () => { index = Math.min(index + 1, steps.length - 1); render(); });
+    back?.addEventListener('click', () => { index = Math.max(index - 1, 0); render(); });
+    done?.addEventListener('click', () => {
+      localStorage.setItem('courtscope-tour-seen', '1');
+      window.location.href = window.location.pathname.startsWith('/es') ? '/es/cities' : '/cities';
+    });
+    dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
+    render();
+  }
+</script>

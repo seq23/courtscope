@@ -1,7 +1,25 @@
 ---
-const { score, label, strength } = Astro.props;
-const cls = score === null ? 'score-none' : score >= 80 ? 'score-high' : score >= 60 ? 'score-mid' : 'score-low';
+import { disparityClass, translatedDisparityLabel } from '../lib/score';
+
+interface Props {
+  score: number | null;
+  label?: string;
+  strength: string;
+  compact?: boolean;
+  lang?: 'en' | 'es';
+}
+
+const { score, strength, compact = false, lang = 'en' } = Astro.props as Props;
+const displayLabel = translatedDisparityLabel(score, lang);
+const scoreName = lang === 'es' ? 'Puntuación de disparidad' : 'Disparity Score';
+const strengthLabel = lang === 'es' ? 'Fuerza de datos' : 'Data strength';
 ---
-<div class={`score-badge ${cls}`} aria-label={`Fairness Score ${score ?? 'not available'}, ${label}, data strength ${strength}`}>
-  <strong>{score ?? '—'}</strong><span>{label}</span><small>{strength}</small>
+<div
+  class={`score-badge ${disparityClass(score)} ${compact ? 'score-compact' : ''}`}
+  aria-label={`${scoreName}: ${score ?? 'not available'}. ${displayLabel}. ${strengthLabel}: ${strength}.`}
+>
+  <span class="score-name">{scoreName}</span>
+  <strong>{score ?? '—'}</strong>
+  <span class="score-label">{displayLabel}</span>
+  <small>{strengthLabel}: {strength}</small>
 </div>

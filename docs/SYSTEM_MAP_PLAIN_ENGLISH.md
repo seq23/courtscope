@@ -1,5 +1,13 @@
-# CourtScope System Map — Plain English
+# System Map in Plain English
 
-Official court source → immutable source artifact and checksum → normalized records → judge and field verification → quarantine of ambiguous records → statistical model and sensitivity checks → publication gates → public score or Not Enough Data → downloadable release → correction history and audit receipts.
-
-`/admin/add-cities` is the operator entry point for requesting, tracking, inspecting, and mapping new court data. It does not bypass the ingestion, privacy, model, or launch gates.
+- `src/pages` builds national, city, legal, Spanish, and admin routes.
+- `src/components` holds the score card, explanation accordion, onboarding tour, and shared UI.
+- `model` calculates the two outcome components and publication gates.
+- `data/intake/incoming` receives complete de-identified city packages.
+- `data/intake/rejected` holds failed packages and receipts.
+- `data/intake/processed` temporarily retains accepted input packages.
+- `data/cities/published` holds generated city releases.
+- `public/downloads/<city>` exists only for published cities.
+- `data/admin` feeds the command-center status and cleanup queue.
+- `scripts/validate-all.mjs` governs release validation.
+- `.github/workflows` runs provider-backed pipeline, cleanup, control, and deployment jobs.

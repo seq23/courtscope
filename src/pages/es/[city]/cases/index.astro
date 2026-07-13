@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../../components/FixtureBanner.astro';
+import SearchPanel from '../../../../components/SearchPanel.astro';
+import { findCity } from '../../../../lib/cities';
+import { findCityCase } from '../../../../lib/city-data';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities'); const query = Astro.url.searchParams.get('q')?.trim() ?? ''; const record = query ? findCityCase(city.slug, query) : undefined;
+---
+<BaseLayout lang="es" title={`Buscar casos | ${city.name} | CourtScope`} noindex={true}><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · {city.name}</p><h1>Buscar números públicos de caso</h1><p class="lede">CourtScope no muestra nombres de acusados.</p></div></section><section class="section"><div class="shell"><SearchPanel citySlug={city.slug} lang="es" />{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}{query && (!record ? <div class="card"><h2>Sin coincidencia</h2></div> : <div class="card"><h2><a href={`/es/${city.slug}/cases/${record.publicCaseNumber}`}>{record.publicCaseNumber}</a></h2><p>{record.court} · {record.disposition} · {record.sentenceType}</p></div>)}</div></section></BaseLayout>

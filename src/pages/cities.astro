@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { visibleCities, cityStatusLabel } from '../lib/cities';
+---
+<BaseLayout title="Choose a City | CourtScope" description="Choose a CourtScope city dashboard and review its publication status, courts, and data coverage.">
+  <section class="hero compact-hero"><div class="shell"><p class="eyebrow">Jurisdiction directory</p><h1>Choose a city</h1><p class="lede">Every city has a separate dashboard, case search, data page, and publication status.</p></div></section>
+  <section class="section"><div class="shell"><div class="grid grid-2">
+    {visibleCities.map((city) => <article class="card city-card"><div><span class="city-status">{cityStatusLabel(city)}</span><h2>{city.name}, {city.state}</h2><p><strong>Courts:</strong> {city.courts.join('; ')}</p><p>{city.notice}</p><p><strong>Public downloads:</strong> {city.downloadsAvailable ? 'Available' : 'Not available until publication'}</p></div><a class="button" href={`/${city.slug}`}>Open dashboard</a></article>)}
+  </div><div class="callout"><h2>Don’t see your city?</h2><p>Use the records-request guide to identify the right local office, request a complete dataset, and submit a privacy-reviewed package.</p><a class="button secondary" href="/add-cities">How to add a city</a></div></div></section>
+</BaseLayout>

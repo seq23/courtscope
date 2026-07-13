@@ -1,17 +1,42 @@
 # Implementation Phase Ledger
 
-| Phase | Capability | Code state | Live proof state |
-|---|---|---|---|
-| 1 | Repository foundation | Implemented | Local validation required |
-| 2 | Public civic experience | Implemented | Browser/production proof pending |
-| 3 | Data foundation | Implemented | Live D1/R2 proof pending |
-| 4 | Shelby Criminal Court ingestion | Implemented | Official bulk data pending |
-| 5 | Statistical engine | Implemented and fixture-tested | Real-data calibration pending |
-| 6 | Score publication | Implemented fail-closed | Real scores prohibited |
-| 7 | Case search and downloads | Implemented with fixtures | Official release pending |
-| 8 | Corrections and audit | Implemented contracts and secured review surfaces | Live queue/provider proof pending |
-| 9 | Admin command center | Implemented server-side/provider-gated | Live secrets and workflow proof pending |
-| 10 | General Sessions | Court-separated implementation | Official source pending |
-| 11 | City expansion | Guided onboarding implemented | Second-city dry run pending |
-| 12 | Hardening/private preview | Implemented controls | Deployed drills pending |
-| 13 | Public launch | Release gates implemented | BLOCKED until external gates pass |
+## Phase 1 — Public explainer and onboarding
+
+**Status:** Implemented in source.
+
+Includes the national homepage, plain-language purpose, score legend, brief methodology, how-to-use flow, open-source/add-city paths, reusable score explanation accordion, accessibility structure, and Spanish routes.
+
+## Phase 2 — Methodology alignment
+
+**Status:** Implemented and deterministically tested with synthetic data.
+
+Includes an eight-year shared city window, incarceration and sentence-length outcomes, separate racial-group comparisons, directional findings, conservative overall-score rule, publication gates, and Methodology 2.0 documentation.
+
+## Phase 3 — Judge detail experience
+
+**Status:** Implemented in source.
+
+Includes city-scoped judge profiles, visible outcome components, strong visual hierarchy, case table, qualifying-case count, data strength, interpretation limitations, and same-court comparison.
+
+## Phase 4 — Interactive onboarding
+
+**Status:** Implemented in source.
+
+Includes a four-step accessible dialog explaining the product, score direction, card accordion, and interpretation limits.
+
+## Expansion implemented with the four phases
+
+- city registry and `/<city-slug>/` architecture;
+- national and city data pages;
+- city-scoped case routes;
+- complete data rejection policy;
+- intake, rejection, processing, publication, and cleanup pipeline;
+- admin status and workflow controls;
+- lean self-healing validation architecture.
+
+## External proof still required
+
+- official city records and real-data calibration;
+- live GitHub workflow run receipts;
+- live Cloudflare provider and deployment proof;
+- review by qualified legal counsel before publication of real judge results.

@@ -1,4 +1,127 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import FixtureBanner from '../components/FixtureBanner.astro'; import SearchPanel from '../components/SearchPanel.astro'; import FilterBar from '../components/FilterBar.astro'; import JudgeCard from '../components/JudgeCard.astro'; import SystemHealth from '../components/SystemHealth.astro'; import { fixtureJudges } from '../lib/fixtures';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import MethodologySummary from '../components/MethodologySummary.astro';
+import { visibleCities } from '../lib/cities';
 ---
-<BaseLayout title="CourtScope | See the patterns behind court outcomes"><section class="hero"><div class="shell"><p class="eyebrow">Shelby County, Tennessee</p><h1>See the patterns behind court outcomes.</h1><p class="lede">CourtScope is an open-source civic data project designed to help the public examine adjusted racial disparities in aggregate sentencing patterns—without declaring any individual case fair or unfair.</p><div class="notice"><strong>How to read this:</strong> A higher Fairness Score means lower measured disparity after controlling for supported case differences. It does not prove perfect fairness or intent.</div><SearchPanel /></div></section><section class="section"><div class="shell"><FixtureBanner/><div class="grid grid-2"><div><p class="eyebrow">Judges by Fairness Score</p><h2>Explore the fixture dashboard</h2><p>Scores publish only when sample size, subgroup coverage, source quality, uncertainty, and model stability pass hard gates.</p></div><SystemHealth/></div><FilterBar/><div class="grid grid-2">{fixtureJudges.sort((a,b)=>(a.score??999)-(b.score??999)).map(j=><JudgeCard judge={j}/>)}</div></div></section></BaseLayout>
+<BaseLayout
+  title="CourtScope | Racial gaps in criminal sentencing"
+  description="CourtScope examines public sentencing records to measure racial gaps in incarceration and sentence length across similar cases."
+>
+  <section class="hero national-hero">
+    <div class="shell hero-grid">
+      <div>
+        <p class="eyebrow">Public sentencing data, explained</p>
+        <h1>See the patterns behind criminal sentences.</h1>
+        <p class="lede">CourtScope studies many similar cases to measure racial gaps in two outcomes: <strong>who is sentenced to incarceration</strong> and <strong>how long incarceration sentences are</strong>.</p>
+        <div class="hero-actions">
+          <a class="button" href="/cities">Choose a city</a>
+          <button class="button secondary" type="button" data-tour-open>How to use CourtScope</button>
+        </div>
+      </div>
+      <aside class="hero-score-card" aria-label="Disparity Score guide">
+        <p class="score-name">Disparity Score</p>
+        <strong class="hero-score-number">0–100</strong>
+        <p><b>Low numbers</b> mean smaller measured racial gaps. <b>High numbers</b> mean bigger measured racial gaps.</p>
+        <div class="mini-scale" aria-hidden="true"><span></span><span></span><span></span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Start with the basics</p>
+        <h2>What is this site?</h2>
+        <p>CourtScope is a public-interest research tool. It organizes court records so people can inspect sentencing patterns that are difficult to see one case at a time.</p>
+      </div>
+      <div class="grid grid-3 explainer-grid">
+        <article class="card">
+          <h3>What is it for?</h3>
+          <p>It helps voters, journalists, researchers, lawyers, community members, and public officials ask better questions about sentencing.</p>
+        </article>
+        <article class="card">
+          <h3>What does it measure?</h3>
+          <p>It measures adjusted racial gaps in incarceration and sentence length across qualifying cases assigned to the same judge.</p>
+        </article>
+        <article class="card">
+          <h3>What does it not do?</h3>
+          <p>It does not decide whether one case was appropriate, tell anyone how to vote, or make a finding about a judge’s motives.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Read the number plainly</p>
+        <h2>Understanding the Disparity Score</h2>
+        <p>The score is descriptive, not a personal rating. It summarizes the largest measured racial gap found in the two sentencing outcomes.</p>
+      </div>
+      <div class="score-legend">
+        <div class="legend-small"><strong>0–29</strong><span>Smaller racial gaps</span></div>
+        <div class="legend-moderate"><strong>30–59</strong><span>Moderate racial gaps</span></div>
+        <div class="legend-big"><strong>60–100</strong><span>Bigger racial gaps</span></div>
+      </div>
+      <p class="legal-limitation"><em>A measured disparity does not prove racism, discrimination, intent, misconduct, or whether any individual sentence was appropriate.</em></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell"><MethodologySummary /></div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">How to use the site</p>
+        <h2>Five steps from score to context</h2>
+      </div>
+      <ol class="numbered-steps">
+        <li><strong>Choose a city.</strong><span>Each city has its own courts, records, coverage window, and data status.</span></li>
+        <li><strong>Open a judge card.</strong><span>Read the score, label, number of qualifying cases, and data strength.</span></li>
+        <li><strong>Open “Why this score?”</strong><span>See which outcome produced the larger measured gap and the most important group comparisons.</span></li>
+        <li><strong>Compare only within the same court.</strong><span>Different courts may handle different cases and should not be treated as one league table.</span></li>
+        <li><strong>Read the methodology.</strong><span>Use the full method and data limitations before drawing conclusions.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="shell">
+      <div class="section-heading">
+        <p class="eyebrow">Available jurisdictions</p>
+        <h2>Choose a city</h2>
+        <p>A city dashboard may be visible as a clearly labeled fixture preview before official records are published. Public downloads remain locked until the city passes every data gate.</p>
+      </div>
+      <div class="grid grid-2">
+        {visibleCities.map((city) => (
+          <article class="card city-card">
+            <div>
+              <span class="city-status">{city.published ? 'Published' : 'Preview'}</span>
+              <h3>{city.name}</h3>
+              <p>{city.notice}</p>
+            </div>
+            <a class="button" href={`/${city.slug}`}>Open {city.name}</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="shell grid grid-2">
+      <div>
+        <p class="eyebrow">Can this prove discrimination?</p>
+        <h2>No. It can identify patterns that deserve examination.</h2>
+        <p>Statistical patterns may raise important questions. They cannot, by themselves, establish why a difference occurred or whether a legal violation took place.</p>
+      </div>
+      <div>
+        <p class="eyebrow">Open and expandable</p>
+        <h2>Inspect the method. Help add a city.</h2>
+        <p>CourtScope publishes its methodology, data requirements, limitations, and source code so the work can be reviewed and improved.</p>
+        <div class="actions"><a class="button light" href="/open-source">Open source</a><a class="button outline-light" href="/add-cities">Bring CourtScope to your city</a></div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

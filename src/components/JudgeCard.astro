@@ -1,8 +1,34 @@
 ---
 import ScoreBadge from './ScoreBadge.astro';
-const { judge } = Astro.props;
+import ScoreExplanation from './ScoreExplanation.astro';
+import type { JudgeSummary } from '../lib/types';
+
+interface Props {
+  judge: JudgeSummary;
+  citySlug?: string;
+  lang?: 'en' | 'es';
+}
+
+const { judge, citySlug = 'memphis', lang = 'en' } = Astro.props as Props;
+const prefix = lang === 'es' ? '/es' : '';
+const es = lang === 'es';
+const election = judge.nextElectionYear ?? (es ? 'No verificada' : 'Not verified');
 ---
-<article class="card judge-card" data-court={judge.court} data-year={judge.nextElectionYear} data-strength={judge.dataStrength}>
-  <div><p class="eyebrow">{judge.court} · {judge.division}</p><h3><a href={`/judges/${judge.slug}`}>{judge.shortName}</a></h3><p>{judge.caseCount.toLocaleString()} qualifying fixture cases · {judge.trend}</p><p><strong>Next election:</strong> {judge.nextElectionYear}</p></div>
-  <ScoreBadge score={judge.score} label={judge.label} strength={judge.dataStrength} />
+<article
+  class="card judge-card"
+  data-judge-card
+  data-court={judge.court}
+  data-year={judge.nextElectionYear ?? ''}
+  data-strength={judge.dataStrength}
+>
+  <div class="judge-card-main">
+    <div class="judge-card-copy">
+      <p class="eyebrow">{judge.court} · {judge.division}</p>
+      <h3><a href={`${prefix}/${citySlug}/judges/${judge.slug}`}>{judge.shortName}</a></h3>
+      <p class="judge-meta"><strong>{judge.caseCount.toLocaleString()}</strong> {es ? 'casos que califican' : 'qualifying cases'} · {judge.trend}</p>
+      <p class="judge-election"><strong>{es ? 'Próxima elección:' : 'Next election:'}</strong> {election}</p>
+    </div>
+    <ScoreBadge score={judge.score} strength={judge.dataStrength} lang={lang} />
+  </div>
+  <ScoreExplanation judge={judge} lang={lang} />
 </article>

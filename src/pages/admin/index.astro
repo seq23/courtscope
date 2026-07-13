@@ -1,7 +1,62 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';import SystemHealth from '../../components/SystemHealth.astro';
-const operations=[['rerun_ingestion','Rerun ingestion','Reprocess the latest allowlisted source artifact.'],['recalculate_scores','Recalculate scores','Run the model and publication gates.'],['rebuild_exports','Rebuild exports','Regenerate CSV, JSON, and Parquet release files.'],['pause_automation','Pause automation','Stop scheduled mutations while keeping read access.'],['rollback_dataset','Rollback dataset','Restore the last verified dataset release.'],['emergency_stop','Emergency stop','Block every non-read-only admin action.']];
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SystemHealth from '../../components/SystemHealth.astro';
+import pipeline from '../../../data/admin/city_pipeline_status.json';
+import cleanup from '../../../data/admin/cleanup_queue.json';
+import registry from '../../../data/cities/registry.json';
+
+interface PipelineBatch { citySlug: string; batchId: string; status: string; recordCount?: number; path: string; }
+interface CleanupItem { citySlug: string; batchId: string; eligibleAt: string; status: string; }
+const batches = pipeline.batches as PipelineBatch[];
+const cleanupItems = cleanup.items as CleanupItem[];
+
+const operations = [
+  ['process_city_data', 'Process incoming city data', 'Validate every incoming batch. Publish complete data and reject incomplete data with receipts.', true],
+  ['refresh_city_status', 'Refresh city status', 'Rebuild the admin status manifest from intake, rejection, processed, and published folders.', false],
+  ['refresh_cleanup_queue', 'Refresh cleanup queue', 'Recalculate which processed batches have reached the retention deadline.', false],
+  ['cleanup_processed_data', 'Delete eligible processed batches', 'Remove only batches that passed the retention period. This requires an explicit destructive confirmation.', true],
+  ['pause_automation', 'Pause automation', 'Stop scheduled mutation workflows while leaving public read access available.', true],
+  ['resume_automation', 'Resume automation', 'Resume scheduled workflows after an operator review.', true],
+  ['emergency_stop', 'Emergency stop', 'Block all non-read-only admin actions until explicitly cleared.', true],
+] as const;
+const summary = pipeline.summary;
 ---
-<BaseLayout title="Admin command center | CourtScope" noindex={true}><section class="section"><div class="shell"><div class="actions" style="justify-content:space-between"><div><p class="eyebrow">Owner control room</p><h1>Admin command center</h1></div><form method="post" action="/api/admin/logout"><button class="secondary" type="submit">Sign out</button></form></div><div class="notice"><strong>Provider-gated, not simulated.</strong> Actions call the secured admin endpoint. If Cloudflare or GitHub credentials are missing, the action returns a precise configuration error and makes no claim of success.</div><div class="actions"><a class="button" href="/admin/add-cities">Add court data or a city</a><a class="button secondary" href="/admin/corrections">Review corrections</a></div><SystemHealth/><h2>Operations</h2><div class="grid grid-3">{operations.map(([id,title,description])=><article class="card"><h3>{title}</h3><p>{description}</p><form class="admin-action" data-confirm={['recalculate_scores','pause_automation','rollback_dataset','emergency_stop'].includes(id)?'true':'false'}><input type="hidden" name="action" value={id}/><button class={id==='emergency_stop'?'danger':''} type="submit">{title}</button><div class="action-result" aria-live="polite"></div></form></article>)}</div></div></section><script is:inline>
-document.querySelectorAll('.admin-action').forEach(form=>form.addEventListener('submit',async e=>{e.preventDefault();const action=new FormData(form).get('action');if(form.dataset.confirm==='true'&&!confirm(`Confirm ${action.replaceAll('_',' ')}?`))return;const out=form.querySelector('.action-result');out.textContent='Running…';try{const res=await fetch('/api/admin/actions',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({action,confirmed:true})});const data=await res.json();out.textContent=data.message||data.error||`Status ${res.status}`;out.className=`action-result notice ${res.ok?'success':'error'}`}catch(err){out.textContent='The request could not reach the admin service.';out.className='action-result notice error'}}));
-</script></BaseLayout>
+<BaseLayout title="Admin command center | CourtScope" noindex={true}>
+  <section class="section"><div class="shell">
+    <div class="admin-title-row"><div><p class="eyebrow">Owner control room</p><h1>Admin command center</h1><p class="lede">Operate the city data pipeline, review receipts, and control cleanup without editing repository files by hand.</p></div><form method="post" action="/api/admin/logout"><button class="secondary" type="submit">Sign out</button></form></div>
+    <div class="notice"><strong>Provider-gated, not simulated.</strong> Buttons dispatch allowlisted GitHub workflows through a server-side token. A dispatch receipt means the job was requested—not that it finished successfully.</div>
+    <div class="admin-summary-grid"><article><span>Incoming</span><strong>{summary.incoming}</strong></article><article><span>Rejected</span><strong>{summary.rejected}</strong></article><article><span>Processed</span><strong>{summary.processed}</strong></article><article><span>Published cities</span><strong>{summary.publishedCities}</strong></article><article><span>Cleanup ready</span><strong>{summary.cleanupReady}</strong></article></div>
+    <div class="actions"><a class="button" href="/admin/add-cities">City intake guide</a><a class="button secondary" href="/admin/corrections">Corrections</a><a class="button secondary" href="/admin/cities">City registry</a></div>
+    <SystemHealth />
+  </div></section>
+
+  <section class="section section-tint"><div class="shell"><div class="section-heading"><p class="eyebrow">City pipeline</p><h2>Batch status</h2><p>Rejected data remains rejected. Processed data is retained temporarily and then becomes eligible for admin cleanup.</p></div>{batches.length ? <div class="table-wrap admin-table"><table><thead><tr><th>City</th><th>Batch</th><th>Status</th><th>Records</th><th>Path</th></tr></thead><tbody>{batches.map((batch) => <tr><td>{batch.citySlug}</td><td>{batch.batchId}</td><td><span class={`status-pill status-${String(batch.status).toLowerCase()}`}>{batch.status}</span></td><td>{batch.recordCount ?? '—'}</td><td><code>{batch.path}</code></td></tr>)}</tbody></table></div> : <div class="empty-state"><h3>No batch receipts yet</h3><p>Place a complete de-identified package in <code>data/intake/incoming/&lt;city&gt;/&lt;batch&gt;/</code> or use the approved repository workflow.</p></div>}</div></section>
+
+  <section class="section"><div class="shell"><div class="section-heading"><p class="eyebrow">Retention</p><h2>Processed-data cleanup queue</h2></div>{cleanupItems.length ? <div class="table-wrap"><table><thead><tr><th>City</th><th>Batch</th><th>Eligible at</th><th>Status</th></tr></thead><tbody>{cleanupItems.map((item) => <tr><td>{item.citySlug}</td><td>{item.batchId}</td><td>{item.eligibleAt}</td><td>{item.status}</td></tr>)}</tbody></table></div> : <div class="empty-state"><p>No processed batches are waiting for cleanup.</p></div>}</div></section>
+
+  <section class="section section-tint"><div class="shell"><div class="section-heading"><p class="eyebrow">City registry</p><h2>Dashboard and publication state</h2></div><div class="table-wrap"><table><thead><tr><th>City</th><th>Status</th><th>Dashboard</th><th>Published</th><th>Downloads</th></tr></thead><tbody>{registry.cities.map((city) => <tr><td><a href={`/${city.slug}`}>{city.name}</a></td><td>{city.status}</td><td>{city.dashboardVisible ? 'Visible' : 'Hidden'}</td><td>{city.published ? 'Yes' : 'No'}</td><td>{city.downloadsAvailable ? 'Yes' : 'No'}</td></tr>)}</tbody></table></div></div></section>
+
+  <section class="section"><div class="shell"><div class="section-heading"><p class="eyebrow">Allowlisted operations</p><h2>Workflow controls</h2></div><div class="grid grid-3">{operations.map(([id, title, description, confirmRequired]) => <article class="card operation-card"><h3>{title}</h3><p>{description}</p><form class="admin-action" data-confirm={confirmRequired ? 'true' : 'false'}><input type="hidden" name="action" value={id} /><button class={id === 'emergency_stop' || id === 'cleanup_processed_data' ? 'danger' : ''} type="submit">{title}</button><div class="action-result" aria-live="polite"></div></form></article>)}</div></div></section>
+  <script is:inline>
+    document.querySelectorAll('.admin-action').forEach((form) => form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const action = new FormData(form).get('action');
+      if (form.dataset.confirm === 'true' && !confirm(`Confirm ${String(action).replaceAll('_', ' ')}?`)) return;
+      const output = form.querySelector('.action-result');
+      output.textContent = 'Dispatching…';
+      try {
+        const response = await fetch('/api/admin/actions', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ action, confirmed: true }),
+        });
+        const data = await response.json();
+        output.textContent = data.message || data.error || `Status ${response.status}`;
+        output.className = `action-result notice ${response.ok ? 'success' : 'error'}`;
+      } catch {
+        output.textContent = 'The request could not reach the admin service.';
+        output.className = 'action-result notice error';
+      }
+    }));
+  </script>
+</BaseLayout>

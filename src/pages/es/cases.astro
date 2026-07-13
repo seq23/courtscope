@@ -1,4 +1,3 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import SearchPanel from '../../components/SearchPanel.astro';
+return Astro.redirect('/es/memphis/cases' + Astro.url.search, 301);
 ---
-<BaseLayout lang="es" title="Buscar casos | CourtScope" noindex={true}><section class="section"><div class="shell"><p class="eyebrow">Traducción automática</p><h1>Buscar números públicos de casos</h1><div class="notice"><strong>Aviso de privacidad:</strong> CourtScope no muestra nombres de acusados y no es un registro oficial del tribunal.</div><SearchPanel lang="es"/></div></section></BaseLayout>

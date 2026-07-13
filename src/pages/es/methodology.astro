@@ -1,10 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageShell from '../../components/PageShell.astro';
-import StatusNotice from '../../components/StatusNotice.astro';
+import MethodologySummary from '../../components/MethodologySummary.astro';
 ---
-<BaseLayout lang="es" title="Methodology | CourtScope" description="Traducción automática de CourtScope.">
-  <PageShell eyebrow="Traducción automática" title="Methodology" intro="Esta página usa traducción automática. La versión en inglés controla en caso de conflicto.">
-    <StatusNotice>This route will host plain-language and technical reproducibility packages.</StatusNotice>
-  </PageShell>
-</BaseLayout>
+<BaseLayout lang="es" title="Metodología | CourtScope"><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · Metodología 2.0</p><h1>Cómo se calcula la puntuación de disparidad</h1></div></section><section class="section"><div class="shell"><MethodologySummary lang="es" /></div></section><section class="section section-tint"><div class="shell prose"><h2>Dos resultados separados</h2><p>El modelo mide la probabilidad ajustada de encarcelamiento y la duración ajustada de sentencia entre casos con tiempo de encarcelamiento.</p><h2>Una ventana compartida de hasta ocho años</h2><p>Todos los jueces de una ciudad se evalúan dentro de la misma ventana de análisis.</p><h2>Comparaciones por grupo</h2><p>Cada grupo racial se compara por separado con acusados blancos. Los grupos pequeños no se mezclan en una sola categoría.</p><h2>Regla conservadora</h2><p>La puntuación general usa la señal más grande de los dos resultados.</p><div class="notice warning"><strong>Límite:</strong> La puntuación describe patrones agregados. No prueba racismo, discriminación, intención, mala conducta, causalidad ni si una sentencia individual fue apropiada.</div></div></section></BaseLayout>

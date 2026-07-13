@@ -1,0 +1,51 @@
+{
+  "version": "1.0.0",
+  "policy": "REJECT_INCOMPLETE_DATA",
+  "required_manifest_checks": [
+    "official_or_authorized_source",
+    "declared_court_scope_complete",
+    "stable_case_identifiers",
+    "judge_identity_crosswalk_complete",
+    "all_required_fields_present",
+    "date_coverage_documented",
+    "no_unexplained_coverage_gaps",
+    "data_dictionary_included",
+    "amendments_and_corrections_addressed",
+    "privacy_review_passed",
+    "public_projection_safe"
+  ],
+  "required_record_fields": [
+    "case_id",
+    "court",
+    "division",
+    "judge_id",
+    "judge_name",
+    "judge_match_state",
+    "race",
+    "offense_class",
+    "prior_record",
+    "plea_trial",
+    "age_band",
+    "gender",
+    "disposition",
+    "sentence_date",
+    "incarceration_to_serve",
+    "sentence_length_months",
+    "source_id"
+  ],
+  "prohibited_public_fields": [
+    "defendant_name",
+    "first_name",
+    "last_name",
+    "social_security_number",
+    "street_address",
+    "phone_number",
+    "email_address"
+  ],
+  "minimums": {
+    "qualifying_cases_per_judge": 50,
+    "cases_per_comparison_group": 10,
+    "lookback_years": 8
+  },
+  "publication_rule": "A city is published only after every manifest check passes, every required record field exists, privacy checks pass, and at least one judge clears the statistical publication gates."
+}

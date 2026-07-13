@@ -2,27 +2,24 @@
 
 ## Sign in
 
-Open `/admin/login`. The password is checked on the server against `ADMIN_PASSWORD_HASH`. A signed, secure session cookie is created with `ADMIN_SESSION_SECRET`.
+Open `/admin/login`. Authentication is verified on the server. The password and GitHub token are not stored in browser code.
 
-## What works when configured
+## What the dashboard shows
 
-Admin buttons dispatch allowlisted GitHub Actions through the server. The browser never receives the GitHub token. Missing credentials return a configuration error and do not pretend success.
+- incoming batches;
+- rejected batches;
+- processed batches retained temporarily;
+- published cities;
+- packages eligible for cleanup;
+- city publication and download state.
 
-## Add data or a city
+## What the buttons do
 
-Open `/admin/add-cities`.
+- **Process incoming city data:** dispatches the city pipeline workflow.
+- **Refresh city status:** rebuilds the status manifest without publishing incomplete data.
+- **Refresh cleanup queue:** recalculates retention eligibility.
+- **Delete eligible processed batches:** destructive, confirmed cleanup of retention-eligible folders only.
+- **Pause / resume automation:** changes the repository control state.
+- **Emergency stop:** blocks non-read-only automation until cleared.
 
-1. Choose the court and jurisdiction.
-2. Mark which required fields the court can provide.
-3. Download the records request package.
-4. Track calls, emails, fees, request number, and delivery date.
-5. Upload CSV, JSON, XLSX, PDF, ZIP, codebooks, and correspondence.
-6. Review detected columns and map them to CourtScope fields.
-7. Read the readiness report.
-8. Download the onboarding project for the ingestion pipeline.
-
-Nothing uploads to the public site from the wizard. Publication still requires ingestion, privacy, identity, methodology, and release gates.
-
-## Dangerous actions
-
-Emergency stop, rollback, score recalculation, pause, and resume require confirmation. Never override a failed privacy, provenance, identity, or model gate.
+A successful dispatch response means GitHub accepted the request. It does not prove the workflow passed.

@@ -1,0 +1,73 @@
+---
+import { translatedDisparityLabel } from '../lib/score';
+import type { JudgeSummary } from '../lib/types';
+
+interface Props {
+  judge: JudgeSummary;
+  open?: boolean;
+  lang?: 'en' | 'es';
+}
+
+const { judge, open = false, lang = 'en' } = Astro.props as Props;
+const es = lang === 'es';
+const incarceration = judge.incarcerationDisparityScore ?? null;
+const sentenceLength = judge.sentenceLengthDisparityScore ?? null;
+const highlights: string[] = judge.comparisonHighlights ?? [];
+const spanishHighlights: string[] = (judge.comparisonGroups ?? []).flatMap((comparison) => {
+  const lines: string[] = [];
+  if (comparison.incarcerationGapPercentagePoints !== null) {
+    const direction = comparison.incarcerationGapPercentagePoints >= 0 ? 'más alta' : 'más baja';
+    lines.push(`La tasa ajustada de encarcelamiento para el grupo ${comparison.group} fue ${Math.abs(comparison.incarcerationGapPercentagePoints).toFixed(1)} puntos porcentuales ${direction} que para el grupo ${comparison.reference}.`);
+  }
+  if (comparison.sentenceLengthDifferencePercent !== null) {
+    const direction = comparison.sentenceLengthDifferencePercent >= 0 ? 'más larga' : 'más corta';
+    lines.push(`La duración ajustada de la sentencia para el grupo ${comparison.group} fue aproximadamente ${Math.abs(comparison.sentenceLengthDifferencePercent).toFixed(1)}% ${direction} que para el grupo ${comparison.reference}.`);
+  }
+  return lines;
+});
+const displayHighlights = es && spanishHighlights.length > 0 ? spanishHighlights : highlights;
+const scoreAvailable = judge.score !== null;
+---
+<details class="score-explanation" open={open}>
+  <summary>
+    <span>{es ? '¿Por qué esta puntuación?' : 'Why this score?'}</span>
+    <small>{es ? 'Puntos principales' : 'Key findings'}</small>
+  </summary>
+  <div class="score-explanation-body">
+    {scoreAvailable ? (
+      <>
+        <p class="score-summary">
+          <strong>{es ? 'La señal medida más grande fija la puntuación general.' : (judge.strongestSignal ?? 'The larger measured signal sets the overall score.')}</strong>
+        </p>
+        <div class="component-grid">
+          <div class="component-score">
+            <span>{es ? 'Encarcelamiento' : 'Incarceration'}</span>
+            <strong>{incarceration ?? '—'}</strong>
+            <em>{incarceration === null ? (es ? 'No puntuado' : 'Not scored') : translatedDisparityLabel(incarceration, lang)}</em>
+          </div>
+          <div class="component-score">
+            <span>{es ? 'Duración de sentencia' : 'Sentence length'}</span>
+            <strong>{sentenceLength ?? '—'}</strong>
+            <em>{sentenceLength === null ? (es ? 'No puntuado' : 'Not scored') : translatedDisparityLabel(sentenceLength, lang)}</em>
+          </div>
+        </div>
+        {displayHighlights.length > 0 && <ul class="highlight-list">{displayHighlights.map((item: string) => <li>{item}</li>)}</ul>}
+        <p class="method-note">
+          <strong>{es ? 'Datos:' : 'Data:'}</strong> {judge.caseCount.toLocaleString()} {es ? 'casos que califican' : 'qualifying cases'} · {judge.dataStrength}.
+          {judge.analysisWindow && <> <em>{judge.analysisWindow}</em></>}
+        </p>
+      </>
+    ) : (
+      <>
+        <p class="score-summary"><strong>{es ? 'No hubo datos suficientes para publicar una puntuación.' : (judge.strongestSignal ?? 'There was not enough data to publish a score.')}</strong></p>
+        {displayHighlights.length > 0 && <ul class="highlight-list">{displayHighlights.map((item: string) => <li>{item}</li>)}</ul>}
+        <p class="method-note">{es ? '“Datos insuficientes” no es un resultado positivo ni negativo.' : '“Not Enough Data” is not a positive or negative result.'}</p>
+      </>
+    )}
+    <p class="legal-limitation">
+      <em>{es
+        ? 'Esta puntuación describe patrones agregados en los datos analizados. No prueba racismo, discriminación, intención, mala conducta ni si una sentencia individual fue apropiada.'
+        : 'This score describes aggregate patterns in the analyzed data. It does not prove racism, discrimination, intent, misconduct, or whether any individual sentence was appropriate.'}</em>
+    </p>
+  </div>
+</details>

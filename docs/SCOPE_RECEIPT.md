@@ -1,31 +1,9 @@
-# Repair Scope Receipt
+# Scope Receipt
 
-## Implemented
+## Implemented in this source
 
-- Full repository truth reconciliation across Phases 1–13.
-- Server-verified admin login and signed secure sessions.
-- Allowlisted GitHub-backed admin actions with provider-gated failure behavior.
-- Complete `/admin/add-cities` guided workflow with Memphis contacts, records request generator, communication tracking, CSV/JSON/XLSX/ZIP inspection, field mapping, readiness report, dry-run summary, and save/download support.
-- Site-wide legal footer and linked privacy, terms, disclaimer, data-use, accessibility, security, funding/conflicts, political-neutrality, and open-source pages.
-- Responsive mobile navigation, overflow controls, accessible focus, button hierarchy, form help, table containment, and footer navigation.
-- Repository truth, repair, policy, route, footer, and wizard validation.
-- Framework and dependency hardening with zero known npm audit vulnerabilities.
+All four approved public/methodology/judge/onboarding phases, multi-city route architecture, national and city data pages, complete-data rejection, city publication pipeline, admin status/controls, legal-language guardrails, Spanish parity, and lean validation governance.
 
-## Not represented as complete
+## Not represented as proven
 
-- Official Shelby County bulk data acquisition.
-- Real Fairness Scores.
-- Live Cloudflare resources and secrets.
-- Live GitHub workflow dispatch proof.
-- Public deployment.
-
-## Validation
-
-- `npm run validate:all`
-- `npm run build`
-- `npm audit`
-- ZIP integrity and reopened-root verification
-
-## Status
-
-STRUCTURALLY CHECKED — LOCAL AND LIVE-PROVIDER VALIDATION REQUIRED
+Official city data, real judge findings, live workflow completion, live Cloudflare deployment, production secret configuration, and legal counsel clearance.

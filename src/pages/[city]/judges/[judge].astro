@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import ScoreBadge from '../../../components/ScoreBadge.astro';
+import ScoreExplanation from '../../../components/ScoreExplanation.astro';
+import { findCity } from '../../../lib/cities';
+import { findCityJudge, cityCases } from '../../../lib/city-data';
+import type { CaseRecord } from '../../../lib/types';
+
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/cities');
+const judge = findCityJudge(city.slug, String(Astro.params.judge));
+if (!judge) return Astro.redirect(`/${city.slug}/judges?notfound=1`);
+const records: CaseRecord[] = cityCases(city.slug).filter((record) => record.judgeSlug === judge.slug);
+---
+<BaseLayout title={`${judge.shortName} | ${city.name} | CourtScope`} description={`Aggregate sentencing disparity analysis for ${judge.shortName} in ${city.name}.`}>
+  <section class="section"><div class="shell">
+    {city.dataMode === 'fixture' && <FixtureBanner />}
+    <p class="eyebrow">{judge.court} · {judge.division}</p>
+    <div class="judge-profile-head">
+      <div><h1>{judge.shortName}</h1><p class="lede">This page summarizes adjusted racial gaps across qualifying sentencing records. It does not make a finding about motive, wrongdoing, or an individual case.</p><dl class="inline-facts"><dt>Qualifying cases</dt><dd>{judge.caseCount.toLocaleString()}</dd><dt>Next election</dt><dd>{judge.nextElectionYear ?? 'Not verified'}</dd><dt>Trend</dt><dd>{judge.trend}</dd></dl></div>
+      <ScoreBadge score={judge.score} strength={judge.dataStrength} />
+    </div>
+    <ScoreExplanation judge={judge} open={true} />
+  </div></section>
+
+  <section class="section section-tint"><div class="shell"><div class="section-heading"><p class="eyebrow">Two outcome model</p><h2>What was measured</h2></div><div class="grid grid-3"><article class="card"><span class="measure-number">01</span><h3>Incarceration</h3><p>Whether a person was sentenced to incarceration that had to be served.</p></article><article class="card"><span class="measure-number">02</span><h3>Sentence length</h3><p>How long the incarceration sentence was among custodial cases.</p></article><article class="card"><span class="measure-number">03</span><h3>Similar-case adjustments</h3><p>Offense severity, prior record, plea or trial, age, and gender are included when supported by the data.</p></article></div></div></section>
+
+  <section class="section"><div class="shell"><div class="section-heading"><p class="eyebrow">Public case projection</p><h2>Cases shown in this {city.dataMode === 'fixture' ? 'fixture' : 'release'}</h2><p>Defendant names are not displayed. A case row does not carry an individual disparity judgment.</p></div><div class="table-wrap"><table><thead><tr><th>Case</th><th>Disposition</th><th>Sentence</th><th>Model use</th></tr></thead><tbody>{records.length ? records.map((record: CaseRecord) => <tr><td><a href={`/${city.slug}/cases/${record.publicCaseNumber}`}>{record.publicCaseNumber}</a></td><td>{record.disposition}</td><td>{record.sentenceType}{record.sentenceLengthMonths !== null ? ` · ${record.sentenceLengthMonths} months` : ''}</td><td>{record.includedInModel ? 'Included' : 'Excluded'}</td></tr>) : <tr><td colspan="4">No public case rows are available for this judge.</td></tr>}</tbody></table></div></div></section>
+</BaseLayout>

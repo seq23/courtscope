@@ -1,0 +1,23 @@
+---
+const { lang='en' } = Astro.props;
+const es = lang === 'es';
+---
+<section class="methodology-summary" aria-labelledby="method-summary-title">
+  <div class="section-heading">
+    <p class="eyebrow">{es ? 'Cómo funciona' : 'How it works'}</p>
+    <h2 id="method-summary-title">{es ? 'Cómo CourtScope revisa los patrones de sentencia' : 'How CourtScope checks sentencing patterns'}</h2>
+    <p>{es ? 'No tratamos todos los casos como si fueran iguales. Comparamos resultados entre grupos raciales después de tomar en cuenta diferencias respaldadas por los datos.' : 'We do not treat every case as if it were the same. We compare outcomes across racial groups after accounting for supported case differences.'}</p>
+  </div>
+  <div class="method-steps">
+    <article><strong>50+</strong><span>{es ? 'casos que califican por juez' : 'qualifying cases per judge'}</span></article>
+    <article><strong>8</strong><span>{es ? 'años de datos como máximo por ventana' : 'years of data in each rolling window'}</span></article>
+    <article><strong>2</strong><span>{es ? 'resultados: encarcelamiento y duración' : 'outcomes: incarceration and sentence length'}</span></article>
+  </div>
+  <ul class="plain-checks">
+    <li>{es ? 'Comparamos casos con gravedad de delito y antecedentes similares.' : 'We compare cases with similar offense severity and prior-record histories.'}</li>
+    <li>{es ? 'Tomamos en cuenta declaración de culpabilidad o juicio, edad y género cuando los datos lo permiten.' : 'We account for plea versus trial, age, and gender when supported by the data.'}</li>
+    <li>{es ? 'Comparamos cada grupo racial por separado con acusados blancos; no mezclamos todos los grupos minoritarios.' : 'We compare each racial group separately with White defendants; we do not hide differences inside one combined minority group.'}</li>
+    <li>{es ? 'Publicamos “Datos insuficientes” cuando la cobertura, el tamaño de muestra o la incertidumbre no pasan las reglas.' : 'We publish “Not Enough Data” when coverage, sample size, or uncertainty does not pass the rules.'}</li>
+  </ul>
+  <div class="actions"><a class="button secondary" href={es ? '/es/methodology' : '/methodology'}>{es ? 'Leer la metodología completa' : 'Read the full methodology'}</a></div>
+</section>

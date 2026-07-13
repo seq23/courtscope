@@ -1,0 +1,72 @@
+name: Process CourtScope city data
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "data/intake/incoming/**"
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Allowlisted city pipeline action"
+        required: true
+        type: choice
+        options:
+          - process_city_data
+          - refresh_city_status
+      receipt_id:
+        description: "Admin dispatch receipt ID"
+        required: false
+        type: string
+
+concurrency:
+  group: courtscope-city-data-pipeline
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Process or refresh city data
+        env:
+          ACTION: ${{ inputs.action || 'process_city_data' }}
+        run: |
+          if [ "$ACTION" = "refresh_city_status" ]; then
+            python3 scripts/cities/sync_admin_status.py
+          else
+            python3 scripts/cities/process_incoming.py
+          fi
+
+      - name: Run lean release validation
+        run: npm run validate:all
+
+      - name: Build application
+        run: npm run build
+
+      - name: Commit derived receipts and releases
+        run: |
+          git config user.name "courtscope-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data public/downloads
+          if git diff --cached --quiet; then
+            echo "No derived changes to commit."
+          else
+            git commit -m "data: process city intake and refresh status"
+            git push
+          fi

@@ -1,25 +1,10 @@
 # Workflow Automation Map
 
-Live workflows must declare:
+| Workflow | Trigger | Job | Mutation boundary |
+|---|---|---|---|
+| `deploy-cloudflare.yml` | push to main / manual | validate, build, migrate, deploy, smoke test | Cloudflare provider, requires secrets |
+| `city-data-pipeline.yml` | incoming data path / admin dispatch | validate batches, reject or publish, refresh status, commit derived outputs | city intake, city releases, downloads, admin status |
+| `city-data-cleanup.yml` | manual/admin dispatch | refresh queue or confirmed retention cleanup | processed intake and admin queue |
+| `admin-control.yml` | admin dispatch | pause, resume, or emergency-stop state | admin control state only |
 
-- trigger
-- purpose
-- files read
-- files written
-- protected paths
-- provider boundaries
-- failure behavior
-- receipt location
-- rerun method
-
-Automated low-risk data refreshes may write only to explicit allowlisted paths.
-
-
-
-## Phase 4 official extract import
-
-- Trigger: authorized manual import or future records-response workflow.
-- Reads: private official CSV/JSON file.
-- Writes: artifact manifest, normalized cases, provenance, quarantine and receipt.
-- Protected: raw names and private identifiers never enter public paths.
-- Failure: bad records quarantine; missing provenance or corrupt input blocks the run.
+Workflow files prove configuration. Completion requires GitHub run receipts.

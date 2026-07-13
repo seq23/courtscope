@@ -1,0 +1,40 @@
+{
+  "version": "2.0.0",
+  "status": "IMPLEMENTED_WITH_SYNTHETIC_VALIDATION_ONLY",
+  "purpose": "Measure the size and direction of adjusted racial gaps in judge-level criminal sentencing patterns without making findings about motive, misconduct, or individual cases.",
+  "analysis_window": {
+    "type": "shared rolling window per city release",
+    "maximum_years": 8,
+    "end_date_rule": "Latest verified sentence date in the city release unless an approved release date is supplied"
+  },
+  "outcomes": [
+    "Incarceration to serve",
+    "Length of incarceration sentence among cases with time to serve"
+  ],
+  "comparison_rule": "Each supported racial group is compared separately with White defendants. No combined minority group is used as the primary comparison.",
+  "adjustment_variables": [
+    "offense class or severity",
+    "prior-record category or offender range",
+    "plea versus trial",
+    "age band",
+    "gender"
+  ],
+  "estimator": "Deterministic additive control adjustment with group-specific residual comparisons and a seeded bootstrap uncertainty interval.",
+  "score_direction": "0 means a smaller measured racial gap; 100 means a bigger measured racial gap.",
+  "overall_score_rule": "The overall Disparity Score is the larger of the incarceration and sentence-length component scores so a larger signal is not averaged away.",
+  "publication_gates": {
+    "minimum_total_cases": 50,
+    "minimum_supported_group_cases": 10,
+    "maximum_missing_race_rate": 0.2,
+    "maximum_uncertainty_width": 45,
+    "verified_judge_identity_required": true,
+    "custodial_sentence_length_required": true,
+    "complete_city_dataset_required": true
+  },
+  "limitations": [
+    "Synthetic validation does not establish validity on any real court system.",
+    "The model measures associations in available records and does not establish causation, intent, racism, discrimination, or misconduct.",
+    "Unmeasured case facts, source-system limitations, charging decisions, plea negotiations, and statutory constraints may affect observed sentencing patterns.",
+    "A high or low score is not a legal conclusion or an individual-case judgment."
+  ]
+}

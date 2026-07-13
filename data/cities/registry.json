@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "cities": [
+    {
+      "slug": "memphis",
+      "name": "Memphis",
+      "county": "Shelby County",
+      "state": "Tennessee",
+      "status": "FIXTURE_PREVIEW",
+      "dashboardVisible": true,
+      "published": false,
+      "downloadsAvailable": false,
+      "dataMode": "fixture",
+      "courts": [
+        "Shelby County Criminal Court",
+        "Shelby County General Sessions Criminal Court"
+      ],
+      "coverageStart": null,
+      "coverageEnd": null,
+      "lastUpdated": "2026-07-13",
+      "notice": "Synthetic preview only. No conclusions about real judges or courts are published."
+    }
+  ]
+}

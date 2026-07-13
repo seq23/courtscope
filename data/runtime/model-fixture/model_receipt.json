@@ -1,10 +1,12 @@
 {
-  "run_id": "253a2e1469435aca",
-  "methodology_version": "1.0.0",
+  "run_id": "0e2e999723866828",
+  "methodology_version": "2.0.0",
   "input": "data/fixtures/model_records.json",
-  "input_sha256": "223741d7a83eebea6f0d0ff1de3f0407be6b301746183dc639ead4a0de37f454",
-  "records": 480,
-  "scores_published": 0,
-  "scores_withheld": 3,
-  "completed_at": "2026-07-11T22:52:35.500426+00:00"
+  "input_sha256": "144af8ed5b6fd39ecf6053d4236a31e6668826420c2612a5fd369800f6e40136",
+  "records": 852,
+  "scores_published": 3,
+  "scores_withheld": 1,
+  "window_start": "2017-12-27",
+  "window_end": "2025-12-27",
+  "completed_at": "2026-07-13T06:05:46.577852+00:00"
 }

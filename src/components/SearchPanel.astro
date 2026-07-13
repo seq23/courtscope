@@ -1,7 +1,14 @@
 ---
-const { lang='en' } = Astro.props;
+interface Props { lang?: 'en' | 'es'; citySlug?: string; }
+const { lang = 'en', citySlug = 'memphis' } = Astro.props as Props;
+const prefix = lang === 'es' ? '/es' : '';
+const es = lang === 'es';
 ---
-<form class="search-panel" action={lang==='es'?'/es/cases':'/cases'} method="get">
-  <label for="q">{lang==='es'?'Buscar juez, tribunal, división, año electoral o número de caso':'Search judge, court, division, election year, or case number'}</label>
-  <div><input id="q" name="q" type="search" autocomplete="off" placeholder={lang==='es'?'Ej. FX-2025-0001':'Example: FX-2025-0001'} /><button type="submit">{lang==='es'?'Buscar':'Search'}</button></div>
+<form class="search-panel" action={`${prefix}/${citySlug}/cases`} method="get">
+  <label for="q">{es ? 'Buscar por número público de caso' : 'Search by public case number'}</label>
+  <div>
+    <input id="q" name="q" type="search" autocomplete="off" placeholder={es ? 'Ejemplo: FX-2025-0001' : 'Example: FX-2025-0001'} />
+    <button type="submit">{es ? 'Buscar caso' : 'Search cases'}</button>
+  </div>
+  <small>{es ? 'CourtScope no muestra nombres de acusados.' : 'CourtScope does not display defendant names.'}</small>
 </form>

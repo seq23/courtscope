@@ -1,0 +1,5 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { visibleCities } from '../../lib/cities';
+---
+<BaseLayout lang="es" title="Elegir ciudad | CourtScope"><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · Directorio de jurisdicciones</p><h1>Elegir una ciudad</h1><p class="lede">Cada ciudad tiene su propio panel, búsqueda de casos, página de datos y estado de publicación.</p></div></section><section class="section"><div class="shell"><div class="grid grid-2">{visibleCities.map((city) => <article class="card city-card"><div><span class="city-status">{city.published ? 'publicada' : 'vista previa'}</span><h2>{city.name}, {city.state}</h2><p><strong>Tribunales:</strong> {city.courts.join('; ')}</p><p>{city.published ? 'Los datos oficiales pasaron las reglas de publicación.' : 'Vista previa sintética; las descargas están bloqueadas.'}</p></div><a class="button" href={`/es/${city.slug}`}>Abrir panel</a></article>)}</div><div class="callout"><h2>¿No ve su ciudad?</h2><a class="button secondary" href="/es/add-cities">Cómo agregar una ciudad</a></div></div></section></BaseLayout>

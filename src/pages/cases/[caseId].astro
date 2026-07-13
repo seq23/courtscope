@@ -1,7 +1,3 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import FixtureBanner from '../../components/FixtureBanner.astro';
-import { fixtureCases } from '../../lib/fixtures';
-const record=fixtureCases.find(c=>c.publicCaseNumber===Astro.params.caseId); if(!record)return Astro.redirect('/cases?notfound=1');
+return Astro.redirect(`/memphis/cases/${Astro.params.caseId}`, 301);
 ---
-<BaseLayout title={`${record.publicCaseNumber} | CourtScope`} noindex={true}><section class="section"><div class="shell"><FixtureBanner/><p class="eyebrow">Public case record</p><h1>{record.publicCaseNumber}</h1><div class="notice">No defendant name is displayed. CourtScope does not assign a fairness judgment to an individual case.</div><div class="grid grid-2"><div class="card"><h2>Case facts</h2><dl><dt>Internal ID</dt><dd>{record.id}</dd><dt>Court</dt><dd>{record.court}</dd><dt>Division</dt><dd>{record.division}</dd><dt>Disposition</dt><dd>{record.disposition}</dd><dt>Sentence</dt><dd>{record.sentenceType}{record.sentenceLengthMonths!==null?` · ${record.sentenceLengthMonths} months`:''}</dd></dl></div><div class="card"><h2>Model and provenance</h2><dl><dt>Included in aggregate fixture</dt><dd>{record.includedInModel?'Yes':'No'}</dd><dt>Methodology</dt><dd>{record.methodologyVersion}</dd><dt>Source</dt><dd>{record.sourceId}</dd><dt>Last verified</dt><dd>{record.verifiedAt}</dd></dl></div></div></div></section></BaseLayout>

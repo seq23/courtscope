@@ -83,7 +83,7 @@ jobs:
 
       - name: Smoke-test production
         run: |
-          for path in / /methodology /data /admin/login; do
+          for path in / /cities /memphis/ /memphis/judges /methodology /data /admin/login; do
             curl --fail --silent --show-error \
               --retry 12 \
               --retry-delay 5 \

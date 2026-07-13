@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../components/FixtureBanner.astro';
+import { findCity } from '../../lib/cities';
+import { cityJudges } from '../../lib/city-data';
+import type { JudgeSummary } from '../../lib/types';
+
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/cities');
+const all: JudgeSummary[] = cityJudges(city.slug);
+const court = Astro.url.searchParams.get('court') || all[0]?.court || '';
+const availableCourts = [...new Set(all.map((judge) => judge.court))].sort();
+const selected = all.filter((judge) => judge.court === court);
+---
+<BaseLayout title={`Compare ${city.name} Judges | CourtScope`}>
+  <section class="hero compact-hero"><div class="shell"><p class="eyebrow">Same-court comparison</p><h1>Compare judges</h1><p class="lede">CourtScope keeps judges in the same court together because court authority and case mix can differ.</p></div></section>
+  <section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner />}<form class="compare-picker" method="get"><label>Choose a court<select name="court">{availableCourts.map((courtName: string) => <option value={courtName} selected={courtName === court}>{courtName}</option>)}</select></label><button type="submit">Update comparison</button></form>{selected.length > 0 ? <div class="table-wrap"><table><thead><tr><th>Measure</th>{selected.map((judge: JudgeSummary) => <th><a href={`/${city.slug}/judges/${judge.slug}`}>{judge.shortName}</a></th>)}</tr></thead><tbody><tr><th>Disparity Score</th>{selected.map((judge: JudgeSummary) => <td><strong>{judge.score ?? '—'}</strong><br /><small>{judge.label}</small></td>)}</tr><tr><th>Incarceration component</th>{selected.map((judge: JudgeSummary) => <td>{judge.incarcerationDisparityScore ?? '—'}</td>)}</tr><tr><th>Sentence-length component</th>{selected.map((judge: JudgeSummary) => <td>{judge.sentenceLengthDisparityScore ?? '—'}</td>)}</tr><tr><th>Data strength</th>{selected.map((judge: JudgeSummary) => <td>{judge.dataStrength}</td>)}</tr><tr><th>Qualifying cases</th>{selected.map((judge: JudgeSummary) => <td>{judge.caseCount.toLocaleString()}</td>)}</tr></tbody></table></div> : <div class="notice warning">No judges are available for this court.</div>}<p class="legal-limitation"><em>These are aggregate statistical comparisons. They do not establish racism, intent, discrimination, misconduct, or the appropriateness of any individual sentence.</em></p></div></section>
+</BaseLayout>

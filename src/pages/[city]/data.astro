@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CompletenessChecklist from '../../components/CompletenessChecklist.astro';
+import { findCity, cityStatusLabel } from '../../lib/cities';
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/data');
+---
+<BaseLayout title={`${city.name} Data | CourtScope`} description={`Data status, coverage, completeness, and downloads for ${city.name}.`}>
+  <section class="hero compact-hero"><div class="shell"><p class="eyebrow">City dataset</p><h1>{city.name} data</h1><p class="lede">See exactly what has been received, what has passed, and whether a public release is available.</p></div></section>
+  <section class="section"><div class="shell"><div class={`notice ${city.published ? 'success' : 'warning'}`}><strong>{city.published ? 'Published city.' : 'Downloads are not available.'}</strong> {city.published ? 'This city passed the publication gates.' : `${city.name} has not passed the official-data publication gates. Fixture records are not offered as court-data downloads.`}</div><div class="grid grid-2"><article class="card"><h2>Coverage and status</h2><dl><dt>Jurisdiction</dt><dd>{city.county}, {city.state}</dd><dt>Status</dt><dd>{cityStatusLabel(city)}</dd><dt>Date coverage</dt><dd>{city.coverageStart && city.coverageEnd ? `${city.coverageStart} through ${city.coverageEnd}` : 'Not established for official data'}</dd><dt>Courts</dt><dd>{city.courts.join('; ')}</dd><dt>Release</dt><dd>{city.releaseId ?? 'No public release'}</dd></dl></article><article class="card data-status-card"><h2>Download rule</h2><p>Files become public only after the city is marked <strong>PUBLISHED</strong>, every completeness gate passes, the privacy-safe projection is generated, and release validation succeeds.</p>{city.downloadsAvailable ? <div class="actions"><a class="button" href={`/downloads/${city.slug}/cases.csv`}>Download CSV</a><a class="button secondary" href={`/downloads/${city.slug}/cases.json`}>Download JSON</a></div> : <button disabled>No public download</button>}</article></div><h2>What complete data means</h2><CompletenessChecklist /><p><a href="/data">Return to the national data hub</a></p></div></section>
+</BaseLayout>

@@ -1,10 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import PageShell from '../../components/PageShell.astro';
-import StatusNotice from '../../components/StatusNotice.astro';
+import CompletenessChecklist from '../../components/CompletenessChecklist.astro';
+import { visibleCities, publishedCities } from '../../lib/cities';
 ---
-<BaseLayout lang="es" title="Data Downloads | CourtScope" description="Traducción automática de CourtScope.">
-  <PageShell eyebrow="Traducción automática" title="Data Downloads" intro="Esta página usa traducción automática. La versión en inglés controla en caso de conflicto.">
-    <StatusNotice>CSV, JSON, and Parquet fixture downloads demonstrate the release format. Official datasets are not yet published.</StatusNotice>
-  </PageShell>
-</BaseLayout>
+<BaseLayout lang="es" title="Datos por ciudad | CourtScope"><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · Centro nacional de datos</p><h1>Datos por ciudad</h1><p class="lede">Cada ciudad tiene su propio estado, cobertura y archivos.</p></div></section><section class="section"><div class="shell"><div class="notice"><strong>{publishedCities.length} conjuntos de datos publicados.</strong> Una vista previa visible no es una publicación.</div><div class="grid grid-2">{visibleCities.map((city) => <article class="card city-card"><div><h2>{city.name}</h2><p>{city.published ? 'Publicada' : 'Vista previa; descargas bloqueadas'}</p></div><a class="button secondary" href={`/es/${city.slug}/data`}>Ver datos</a></article>)}</div></div></section><section class="section section-tint"><div class="shell"><h2>Los datos incompletos se rechazan</h2><CompletenessChecklist lang="es" /></div></section></BaseLayout>

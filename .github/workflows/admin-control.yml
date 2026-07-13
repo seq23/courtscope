@@ -1,0 +1,60 @@
+name: CourtScope admin control
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Allowlisted admin control"
+        required: true
+        type: choice
+        options:
+          - pause_automation
+          - resume_automation
+          - emergency_stop
+      receipt_id:
+        description: "Admin dispatch receipt ID"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - name: Update emergency state
+        env:
+          ACTION: ${{ inputs.action }}
+          RECEIPT_ID: ${{ inputs.receipt_id }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          path = Path('data/admin/emergency_state.json')
+          current = json.loads(path.read_text()) if path.exists() else {}
+          action = os.environ['ACTION']
+          if action == 'pause_automation':
+              current.update({'mode': 'PAUSED', 'automationPaused': True, 'emergencyStop': False})
+          elif action == 'resume_automation':
+              current.update({'mode': 'NORMAL', 'automationPaused': False, 'emergencyStop': False})
+          elif action == 'emergency_stop':
+              current.update({'mode': 'EMERGENCY_STOP', 'automationPaused': True, 'emergencyStop': True})
+          else:
+              raise SystemExit('Unsupported action')
+          current['updatedAt'] = datetime.now(timezone.utc).isoformat()
+          current['receiptId'] = os.environ.get('RECEIPT_ID') or None
+          path.write_text(json.dumps(current, indent=2) + '\n')
+          PY
+      - name: Commit control state
+        run: |
+          git config user.name "courtscope-admin-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/admin/emergency_state.json
+          git commit -m "ops: update admin control state"
+          git push

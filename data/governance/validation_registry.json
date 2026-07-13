@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "authority": "scripts/validate-all.mjs",
+  "principle": "Warnings do not block. Only material product, data, security, release, or internal validation failures block.",
+  "validators": [
+    {
+      "id": "safe-repair",
+      "command": "node scripts/governance/safe-repair.mjs",
+      "class": "repair",
+      "blocking": true
+    },
+    {
+      "id": "astro-check",
+      "command": "npx astro check",
+      "class": "compile",
+      "blocking": true
+    },
+    {
+      "id": "structure",
+      "command": "node scripts/validate-structure.mjs",
+      "class": "release",
+      "blocking": true
+    },
+    {
+      "id": "public-language",
+      "command": "node scripts/validate-public-language.mjs",
+      "class": "legal-content",
+      "blocking": true
+    },
+    {
+      "id": "city-publication",
+      "command": "node scripts/validate-city-publication.mjs",
+      "class": "data-release",
+      "blocking": true
+    },
+    {
+      "id": "city-routes",
+      "command": "node scripts/validate-city-routes.mjs",
+      "class": "journey",
+      "blocking": true
+    },
+    {
+      "id": "admin-pipeline",
+      "command": "node scripts/validate-admin-pipeline.mjs",
+      "class": "security-ops",
+      "blocking": true
+    },
+    {
+      "id": "model",
+      "command": "npm run test:model",
+      "class": "methodology",
+      "blocking": true
+    },
+    {
+      "id": "city-pipeline",
+      "command": "PYTHONPATH=model python3 scripts/cities/test_city_pipeline.py",
+      "class": "integration",
+      "blocking": true
+    },
+    {
+      "id": "phase4-import",
+      "command": "npm run test:phase4-import",
+      "class": "legacy-preservation",
+      "blocking": true
+    }
+  ]
+}

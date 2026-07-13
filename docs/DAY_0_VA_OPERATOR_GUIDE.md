@@ -1,28 +1,36 @@
 # Day-0 VA Operator Guide
 
-## Your normal job
+## Your job
 
-- Check System Health.
-- Follow up on court records requests.
-- Use `/admin/add-cities` to track contacts and inspect files.
-- Rerun allowlisted ingestion or export workflows when instructed.
-- Record failures and preserve receipts.
+Keep CourtScope accurate, privacy-safe, and honest about what has and has not been proven.
 
-## You may not
+## What you may do
 
-- Change methodology or model variables.
-- Approve high-risk judge, race, sentence, score, or election corrections.
-- Add secrets to GitHub.
-- Force a city live after a failed gate.
-- Publish real scores before launch authorization.
+- review city and batch status in `/admin`;
+- place an approved complete de-identified batch in the documented incoming folder;
+- run `npm run validate:all` and `npm run build`;
+- review rejection and processing receipts;
+- refresh the cleanup queue;
+- report exact validator failures.
 
-## When data arrives
+## What you may not do
 
-1. Save the original delivery and correspondence.
-2. Open `/admin/add-cities`.
-3. Update the communication record.
-4. Upload the source files and codebook.
-5. Map detected fields.
-6. Download the onboarding project.
-7. Run the approved ingestion workflow.
-8. Review quarantine, provenance, and readiness receipts.
+- publish an incomplete city;
+- make fixture data look official;
+- add defendant names or prohibited personal fields;
+- change score thresholds or methodology without owner approval;
+- describe a judge as racist, discriminatory, corrupt, or personally unfair;
+- bypass admin confirmation or publication gates;
+- claim a workflow completed merely because it was dispatched.
+
+## When validation fails
+
+1. Read the first blocking validator.
+2. Fix only the material failure it identifies.
+3. Rerun `npm run validate:all`.
+4. Do not downgrade the failure to a warning manually.
+5. Escalate secrets, legal uncertainty, official-source disputes, or destructive changes.
+
+## What self-heals
+
+Only deterministic derived drift: route manifests, admin status, download flags, and public download residue for an unpublished city.

@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import JudgeCard from '../../../components/JudgeCard.astro';
+import SearchPanel from '../../../components/SearchPanel.astro';
+import MethodologySummary from '../../../components/MethodologySummary.astro';
+import { findCity } from '../../../lib/cities';
+import { cityJudges } from '../../../lib/city-data';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities');
+const judges = cityJudges(city.slug);
+---
+<BaseLayout lang="es" title={`Panel de sentencias de ${city.name} | CourtScope`}><section class="hero city-hero"><div class="shell city-header"><div><span class="city-kicker">{city.published ? 'publicada' : 'vista previa'}</span><p class="eyebrow">Traducción automática · {city.county}, {city.state}</p><h1>Panel de sentencias de {city.name}</h1><p class="lede">Explore patrones de encarcelamiento y duración de sentencia por juez.</p><div class="hero-actions"><a class="button" href={`/es/${city.slug}/judges`}>Ver jueces</a><a class="button secondary" href={`/es/${city.slug}/compare`}>Comparar</a></div></div><aside class="card"><h2>Estado de la ciudad</h2><p>{city.published ? 'Publicación oficial' : 'Vista previa sintética'}</p><p><strong>Descargas:</strong> {city.downloadsAvailable ? 'Disponibles' : 'Bloqueadas hasta publicación'}</p></aside></div></section><section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}<div class="grid grid-2">{judges.map((judge) => <JudgeCard judge={judge} citySlug={city.slug} lang="es" />)}</div></div></section><section class="section section-tint"><div class="shell grid grid-2"><div><h2>Buscar número de caso</h2><SearchPanel citySlug={city.slug} lang="es" /></div><div class="card"><h2>Datos de la ciudad</h2><a class="button secondary" href={`/es/${city.slug}/data`}>Ver estado de datos</a></div></div></section><section class="section"><div class="shell"><MethodologySummary lang="es" /></div></section></BaseLayout>

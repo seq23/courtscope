@@ -1,0 +1,70 @@
+name: Review or clean processed city data
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Cleanup action"
+        required: true
+        type: choice
+        options:
+          - refresh_cleanup_queue
+          - cleanup_processed_data
+      confirmation:
+        description: "Required exact phrase for destructive cleanup"
+        required: false
+        type: string
+      receipt_id:
+        description: "Admin dispatch receipt ID"
+        required: false
+        type: string
+
+concurrency:
+  group: courtscope-city-data-cleanup
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+
+      - name: Refresh or execute cleanup
+        env:
+          ACTION: ${{ inputs.action }}
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          if [ "$ACTION" = "cleanup_processed_data" ]; then
+            test "$CONFIRMATION" = "DELETE_ELIGIBLE_PROCESSED_BATCHES"
+            python3 scripts/cities/cleanup_processed.py --execute --confirm "$CONFIRMATION"
+          else
+            python3 scripts/cities/cleanup_processed.py
+          fi
+
+      - run: npm run validate:all
+      - run: npm run build
+
+      - name: Commit queue or cleanup receipt
+        run: |
+          git config user.name "courtscope-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/admin data/intake/processed
+          if git diff --cached --quiet; then
+            echo "No cleanup changes to commit."
+          else
+            git commit -m "ops: refresh city data retention state"
+            git push
+          fi

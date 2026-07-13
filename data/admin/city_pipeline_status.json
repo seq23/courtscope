@@ -1,0 +1,11 @@
+{
+  "updatedAt": "2026-07-13T06:08:29.183769+00:00",
+  "summary": {
+    "incoming": 0,
+    "rejected": 0,
+    "processed": 0,
+    "publishedCities": 0,
+    "cleanupReady": 0
+  },
+  "batches": []
+}

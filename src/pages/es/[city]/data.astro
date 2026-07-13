@@ -1,0 +1,7 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CompletenessChecklist from '../../../components/CompletenessChecklist.astro';
+import { findCity } from '../../../lib/cities';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/data');
+---
+<BaseLayout lang="es" title={`Datos de ${city.name} | CourtScope`}><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · Conjunto de datos</p><h1>Datos de {city.name}</h1></div></section><section class="section"><div class="shell"><div class={`notice ${city.published ? 'success' : 'warning'}`}><strong>{city.published ? 'Ciudad publicada.' : 'Descargas no disponibles.'}</strong> {city.published ? 'Pasó las reglas de publicación.' : 'La vista previa sintética no se ofrece como descarga de datos judiciales.'}</div><div class="grid grid-2"><article class="card"><h2>Estado</h2><dl><dt>Jurisdicción</dt><dd>{city.county}, {city.state}</dd><dt>Cobertura</dt><dd>{city.coverageStart && city.coverageEnd ? `${city.coverageStart} a ${city.coverageEnd}` : 'No establecida'}</dd><dt>Tribunales</dt><dd>{city.courts.join('; ')}</dd></dl></article><article class="card"><h2>Regla de descarga</h2><p>Los archivos se hacen públicos solo después de pasar todas las reglas.</p>{city.downloadsAvailable ? <a class="button" href={`/downloads/${city.slug}/cases.csv`}>Descargar CSV</a> : <button disabled>Sin descarga pública</button>}</article></div><CompletenessChecklist lang="es" /></div></section></BaseLayout>

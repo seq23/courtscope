@@ -1,0 +1,12 @@
+{
+  "version": "2.0.0",
+  "actions": [
+    {"id":"process_city_data","label":"Process incoming city data","mutatesGithub":true,"mutatesLiveSite":true,"confirmationRequired":true,"allowedPaths":["data/intake/**","data/cities/**","data/admin/**","public/downloads/**"],"forbiddenPaths":["model/**","src/**"],"receiptType":"github_workflow_dispatch"},
+    {"id":"refresh_city_status","label":"Refresh city status","mutatesGithub":true,"mutatesLiveSite":false,"confirmationRequired":false,"allowedPaths":["data/admin/**"],"forbiddenPaths":["src/**","model/**"],"receiptType":"github_workflow_dispatch"},
+    {"id":"refresh_cleanup_queue","label":"Refresh cleanup queue","mutatesGithub":true,"mutatesLiveSite":false,"confirmationRequired":false,"allowedPaths":["data/admin/**"],"forbiddenPaths":["src/**","model/**"],"receiptType":"github_workflow_dispatch"},
+    {"id":"cleanup_processed_data","label":"Delete eligible processed batches","mutatesGithub":true,"mutatesLiveSite":false,"confirmationRequired":true,"allowedPaths":["data/intake/processed/**","data/admin/**"],"forbiddenPaths":["data/cities/published/**","public/downloads/**"],"receiptType":"github_workflow_dispatch"},
+    {"id":"pause_automation","label":"Pause automation","mutatesGithub":true,"mutatesLiveSite":true,"confirmationRequired":true,"allowedPaths":["data/admin/emergency_state.json"],"forbiddenPaths":[],"receiptType":"github_workflow_dispatch"},
+    {"id":"resume_automation","label":"Resume automation","mutatesGithub":true,"mutatesLiveSite":true,"confirmationRequired":true,"allowedPaths":["data/admin/emergency_state.json"],"forbiddenPaths":[],"receiptType":"github_workflow_dispatch"},
+    {"id":"emergency_stop","label":"Emergency stop","mutatesGithub":true,"mutatesLiveSite":true,"confirmationRequired":true,"allowedPaths":["data/admin/emergency_state.json"],"forbiddenPaths":[],"receiptType":"github_workflow_dispatch"}
+  ]
+}

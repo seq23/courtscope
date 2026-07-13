@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../../components/FixtureBanner.astro';
+import FilterBar from '../../../../components/FilterBar.astro';
+import JudgeCard from '../../../../components/JudgeCard.astro';
+import { findCity } from '../../../../lib/cities';
+import { cityJudges } from '../../../../lib/city-data';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities');
+const judges = cityJudges(city.slug); const courts = [...new Set(judges.map((judge) => judge.court))].sort(); const years = [...new Set(judges.map((judge) => judge.nextElectionYear).filter((year): year is number => year !== null))].sort();
+---
+<BaseLayout lang="es" title={`Jueces en ${city.name} | CourtScope`}><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · {city.county}</p><h1>Jueces por puntuación de disparidad</h1><p class="lede">Abra “¿Por qué esta puntuación?” para ver los puntos principales.</p></div></section><section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}<FilterBar courts={courts} years={years} lang="es" /><div class="grid grid-2">{judges.map((judge) => <JudgeCard judge={judge} citySlug={city.slug} lang="es" />)}</div></div></section></BaseLayout>

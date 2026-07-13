@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import FilterBar from '../../../components/FilterBar.astro';
+import JudgeCard from '../../../components/JudgeCard.astro';
+import { findCity } from '../../../lib/cities';
+import { cityJudges } from '../../../lib/city-data';
+
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/cities');
+const judges = cityJudges(city.slug);
+const courts = [...new Set(judges.map((judge) => judge.court))].sort();
+const years = [...new Set(judges.map((judge) => judge.nextElectionYear).filter((year): year is number => year !== null))].sort();
+---
+<BaseLayout title={`Judges in ${city.name} | CourtScope`}>
+  <section class="hero compact-hero"><div class="shell"><p class="eyebrow">{city.county}, {city.state}</p><h1>Judges by Disparity Score</h1><p class="lede">Browse aggregate sentencing results. Open “Why this score?” for the incarceration, sentence-length, and data-strength highlights.</p></div></section>
+  <section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner />}<FilterBar courts={courts} years={years} /><div class="grid grid-2">{judges.map((judge) => <JudgeCard judge={judge} citySlug={city.slug} />)}</div></div></section>
+</BaseLayout>

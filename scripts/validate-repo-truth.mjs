@@ -1,3 +1,25 @@
-import fs from 'node:fs';import path from 'node:path';
-const roots=['README.md','src','docs'];const files=[];function walk(p){const s=fs.statSync(p);if(s.isDirectory())for(const x of fs.readdirSync(p))walk(path.join(p,x));else if(/\.(md|astro|ts|json)$/.test(p))files.push(p)}for(const r of roots)walk(r);
-const forbidden=[/structural placeholders? in Phase 1/i,/Not connected to production actions/i,/scheduled for later phases/i,/\| 2 \| Public civic experience \| Not started/i,/\| 9 \| Admin command center \| Not started/i];const hits=[];for(const f of files){const t=fs.readFileSync(f,'utf8');for(const re of forbidden)if(re.test(t))hits.push(`${f}: ${re}`)}if(hits.length)throw new Error(`Repository truth contradictions:\n${hits.join('\n')}`);console.log('Repository truth validator passed.');
+import fs from 'node:fs';
+import path from 'node:path';
+const roots = ['README.md', 'src', 'docs', 'data'];
+const files = [];
+function walk(target) {
+  const stat = fs.statSync(target);
+  if (stat.isDirectory()) for (const item of fs.readdirSync(target)) walk(path.join(target, item));
+  else if (/\.(md|astro|ts|json)$/.test(target)) files.push(target);
+}
+for (const root of roots) if (fs.existsSync(root)) walk(root);
+const forbidden = [
+  /structural placeholders? in Phase 1/i,
+  /scheduled for later phases/i,
+  /adminAuth['"]?\s*:\s*['"]NOT_IMPLEMENTED/i,
+  /mutations['"]?\s*:\s*['"]DISABLED/i,
+  /100 means lower measured adjusted disparity/i,
+  /0 means higher measured adjusted disparity/i,
+];
+const hits = [];
+for (const file of files) {
+  const text = fs.readFileSync(file, 'utf8');
+  for (const pattern of forbidden) if (pattern.test(text)) hits.push(`${file}: ${pattern}`);
+}
+if (hits.length) throw new Error(`Repository truth contradictions:\n${hits.join('\n')}`);
+console.log('Repository truth PASS.');

@@ -1,4 +1,3 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import FixtureBanner from '../components/FixtureBanner.astro'; import SearchPanel from '../components/SearchPanel.astro'; import { findCase } from '../lib/fixtures'; const q=Astro.url.searchParams.get('q')?.trim()||''; const record=q?findCase(q):undefined;
+return Astro.redirect('/memphis/cases' + Astro.url.search, 301);
 ---
-<BaseLayout title="Case Search | CourtScope" noindex={true}><section class="section"><div class="shell"><h1>Search public case numbers</h1><div class="notice"><strong>Privacy notice:</strong> CourtScope does not display defendant names. This preview uses synthetic records and is not an official court record.</div><SearchPanel/><FixtureBanner/>{q&&(!record?<div class="card"><h2>No fixture match</h2><p>Try FX-2025-0001 or FX-2025-0002.</p></div>:<div class="card"><h2><a href={`/cases/${record.publicCaseNumber}`}>{record.publicCaseNumber}</a></h2><p>{record.court} · {record.division}</p><p>{record.disposition} · {record.sentenceType}</p></div>)}</div></section></BaseLayout>

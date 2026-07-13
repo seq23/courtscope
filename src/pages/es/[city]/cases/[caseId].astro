@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../../components/FixtureBanner.astro';
+import { findCity } from '../../../../lib/cities';
+import { findCityCase } from '../../../../lib/city-data';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities'); const record = findCityCase(city.slug, String(Astro.params.caseId)); if (!record) return Astro.redirect(`/es/${city.slug}/cases`);
+---
+<BaseLayout lang="es" title={`${record.publicCaseNumber} | ${city.name} | CourtScope`} noindex={true}><section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}<p class="eyebrow">Traducción automática · Proyección pública</p><h1>{record.publicCaseNumber}</h1><div class="notice"><strong>Límite de privacidad:</strong> No se muestra el nombre del acusado. CourtScope no asigna un juicio de disparidad a un caso individual.</div><div class="grid grid-2"><article class="card"><h2>Datos del caso</h2><dl><dt>Tribunal</dt><dd>{record.court}</dd><dt>División</dt><dd>{record.division}</dd><dt>Resultado</dt><dd>{record.disposition}</dd><dt>Sentencia</dt><dd>{record.sentenceType}</dd></dl></article><article class="card"><h2>Modelo y fuente</h2><dl><dt>Incluido</dt><dd>{record.includedInModel ? 'Sí' : 'No'}</dd><dt>Metodología</dt><dd>{record.methodologyVersion}</dd><dt>Fuente</dt><dd>{record.sourceId}</dd></dl></article></div></div></section></BaseLayout>

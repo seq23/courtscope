@@ -1,0 +1,10 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import { findCity } from '../../../lib/cities';
+import { cityJudges } from '../../../lib/city-data';
+import type { JudgeSummary } from '../../../lib/types';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities');
+const all: JudgeSummary[] = cityJudges(city.slug); const court = Astro.url.searchParams.get('court') || all[0]?.court || ''; const courts = [...new Set(all.map((judge) => judge.court))].sort(); const selected = all.filter((judge) => judge.court === court);
+---
+<BaseLayout lang="es" title={`Comparar jueces de ${city.name} | CourtScope`}><section class="hero compact-hero"><div class="shell"><p class="eyebrow">Traducción automática · Mismo tribunal</p><h1>Comparar jueces</h1><p class="lede">Compare solamente jueces del mismo tribunal.</p></div></section><section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}<form class="compare-picker"><label>Tribunal<select name="court">{courts.map((name: string) => <option value={name} selected={name === court}>{name}</option>)}</select></label><button>Actualizar</button></form><div class="table-wrap"><table><thead><tr><th>Medida</th>{selected.map((judge: JudgeSummary) => <th><a href={`/es/${city.slug}/judges/${judge.slug}`}>{judge.shortName}</a></th>)}</tr></thead><tbody><tr><th>Puntuación de disparidad</th>{selected.map((judge: JudgeSummary) => <td>{judge.score ?? '—'}<br /><small>{judge.label}</small></td>)}</tr><tr><th>Encarcelamiento</th>{selected.map((judge: JudgeSummary) => <td>{judge.incarcerationDisparityScore ?? '—'}</td>)}</tr><tr><th>Duración de sentencia</th>{selected.map((judge: JudgeSummary) => <td>{judge.sentenceLengthDisparityScore ?? '—'}</td>)}</tr><tr><th>Fuerza de datos</th>{selected.map((judge: JudgeSummary) => <td>{judge.dataStrength}</td>)}</tr></tbody></table></div><p class="legal-limitation"><em>Estas comparaciones no prueban racismo, discriminación, intención o mala conducta.</em></p></div></section></BaseLayout>

@@ -1,12 +1,98 @@
 ---
 import '../styles/global.css';
 import LegalFooter from '../components/LegalFooter.astro';
-const { title='CourtScope', description='See the patterns behind court outcomes.', lang='en', noindex=false }=Astro.props;
-const path=Astro.url.pathname; const spanishPath=path.startsWith('/es')?path:`/es${path==='/'?'':path}`; const englishPath=path.startsWith('/es')?path.replace(/^\/es/,'')||'/':path;
-const prefix=lang==='es'?'/es':''; const es=lang==='es';
-const nav=[['/judges',es?'Jueces':'Judges'],['/compare',es?'Comparar':'Compare'],['/cases',es?'Casos':'Cases'],['/methodology',es?'Metodología':'Methodology'],['/data',es?'Datos':'Data'],['/add-cities',es?'Agregar ciudad':'Add City']];
+import OnboardingTour from '../components/OnboardingTour.astro';
+import { findCity } from '../lib/cities';
+
+interface Props {
+  title?: string;
+  description?: string;
+  lang?: 'en' | 'es';
+  noindex?: boolean;
+}
+
+const {
+  title = 'CourtScope',
+  description = 'Explore measured racial gaps in criminal sentencing outcomes.',
+  lang = 'en',
+  noindex = false,
+} = Astro.props as Props;
+
+const path = Astro.url.pathname;
+const es = lang === 'es';
+const prefix = es ? '/es' : '';
+const spanishPath = path.startsWith('/es') ? path : `/es${path === '/' ? '' : path}`;
+const englishPath = path.startsWith('/es') ? path.replace(/^\/es/, '') || '/' : path;
+const unprefixedPath = path.replace(/^\/es(?=\/|$)/, '') || '/';
+const segments = unprefixedPath.split('/').filter(Boolean);
+const city = findCity(segments[0]);
+
+const nav = city
+  ? [
+      [`${prefix}/${city.slug}`, es ? 'Panel de ciudad' : 'City dashboard'],
+      [`${prefix}/${city.slug}/judges`, es ? 'Jueces' : 'Judges'],
+      [`${prefix}/${city.slug}/compare`, es ? 'Comparar' : 'Compare'],
+      [`${prefix}/${city.slug}/cases`, es ? 'Casos' : 'Cases'],
+      [`${prefix}/methodology`, es ? 'Metodología' : 'Methodology'],
+      [`${prefix}/data`, es ? 'Datos' : 'Data'],
+    ]
+  : [
+      [`${prefix}/cities`, es ? 'Elegir ciudad' : 'Choose a city'],
+      [`${prefix}/methodology`, es ? 'Metodología' : 'Methodology'],
+      [`${prefix}/data`, es ? 'Datos' : 'Data'],
+      [`${prefix}/add-cities`, es ? 'Agregar ciudad' : 'Add a city'],
+    ];
 ---
-<!doctype html><html lang={lang}><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>{title}</title><meta name="description" content={description}/><meta name="theme-color" content="#123b5d"/>{noindex&&<meta name="robots" content="noindex,nofollow"/>}<link rel="canonical" href={`https://courtscope.org${path}`}/><link rel="alternate" hreflang="en" href={`https://courtscope.org${englishPath}`}/><link rel="alternate" hreflang="es" href={`https://courtscope.org${spanishPath}`}/></head>
-<body><a class="skip-link" href="#main">{es?'Saltar al contenido':'Skip to content'}</a><header class="site-header"><div class="shell nav-wrap"><a href={`${prefix}/`} class="wordmark">CourtScope</a><button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="sr-only">{es?'Abrir menú':'Open menu'}</span><span aria-hidden="true">☰</span></button><nav id="primary-nav" class="primary-nav" aria-label={es?'Principal':'Primary'}>{nav.map(([href,label])=><a href={`${prefix}${href}`}>{label}</a>)}<a class="language" href={es?englishPath:spanishPath}>{es?'English':'Español'}</a></nav></div></header><main id="main"><slot/></main><LegalFooter lang={lang}/><script is:inline>
-const toggle=document.querySelector('.nav-toggle');const nav=document.querySelector('#primary-nav');if(toggle&&nav){toggle.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')==='true';toggle.setAttribute('aria-expanded',String(!open));nav.classList.toggle('is-open',!open)});nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{toggle.setAttribute('aria-expanded','false');nav.classList.remove('is-open')}));}
-</script></body></html>
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#123b5d" />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={`https://courtscope.org${path}`} />
+    <link rel="alternate" hreflang="en" href={`https://courtscope.org${englishPath}`} />
+    <link rel="alternate" hreflang="es" href={`https://courtscope.org${spanishPath}`} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{es ? 'Saltar al contenido' : 'Skip to content'}</a>
+    <header class="site-header">
+      <div class="shell nav-wrap">
+        <a href={`${prefix}/`} class="wordmark">CourtScope</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+          <span class="sr-only">{es ? 'Abrir menú' : 'Open menu'}</span>
+          <span aria-hidden="true">☰</span>
+        </button>
+        <nav id="primary-nav" class="primary-nav" aria-label={es ? 'Principal' : 'Primary'}>
+          {nav.map(([href, label]) => <a href={href}>{label}</a>)}
+          <button class="nav-help secondary" type="button" data-tour-open>
+            {es ? '¿Nuevo aquí?' : 'New here?'}
+          </button>
+          <a class="language" href={es ? englishPath : spanishPath}>{es ? 'English' : 'Español'}</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main"><slot /></main>
+    <LegalFooter lang={lang} />
+    <OnboardingTour lang={lang} />
+    <script is:inline>
+      const toggle = document.querySelector('.nav-toggle');
+      const primaryNav = document.querySelector('#primary-nav');
+      if (toggle && primaryNav) {
+        toggle.addEventListener('click', () => {
+          const open = toggle.getAttribute('aria-expanded') === 'true';
+          toggle.setAttribute('aria-expanded', String(!open));
+          primaryNav.classList.toggle('is-open', !open);
+        });
+        primaryNav.querySelectorAll('a').forEach((anchor) =>
+          anchor.addEventListener('click', () => {
+            toggle.setAttribute('aria-expanded', 'false');
+            primaryNav.classList.remove('is-open');
+          }),
+        );
+      }
+    </script>
+  </body>
+</html>

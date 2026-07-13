@@ -1,3 +1,42 @@
-export const ACTIONS={rerun_ingestion:{confirm:false,paths:['data/runtime/**']},recalculate_scores:{confirm:true,paths:['data/scores/**']},rebuild_exports:{confirm:false,paths:['public/downloads/**']},pause_automation:{confirm:true,paths:['data/admin/**']},resume_automation:{confirm:true,paths:['data/admin/**']},emergency_stop:{confirm:true,paths:['data/admin/**']},rollback_dataset:{confirm:true,paths:['data/releases/**']},refresh_elections:{confirm:false,paths:['data/elections/**']}} as const;
-export type ActionId=keyof typeof ACTIONS;
-export function isActionId(v:string):v is ActionId{return Object.hasOwn(ACTIONS,v)}
+export const ACTIONS = {
+  process_city_data: {
+    confirm: true,
+    workflow: 'city-data-pipeline.yml',
+    paths: ['data/intake/**', 'data/cities/**', 'public/downloads/**', 'data/admin/**'],
+  },
+  refresh_city_status: {
+    confirm: false,
+    workflow: 'city-data-pipeline.yml',
+    paths: ['data/admin/**'],
+  },
+  refresh_cleanup_queue: {
+    confirm: false,
+    workflow: 'city-data-cleanup.yml',
+    paths: ['data/admin/**'],
+  },
+  cleanup_processed_data: {
+    confirm: true,
+    workflow: 'city-data-cleanup.yml',
+    paths: ['data/intake/processed/**', 'data/admin/**'],
+  },
+  pause_automation: {
+    confirm: true,
+    workflow: 'admin-control.yml',
+    paths: ['data/admin/**'],
+  },
+  resume_automation: {
+    confirm: true,
+    workflow: 'admin-control.yml',
+    paths: ['data/admin/**'],
+  },
+  emergency_stop: {
+    confirm: true,
+    workflow: 'admin-control.yml',
+    paths: ['data/admin/**'],
+  },
+} as const;
+
+export type ActionId = keyof typeof ACTIONS;
+export function isActionId(value: string): value is ActionId {
+  return Object.hasOwn(ACTIONS, value);
+}

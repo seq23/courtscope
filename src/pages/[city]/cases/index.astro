@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import SearchPanel from '../../../components/SearchPanel.astro';
+import { findCity } from '../../../lib/cities';
+import { findCityCase } from '../../../lib/city-data';
+
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/cities');
+const query = Astro.url.searchParams.get('q')?.trim() ?? '';
+const record = query ? findCityCase(city.slug, query) : undefined;
+---
+<BaseLayout title={`Case Search | ${city.name} | CourtScope`} noindex={true}>
+  <section class="hero compact-hero"><div class="shell"><p class="eyebrow">{city.name}, {city.state}</p><h1>Search public case numbers</h1><p class="lede">Search the limited public projection for this city. CourtScope does not display defendant names.</p></div></section>
+  <section class="section"><div class="shell"><div class="notice"><strong>Not the official court record:</strong> Verify important facts with the originating court.</div><SearchPanel citySlug={city.slug} />{city.dataMode === 'fixture' && <FixtureBanner />}{query && (!record ? <div class="card"><h2>No match</h2><p>Check the case number and selected city.</p></div> : <div class="card search-result"><p class="eyebrow">Matching case</p><h2><a href={`/${city.slug}/cases/${record.publicCaseNumber}`}>{record.publicCaseNumber}</a></h2><p>{record.court} · {record.division}</p><p>{record.disposition} · {record.sentenceType}</p></div>)}</div></section>
+</BaseLayout>

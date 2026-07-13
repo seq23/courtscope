@@ -1,22 +1,21 @@
-# Start Here — New Person Plain-English Guide
+# Start Here — New Operator
 
-## CourtScope in two minutes
+## What CourtScope does
 
-CourtScope gathers official public court information, keeps copies and provenance, converts records into a consistent format, checks identities and data quality, and then calculates aggregate judge-level disparity measures. A score publishes only when enough reliable information exists.
+CourtScope measures racial gaps in criminal sentencing outcomes across many similar cases. It reports incarceration and sentence-length components, then uses the larger measured signal as the overall Disparity Score.
 
-## What the Fairness Score means
+Low score = smaller measured racial gaps. High score = bigger measured racial gaps.
 
-A higher score means lower measured racial disparity after controlling for supported case differences. A lower score means higher measured disparity. It is not proof of motive, intent, or perfect fairness.
+The score is not a finding that a judge is racist, discriminatory, corrupt, or personally unfair. It does not determine whether an individual sentence was appropriate.
 
-## Why “Not Enough Data” is valid
+## What is live now
 
-CourtScope would rather show no score than publish a weak one. Small samples, missing variables, source gaps, or unstable modeling can all block a score.
+The code and fixture system are operationally structured. Memphis is a synthetic preview, not an official-data publication. No real judge conclusion is authorized from fixture data.
 
-## Privacy
+## First commands
 
-CourtScope may let people search by public case number, but it does not display defendant names and does not label an individual case fair or unfair.
+1. `npm ci`
+2. `npm run validate:all`
+3. `npm run build`
 
-## When something looks wrong
-
-Use Report a Problem. Routine mechanical errors may repair automatically. High-impact changes such as judge attribution, sentence values, demographics, or published scores require owner approval and remain auditable.
-
+Read `DAY_0_VA_OPERATOR_GUIDE.md` before changing data or using admin workflows.

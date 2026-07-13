@@ -1,1 +1,13 @@
-{"is_stopped":false,"reason":null,"updated_at":null,"effects":{"scheduled_publishing":"blocked_when_stopped","content_mutation":"blocked_when_stopped","distribution":"blocked_when_stopped","read_only_admin":"available"}}
+{
+  "mode": "NORMAL",
+  "automationPaused": false,
+  "emergencyStop": false,
+  "updatedAt": null,
+  "receiptId": null,
+  "effects": {
+    "scheduledPublishing": "allowed_when_not_paused",
+    "contentMutation": "allowed_when_not_paused",
+    "distribution": "allowed_when_not_paused",
+    "readOnlyAdmin": "always_available"
+  }
+}

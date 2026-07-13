@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "defaultProfile": "release",
+  "profiles": {
+    "quick": ["safe-repair", "astro-check", "structure", "public-language", "city-publication", "city-routes"],
+    "release": ["safe-repair", "astro-check", "structure", "public-language", "city-publication", "city-routes", "admin-pipeline", "model", "city-pipeline", "phase4-import"]
+  },
+  "findingResolution": {
+    "selfHeal": ["derived route manifest drift", "download flags inconsistent with publication state", "public download residue for unpublished cities", "admin status manifest drift"],
+    "skip": ["isolated rejected city batch while other batches remain valid"],
+    "warn": ["offline Cloudflare Request.cf metadata fetch unavailable during local checks"],
+    "block": ["compile error", "secret exposure", "public download for unpublished city", "incomplete dataset published", "admin action outside allowlist", "unsupported public accusation", "model contract failure", "workflow missing"]
+  }
+}

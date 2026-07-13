@@ -1,4 +1,3 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro'; import FixtureBanner from '../../components/FixtureBanner.astro'; import JudgeCard from '../../components/JudgeCard.astro'; import { fixtureJudges } from '../../lib/fixtures';
+return Astro.redirect('/es/memphis/judges', 301);
 ---
-<BaseLayout lang="es" title="Jueces | CourtScope"><section class="section"><div class="shell"><p class="eyebrow">Traducción automática</p><h1>Jueces por Fairness Score</h1><div class="notice warning">La versión en inglés controla. Los identificadores y valores técnicos no se traducen.</div><FixtureBanner/><div class="grid grid-2">{fixtureJudges.map(j=><JudgeCard judge={j}/>)}</div></div></section></BaseLayout>

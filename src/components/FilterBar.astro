@@ -1,24 +1,67 @@
-<form class="filter-bar" aria-label="Judge filters">
-  <label>Search judges<input id="judge-search" type="search" placeholder="Name or division" /></label>
-  <label>Court<select id="court-filter"><option value="">All Courts</option><option>Shelby County Criminal Court</option><option>Shelby County General Sessions Criminal Court</option></select></label>
-  <label>Election year<select id="year-filter"><option value="">All years</option><option>2028</option><option>2030</option></select></label>
-  <label>Data strength<select id="strength-filter"><option value="">All strengths</option><option>Strong</option><option>Moderate</option><option>Limited</option><option>Not Enough Data</option></select></label>
-</form>
-<script is:inline>
-const q=document.querySelector('#judge-search');
-const c=document.querySelector('#court-filter');
-const y=document.querySelector('#year-filter');
-const strength=document.querySelector('#strength-filter');
-document.querySelector('.filter-bar').addEventListener('submit',(event)=>event.preventDefault());
-function apply(){
-  document.querySelectorAll('.judge-card').forEach((el)=>{
-    const text=(el.textContent||'').toLowerCase();
-    const okQ=!q.value||text.includes(q.value.toLowerCase());
-    const okC=!c.value||el.dataset.court===c.value;
-    const okY=!y.value||el.dataset.year===y.value;
-    const okS=!strength.value||el.dataset.strength===strength.value;
-    el.hidden=!(okQ&&okC&&okY&&okS);
-  });
+---
+interface Props {
+  courts: string[];
+  years?: number[];
+  lang?: 'en' | 'es';
 }
-[q,c,y,strength].forEach((el)=>el.addEventListener('input',apply));
+const { courts, years = [], lang = 'en' } = Astro.props as Props;
+const es = lang === 'es';
+---
+<div class="filter-bar" aria-label={es ? 'Filtros de jueces' : 'Judge filters'}>
+  <label>
+    {es ? 'Tribunal' : 'Court'}
+    <select id="court-filter">
+      <option value="">{es ? 'Todos los tribunales' : 'All courts'}</option>
+      {courts.map((court: string) => <option value={court}>{court}</option>)}
+    </select>
+  </label>
+  <label>
+    {es ? 'Año electoral' : 'Election year'}
+    <select id="year-filter">
+      <option value="">{es ? 'Todos los años' : 'All years'}</option>
+      {years.map((year: number) => <option value={year}>{year}</option>)}
+    </select>
+  </label>
+  <label>
+    {es ? 'Fuerza de datos' : 'Data strength'}
+    <select id="strength-filter">
+      <option value="">{es ? 'Todas' : 'All strengths'}</option>
+      <option value="Strong">Strong</option>
+      <option value="Moderate">Moderate</option>
+      <option value="Limited">Limited</option>
+      <option value="Not Enough Data">Not Enough Data</option>
+    </select>
+  </label>
+  <button type="button" class="secondary" id="clear-filters">{es ? 'Borrar' : 'Clear'}</button>
+</div>
+<p id="filter-status" class="filter-status" aria-live="polite"></p>
+<script is:inline>
+  const courtFilter = document.querySelector('#court-filter');
+  const yearFilter = document.querySelector('#year-filter');
+  const strengthFilter = document.querySelector('#strength-filter');
+  const clear = document.querySelector('#clear-filters');
+  const cards = [...document.querySelectorAll('[data-judge-card]')];
+  const status = document.querySelector('#filter-status');
+  const apply = () => {
+    const court = courtFilter?.value || '';
+    const year = yearFilter?.value || '';
+    const strength = strengthFilter?.value || '';
+    let visible = 0;
+    cards.forEach((card) => {
+      const show = (!court || card.dataset.court === court) &&
+        (!year || card.dataset.year === year) &&
+        (!strength || card.dataset.strength === strength);
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (status) status.textContent = `${visible} ${visible === 1 ? 'judge' : 'judges'} shown`;
+  };
+  [courtFilter, yearFilter, strengthFilter].forEach((element) => element?.addEventListener('change', apply));
+  clear?.addEventListener('click', () => {
+    if (courtFilter) courtFilter.value = '';
+    if (yearFilter) yearFilter.value = '';
+    if (strengthFilter) strengthFilter.value = '';
+    apply();
+  });
+  apply();
 </script>

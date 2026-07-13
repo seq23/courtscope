@@ -1,10 +1,15 @@
-# Real vs Fixture Data
+# Real vs Fixture Data Guide
 
-- Real official data: collected from documented authoritative sources.
-- Synthetic fixture: invented test data that does not represent a real person or case.
-- De-identified example: transformed example with privacy controls.
-- Dry-run output: pipeline output not approved for publication.
-- Live published score: a score that passed source, model, sufficiency, and publication gates.
+## Fixture data
 
-The repository contains synthetic fixture contracts only and no real court data.
+Synthetic records exist to test score direction, withholding, UI states, routes, exports, and validation. Fixture judges and cases use explicit fixture labels and `FX-` case numbers.
 
+Fixture data may not support any claim about a real judge, court, defendant, or jurisdiction.
+
+## Official city data
+
+A city becomes official only after a complete authorized dataset passes the completeness, privacy, provenance, identity, model, and release gates. Registry status becomes `PUBLISHED`, `dataMode` becomes `published`, and city-scoped downloads are generated.
+
+## Public download rule
+
+No city-specific public download directory may exist for an unpublished city.

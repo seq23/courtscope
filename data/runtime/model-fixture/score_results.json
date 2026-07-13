@@ -1,47 +1,151 @@
 [
   {
     "judge_id": "judge-alpha",
-    "score": null,
-    "label": "Not Enough Data",
-    "data_strength": "Not Enough Data",
-    "case_count": 160,
-    "disparity_log_odds": 0.0,
-    "ci_low": 17.8,
-    "ci_high": 100.0,
-    "publication_status": "WITHHELD",
-    "reasons": [
-      "UNCERTAINTY_WIDTH"
+    "score": 7.2,
+    "label": "Smaller racial gaps",
+    "data_strength": "Limited",
+    "case_count": 270,
+    "incarceration_disparity_score": 2.1,
+    "sentence_length_disparity_score": 7.2,
+    "strongest_signal": "Black defendants had the longer adjusted incarceration sentences in the comparison with White defendants.",
+    "comparison_groups": [
+      {
+        "group": "Black",
+        "reference": "White",
+        "incarceration_score": 2.1,
+        "incarceration_gap_percentage_points": 0.8,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 7.2,
+        "sentence_length_difference_percent": 7.2,
+        "sentence_length_group_cases": 45,
+        "sentence_length_white_cases": 42
+      },
+      {
+        "group": "Hispanic",
+        "reference": "White",
+        "incarceration_score": 0.0,
+        "incarceration_gap_percentage_points": -0.0,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 4.8,
+        "sentence_length_difference_percent": 4.8,
+        "sentence_length_group_cases": 40,
+        "sentence_length_white_cases": 42
+      }
     ],
-    "methodology_version": "1.0.0"
+    "ci_low": 5.6,
+    "ci_high": 50.3,
+    "window_start": "2017-12-27",
+    "window_end": "2025-12-27",
+    "publication_status": "PUBLISHED",
+    "reasons": [],
+    "methodology_version": "2.0.0"
   },
   {
-    "judge_id": "judge-bravo",
-    "score": null,
-    "label": "Not Enough Data",
-    "data_strength": "Not Enough Data",
-    "case_count": 160,
-    "disparity_log_odds": 0.0,
-    "ci_low": 17.8,
-    "ci_high": 100.0,
-    "publication_status": "WITHHELD",
-    "reasons": [
-      "UNCERTAINTY_WIDTH"
+    "judge_id": "judge-beta",
+    "score": 39.9,
+    "label": "Moderate racial gaps",
+    "data_strength": "Limited",
+    "case_count": 270,
+    "incarceration_disparity_score": 32.5,
+    "sentence_length_disparity_score": 39.9,
+    "strongest_signal": "Black defendants had the longer adjusted incarceration sentences in the comparison with White defendants.",
+    "comparison_groups": [
+      {
+        "group": "Black",
+        "reference": "White",
+        "incarceration_score": 32.5,
+        "incarceration_gap_percentage_points": 13.0,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 39.9,
+        "sentence_length_difference_percent": 39.9,
+        "sentence_length_group_cases": 53,
+        "sentence_length_white_cases": 41
+      },
+      {
+        "group": "Hispanic",
+        "reference": "White",
+        "incarceration_score": 27.0,
+        "incarceration_gap_percentage_points": 10.8,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 19.0,
+        "sentence_length_difference_percent": 19.0,
+        "sentence_length_group_cases": 53,
+        "sentence_length_white_cases": 41
+      }
     ],
-    "methodology_version": "1.0.0"
+    "ci_low": 30.4,
+    "ci_high": 65.5,
+    "window_start": "2017-12-27",
+    "window_end": "2025-12-27",
+    "publication_status": "PUBLISHED",
+    "reasons": [],
+    "methodology_version": "2.0.0"
   },
   {
-    "judge_id": "judge-charlie",
+    "judge_id": "judge-delta",
     "score": null,
     "label": "Not Enough Data",
     "data_strength": "Not Enough Data",
-    "case_count": 160,
-    "disparity_log_odds": 0.0,
-    "ci_low": 17.8,
-    "ci_high": 100.0,
+    "case_count": 42,
+    "incarceration_disparity_score": null,
+    "sentence_length_disparity_score": null,
+    "strongest_signal": null,
+    "comparison_groups": [],
+    "ci_low": null,
+    "ci_high": null,
+    "window_start": "2017-12-27",
+    "window_end": "2025-12-27",
     "publication_status": "WITHHELD",
     "reasons": [
-      "UNCERTAINTY_WIDTH"
+      "MIN_TOTAL_CASES"
     ],
-    "methodology_version": "1.0.0"
+    "methodology_version": "2.0.0"
+  },
+  {
+    "judge_id": "judge-gamma",
+    "score": 67.4,
+    "label": "Bigger racial gaps",
+    "data_strength": "Limited",
+    "case_count": 270,
+    "incarceration_disparity_score": 67.4,
+    "sentence_length_disparity_score": 66.5,
+    "strongest_signal": "Black defendants had the higher adjusted incarceration-to-serve rate in the comparison with White defendants.",
+    "comparison_groups": [
+      {
+        "group": "Black",
+        "reference": "White",
+        "incarceration_score": 67.4,
+        "incarceration_gap_percentage_points": 27.0,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 66.5,
+        "sentence_length_difference_percent": 66.5,
+        "sentence_length_group_cases": 63,
+        "sentence_length_white_cases": 41
+      },
+      {
+        "group": "Hispanic",
+        "reference": "White",
+        "incarceration_score": 45.7,
+        "incarceration_gap_percentage_points": 18.3,
+        "incarceration_group_cases": 90,
+        "incarceration_white_cases": 90,
+        "sentence_length_score": 40.8,
+        "sentence_length_difference_percent": 40.8,
+        "sentence_length_group_cases": 58,
+        "sentence_length_white_cases": 41
+      }
+    ],
+    "ci_low": 59.0,
+    "ci_high": 97.2,
+    "window_start": "2017-12-27",
+    "window_end": "2025-12-27",
+    "publication_status": "PUBLISHED",
+    "reasons": [],
+    "methodology_version": "2.0.0"
   }
 ]

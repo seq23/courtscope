@@ -1,6 +1,106 @@
 [
-  {"slug":"a-morgan","name":"Alexis Morgan","shortName":"A. Morgan","court":"Shelby County Criminal Court","division":"Division 1","score":84,"label":"More Fair","dataStrength":"Strong","caseCount":742,"nextElectionYear":2030,"trend":"Improving","confidenceInterval":[80,88]},
-  {"slug":"d-reed","name":"Devin Reed","shortName":"D. Reed","court":"Shelby County Criminal Court","division":"Division 3","score":67,"label":"Moderately Fair","dataStrength":"Moderate","caseCount":388,"nextElectionYear":2030,"trend":"Stable","confidenceInterval":[61,73]},
-  {"slug":"j-carter","name":"Jordan Carter","shortName":"J. Carter","court":"Shelby County General Sessions Criminal Court","division":"Division 7","score":54,"label":"Less than Fair","dataStrength":"Limited","caseCount":126,"nextElectionYear":2028,"trend":"Worsening","confidenceInterval":[44,64]},
-  {"slug":"r-ellis","name":"Riley Ellis","shortName":"R. Ellis","court":"Shelby County General Sessions Criminal Court","division":"Division 10","score":null,"label":"Not Enough Data","dataStrength":"Not Enough Data","caseCount":41,"nextElectionYear":2028,"trend":"Stable"}
+  {
+    "slug": "a-morgan",
+    "name": "Alexis Morgan",
+    "shortName": "A. Morgan",
+    "court": "Shelby County Criminal Court",
+    "division": "Division 1",
+    "score": 7.2,
+    "label": "Smaller racial gaps",
+    "dataStrength": "Limited",
+    "caseCount": 270,
+    "nextElectionYear": 2030,
+    "trend": "Not yet established",
+    "confidenceInterval": [5.6, 50.3],
+    "incarcerationDisparityScore": 2.1,
+    "sentenceLengthDisparityScore": 7.2,
+    "strongestSignal": "Black defendants had the longer adjusted incarceration sentences in the comparison with White defendants.",
+    "comparisonHighlights": [
+      "The adjusted incarceration-to-serve gap was under one percentage point in the Black–White comparison.",
+      "The largest sentence-length difference in the fixture was about 7%.",
+      "Each racial group was evaluated separately; no combined minority category was used."
+    ],
+    "comparisonGroups": [
+      {"group":"Black","reference":"White","incarcerationScore":2.1,"incarcerationGapPercentagePoints":0.8,"sentenceLengthScore":7.2,"sentenceLengthDifferencePercent":7.2},
+      {"group":"Hispanic","reference":"White","incarcerationScore":0,"incarcerationGapPercentagePoints":0,"sentenceLengthScore":4.8,"sentenceLengthDifferencePercent":4.8}
+    ],
+    "analysisWindow": "Synthetic records from December 27, 2017 through December 27, 2025."
+  },
+  {
+    "slug": "d-reed",
+    "name": "Devin Reed",
+    "shortName": "D. Reed",
+    "court": "Shelby County Criminal Court",
+    "division": "Division 3",
+    "score": 39.9,
+    "label": "Moderate racial gaps",
+    "dataStrength": "Limited",
+    "caseCount": 270,
+    "nextElectionYear": 2030,
+    "trend": "Not yet established",
+    "confidenceInterval": [30.4, 65.5],
+    "incarcerationDisparityScore": 32.5,
+    "sentenceLengthDisparityScore": 39.9,
+    "strongestSignal": "Black defendants had the longer adjusted incarceration sentences in the comparison with White defendants.",
+    "comparisonHighlights": [
+      "Black defendants had an adjusted incarceration-to-serve rate about 13 percentage points higher than White defendants in the fixture comparison.",
+      "The largest adjusted sentence-length difference was about 40%.",
+      "The uncertainty range is wide, so the result carries a Limited data-strength label."
+    ],
+    "comparisonGroups": [
+      {"group":"Black","reference":"White","incarcerationScore":32.5,"incarcerationGapPercentagePoints":13,"sentenceLengthScore":39.9,"sentenceLengthDifferencePercent":39.9},
+      {"group":"Hispanic","reference":"White","incarcerationScore":27,"incarcerationGapPercentagePoints":10.8,"sentenceLengthScore":19,"sentenceLengthDifferencePercent":19}
+    ],
+    "analysisWindow": "Synthetic records from December 27, 2017 through December 27, 2025."
+  },
+  {
+    "slug": "j-carter",
+    "name": "Jordan Carter",
+    "shortName": "J. Carter",
+    "court": "Shelby County General Sessions Criminal Court",
+    "division": "Division 7",
+    "score": 67.4,
+    "label": "Bigger racial gaps",
+    "dataStrength": "Limited",
+    "caseCount": 270,
+    "nextElectionYear": 2028,
+    "trend": "Not yet established",
+    "confidenceInterval": [59, 97.2],
+    "incarcerationDisparityScore": 67.4,
+    "sentenceLengthDisparityScore": 66.5,
+    "strongestSignal": "Black defendants had the higher adjusted incarceration-to-serve rate in the comparison with White defendants.",
+    "comparisonHighlights": [
+      "Black defendants had an adjusted incarceration-to-serve rate about 27 percentage points higher than White defendants in the fixture comparison.",
+      "The largest adjusted sentence-length difference was about 67%.",
+      "This is a synthetic stress-test result and is not evidence about a real judge."
+    ],
+    "comparisonGroups": [
+      {"group":"Black","reference":"White","incarcerationScore":67.4,"incarcerationGapPercentagePoints":27,"sentenceLengthScore":66.5,"sentenceLengthDifferencePercent":66.5},
+      {"group":"Hispanic","reference":"White","incarcerationScore":45.7,"incarcerationGapPercentagePoints":18.3,"sentenceLengthScore":40.8,"sentenceLengthDifferencePercent":40.8}
+    ],
+    "analysisWindow": "Synthetic records from December 27, 2017 through December 27, 2025."
+  },
+  {
+    "slug": "m-brooks",
+    "name": "Morgan Brooks",
+    "shortName": "M. Brooks",
+    "court": "Shelby County General Sessions Criminal Court",
+    "division": "Division 9",
+    "score": null,
+    "label": "Not Enough Data",
+    "dataStrength": "Not Enough Data",
+    "caseCount": 42,
+    "nextElectionYear": 2028,
+    "trend": "Not yet established",
+    "confidenceInterval": null,
+    "incarcerationDisparityScore": null,
+    "sentenceLengthDisparityScore": null,
+    "strongestSignal": "The fixture did not meet the 50-case publication minimum.",
+    "comparisonHighlights": [
+      "CourtScope withholds the score rather than filling the gap with an estimate.",
+      "Not Enough Data is not a positive or negative finding about the judge."
+    ],
+    "comparisonGroups": [],
+    "analysisWindow": "Synthetic records from December 27, 2017 through December 27, 2025."
+  }
 ]

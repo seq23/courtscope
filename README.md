@@ -1,18 +1,33 @@
 # CourtScope
 
-CourtScope is an open-source civic data platform for examining aggregate sentencing disparities with transparent sources, uncertainty, reproducibility, and correction history.
+CourtScope is an open-source civic research application for examining measured racial gaps in criminal sentencing outcomes.
 
-## Current truth
+The public product is organized by city. The national homepage explains the project; each `/<city-slug>/` dashboard owns that jurisdiction's judges, comparisons, case search, data status, and release files.
 
-The repository contains the complete prelaunch application architecture, public experience, statistical engine, ingestion system, secured admin implementation, city-data onboarding wizard, policy suite, validators, and operator manuals. Synthetic fixtures prove local behavior. Official Shelby County bulk records, live provider configuration, private-preview evidence, and public launch authorization remain external gates.
+## What the Disparity Score measures
 
-No real Fairness Score may publish until official records and all release gates pass.
+The model evaluates two adjusted outcomes:
 
-## Start here
+1. whether a qualifying sentence includes incarceration that must be served;
+2. the length of the incarceration sentence among custodial cases.
 
-- New person: `docs/START_HERE_NEW_PERSON.md`
-- VA/operator: `docs/DAY_0_VA_OPERATOR_GUIDE.md`
-- Admin: `docs/ADMIN_GUIDE_FOR_NON_ENGINEERS.md`
-- Current status: `docs/IMPLEMENTATION_STATUS.md`
-- Validation: `docs/VALIDATION_AND_HANDOFF.md`
-- Hostile review: `docs/HOSTILE_REVIEW_ALL_13_PHASES.md`
+A lower score means smaller measured racial gaps. A higher score means bigger measured racial gaps. The overall score uses the larger of the two outcome components so a material signal is not averaged away.
+
+A score describes aggregate patterns in the analyzed data. It does not prove racism, discrimination, intent, misconduct, causation, or whether any individual sentence was appropriate.
+
+## Current public-data status
+
+Memphis is present as a clearly labeled synthetic fixture preview. It is not a published official-data city, and no Memphis court-data download is available. Official city results remain blocked until a complete, authorized, de-identified dataset passes every publication gate.
+
+## Local commands
+
+- `npm ci`
+- `npm run validate:all`
+- `npm run build`
+- `npm run verify`
+- `npm run test:model`
+- `npm run test:city-pipeline`
+
+Validation is browserless by design in this delivery. Live Cloudflare, GitHub workflow, official-record, and production-deployment proof remain separate.
+
+Start with [`docs/START_HERE_NEW_PERSON.md`](docs/START_HERE_NEW_PERSON.md).

@@ -1,1 +1,11 @@
-<div class="notice warning" role="status"><strong>Fixture-only preview.</strong> All names, records, scores, and trends on this build are synthetic. No public conclusion about any real judge or court is being made.</div>
+---
+interface Props { lang?: 'en' | 'es'; }
+const { lang = 'en' } = Astro.props as Props;
+const es = lang === 'es';
+---
+<div class="notice warning" role="status">
+  <strong>{es ? 'Vista previa con datos sintéticos.' : 'Fixture-only preview.'}</strong>
+  {es
+    ? ' Todos los nombres, registros, puntuaciones y tendencias de esta vista son sintéticos. No se publica ninguna conclusión sobre un juez o tribunal real.'
+    : ' All names, records, scores, and trends in this view are synthetic. No conclusion about a real judge or court is being published.'}
+</div>

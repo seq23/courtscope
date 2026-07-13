@@ -1,10 +1,69 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageShell from '../components/PageShell.astro';
-import StatusNotice from '../components/StatusNotice.astro';
 ---
-<BaseLayout title="Public Correction Log | CourtScope" description="See verified corrections and report data problems.">
-  <PageShell eyebrow="Shelby County, Tennessee" title="Public Correction Log" intro="See verified corrections and report data problems.">
-    <StatusNotice>Correction submission and public audit history are not yet connected.</StatusNotice>
+<BaseLayout title="Corrections and data reports | CourtScope" description="Report a possible CourtScope data or source problem and learn how corrections are handled.">
+  <PageShell eyebrow="Accuracy and accountability" title="Corrections and data reports" intro="CourtScope separates a possible problem report from a verified correction. Reports are reviewed against official source records before public data or scores change.">
+    <div class="grid grid-2">
+      <section class="card">
+        <h2>Report a possible problem</h2>
+        <p>Include the city, case or judge page, the exact item that may be wrong, and the official source that supports the correction.</p>
+        <form id="correction-report" class="stacked-form">
+          <label>Problem type
+            <select name="reportType" required>
+              <option value="wrong_judge">Wrong judge</option>
+              <option value="wrong_court">Wrong court</option>
+              <option value="wrong_sentence">Wrong sentence</option>
+              <option value="missing_case">Missing case</option>
+              <option value="demographic_mismatch">Demographic mismatch</option>
+              <option value="broken_link">Broken source link</option>
+              <option value="translation">Translation problem</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>Page, case, or judge identifier
+            <input name="entityId" required autocomplete="off" placeholder="Example: /memphis/judges/judge-name" />
+          </label>
+          <label>What should be checked?
+            <textarea name="explanation" minlength="10" required rows="6" placeholder="Describe the possible error and paste the official source URL when available."></textarea>
+          </label>
+          <button class="button" type="submit">Submit report</button>
+          <p id="correction-result" class="form-result" aria-live="polite"></p>
+        </form>
+      </section>
+      <section class="card">
+        <h2>What happens next?</h2>
+        <ol class="numbered-steps compact">
+          <li><strong>Receipt.</strong><span>The system creates a report identifier.</span></li>
+          <li><strong>Source check.</strong><span>An operator compares the report with official records and stored provenance.</span></li>
+          <li><strong>Impact check.</strong><span>If verified, CourtScope checks whether the change affects a case, judge summary, or score.</span></li>
+          <li><strong>Correction.</strong><span>Verified changes are recorded with the affected source and methodology version.</span></li>
+        </ol>
+        <p class="legal-limitation"><em>A submitted report is not proof that the published information is wrong. A score is not changed until the underlying correction is verified.</em></p>
+      </section>
+    </div>
   </PageShell>
+  <script>
+    type ReportResponse = { ok?: boolean; reportId?: string; note?: string; error?: string };
+    const form = document.querySelector<HTMLFormElement>('#correction-report');
+    const result = document.querySelector<HTMLElement>('#correction-result');
+    if (form && result) form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      result.textContent = 'Submitting…';
+      const values = Object.fromEntries(new FormData(form));
+      try {
+        const response = await fetch('/api/corrections/report', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify(values),
+        });
+        const data = await response.json() as ReportResponse;
+        if (!response.ok || !data.ok) throw new Error(data.error || 'REPORT_FAILED');
+        result.textContent = `Report received. Reference: ${data.reportId || 'pending'}. ${data.note || ''}`;
+        form.reset();
+      } catch {
+        result.textContent = 'The report could not be recorded. Email the page URL and supporting official source to the contact listed on CourtScope.';
+      }
+    });
+  </script>
 </BaseLayout>

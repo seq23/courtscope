@@ -1,3 +1,6 @@
 ---
-return Astro.redirect('/admin/add-cities');
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import registry from '../../../data/cities/registry.json';
+import pipeline from '../../../data/admin/city_pipeline_status.json';
 ---
+<BaseLayout title="City registry | CourtScope Admin" noindex={true}><section class="section"><div class="shell"><p class="eyebrow">Admin · City architecture</p><h1>City registry</h1><p class="lede">The registry controls which city routes are visible, published, and eligible for public downloads.</p><div class="table-wrap"><table><thead><tr><th>Slug</th><th>City</th><th>Status</th><th>Mode</th><th>Published</th><th>Downloads</th><th>Coverage</th></tr></thead><tbody>{registry.cities.map((city) => <tr><td><code>{city.slug}</code></td><td><a href={`/${city.slug}`}>{city.name}, {city.state}</a></td><td>{city.status}</td><td>{city.dataMode}</td><td>{city.published ? 'Yes' : 'No'}</td><td>{city.downloadsAvailable ? 'Yes' : 'No'}</td><td>{city.coverageStart && city.coverageEnd ? `${city.coverageStart}–${city.coverageEnd}` : 'Not established'}</td></tr>)}</tbody></table></div><div class="notice"><strong>Pipeline receipt updated:</strong> {pipeline.updatedAt}</div><p><a href="/admin">Return to command center</a></p></div></section></BaseLayout>

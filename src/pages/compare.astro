@@ -1,5 +1,3 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'; import FixtureBanner from '../components/FixtureBanner.astro'; import { fixtureJudges } from '../lib/fixtures';
-const selected=fixtureJudges.filter(j=>j.court==='Shelby County Criminal Court').slice(0,3);
+return Astro.redirect('/memphis/compare', 301);
 ---
-<BaseLayout title="Compare Judges | CourtScope"><section class="section"><div class="shell"><h1>Compare judges</h1><p>Compare up to three judges within the same court. Cross-court comparisons are excluded because case mix and authority differ.</p><FixtureBanner/><div class="table-wrap"><table><thead><tr><th>Measure</th>{selected.map(j=><th>{j.shortName}</th>)}</tr></thead><tbody><tr><th>Fairness Score</th>{selected.map(j=><td>{j.score??'Not Enough Data'}</td>)}</tr><tr><th>Data strength</th>{selected.map(j=><td>{j.dataStrength}</td>)}</tr><tr><th>Qualifying cases</th>{selected.map(j=><td>{j.caseCount}</td>)}</tr><tr><th>Trend</th>{selected.map(j=><td>{j.trend}</td>)}</tr></tbody></table></div></div></section></BaseLayout>

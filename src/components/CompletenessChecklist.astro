@@ -1,0 +1,27 @@
+---
+const { lang='en', compact=false } = Astro.props;
+const es = lang === 'es';
+const items = es ? [
+  'Fuente oficial o autorizada y términos de uso claros',
+  'Todos los tribunales y divisiones declarados están cubiertos',
+  'Identificadores estables de casos y jueces verificados',
+  'Raza, delito, antecedentes, declaración/juicio, edad, género y resultado de sentencia',
+  'Fecha de sentencia, encarcelamiento y duración de la sentencia',
+  'Cobertura de fechas documentada sin huecos sin explicar',
+  'Diccionario de datos y registro de correcciones',
+  'Revisión de privacidad y proyección pública segura'
+] : [
+  'Official or authorized source with clear reuse terms',
+  'Every declared court and division is covered',
+  'Stable case identifiers and verified judge identities',
+  'Race, offense, prior record, plea/trial, age, gender, and disposition fields',
+  'Sentence date, incarceration outcome, and sentence length',
+  'Documented date coverage with no unexplained gaps',
+  'A data dictionary and correction history',
+  'Privacy review and a safe public projection'
+];
+---
+<div class={`completeness-checklist ${compact ? 'compact' : ''}`}>
+  <p class="checklist-law"><strong>{es ? 'Regla dura:' : 'Hard rule:'}</strong> {es ? 'Los datos incompletos se rechazan. No se publican como “casi listos”.' : 'Incomplete data is rejected. It is not published as “almost ready.”'}</p>
+  <ul>{items.map((item) => <li>{item}</li>)}</ul>
+</div>

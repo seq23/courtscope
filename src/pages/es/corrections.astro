@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageShell from '../../components/PageShell.astro';
-import StatusNotice from '../../components/StatusNotice.astro';
 ---
-<BaseLayout lang="es" title="Public Correction Log | CourtScope" description="Traducción automática de CourtScope.">
-  <PageShell eyebrow="Traducción automática" title="Public Correction Log" intro="Esta página usa traducción automática. La versión en inglés controla en caso de conflicto.">
-    <StatusNotice>Correction submission and public audit history are not yet connected.</StatusNotice>
+<BaseLayout lang="es" title="Correcciones e informes de datos | CourtScope" description="Informe un posible problema de datos o fuentes de CourtScope.">
+  <PageShell eyebrow="Traducción automática" title="Correcciones e informes de datos" intro="Informe la ciudad, la página del caso o juez, el dato que debe revisarse y la fuente oficial que respalda el cambio. La versión en inglés controla en caso de conflicto.">
+    <div class="card"><h2>Cómo funciona</h2><ol class="numbered-steps compact"><li><strong>Informe.</strong><span>Identifique la página y el posible problema.</span></li><li><strong>Verificación.</strong><span>Un operador compara el informe con los registros oficiales.</span></li><li><strong>Impacto.</strong><span>CourtScope revisa cualquier efecto en casos, resúmenes o puntajes.</span></li><li><strong>Corrección.</strong><span>Solo los cambios verificados se publican.</span></li></ol><p><a class="button" href="/corrections">Abrir el formulario en inglés</a></p><p class="legal-limitation"><em>Un informe no demuestra que la información publicada sea incorrecta.</em></p></div>
   </PageShell>
 </BaseLayout>

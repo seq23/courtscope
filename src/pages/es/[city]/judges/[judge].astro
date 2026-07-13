@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../../components/FixtureBanner.astro';
+import ScoreBadge from '../../../../components/ScoreBadge.astro';
+import ScoreExplanation from '../../../../components/ScoreExplanation.astro';
+import { findCity } from '../../../../lib/cities';
+import { findCityJudge, cityCases } from '../../../../lib/city-data';
+import type { CaseRecord } from '../../../../lib/types';
+const city = findCity(Astro.params.city); if (!city) return Astro.redirect('/es/cities');
+const judge = findCityJudge(city.slug, String(Astro.params.judge)); if (!judge) return Astro.redirect(`/es/${city.slug}/judges`);
+const records: CaseRecord[] = cityCases(city.slug).filter((record) => record.judgeSlug === judge.slug);
+---
+<BaseLayout lang="es" title={`${judge.shortName} | ${city.name} | CourtScope`}><section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner lang="es" />}<p class="eyebrow">Traducción automática · {judge.court} · {judge.division}</p><div class="judge-profile-head"><div><h1>{judge.shortName}</h1><p class="lede">Esta página resume brechas raciales ajustadas en registros que califican. No determina motivos, mala conducta ni un caso individual.</p><dl class="inline-facts"><dt>Casos que califican</dt><dd>{judge.caseCount}</dd><dt>Próxima elección</dt><dd>{judge.nextElectionYear ?? 'No verificada'}</dd><dt>Tendencia</dt><dd>{judge.trend}</dd></dl></div><ScoreBadge score={judge.score} strength={judge.dataStrength} lang="es" /></div><ScoreExplanation judge={judge} open={true} lang="es" /></div></section><section class="section section-tint"><div class="shell"><h2>Casos en esta vista</h2><div class="table-wrap"><table><thead><tr><th>Caso</th><th>Resultado</th><th>Sentencia</th><th>Uso en modelo</th></tr></thead><tbody>{records.length ? records.map((record: CaseRecord) => <tr><td><a href={`/es/${city.slug}/cases/${record.publicCaseNumber}`}>{record.publicCaseNumber}</a></td><td>{record.disposition}</td><td>{record.sentenceType}</td><td>{record.includedInModel ? 'Incluido' : 'Excluido'}</td></tr>) : <tr><td colspan="4">No hay filas públicas.</td></tr>}</tbody></table></div></div></section></BaseLayout>

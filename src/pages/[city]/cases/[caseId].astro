@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import FixtureBanner from '../../../components/FixtureBanner.astro';
+import { findCity } from '../../../lib/cities';
+import { findCityCase } from '../../../lib/city-data';
+
+const city = findCity(Astro.params.city);
+if (!city) return Astro.redirect('/cities');
+const record = findCityCase(city.slug, String(Astro.params.caseId));
+if (!record) return Astro.redirect(`/${city.slug}/cases?notfound=1`);
+---
+<BaseLayout title={`${record.publicCaseNumber} | ${city.name} | CourtScope`} noindex={true}>
+  <section class="section"><div class="shell">{city.dataMode === 'fixture' && <FixtureBanner />}<p class="eyebrow">Public case projection · {city.name}</p><h1>{record.publicCaseNumber}</h1><div class="notice"><strong>Privacy boundary:</strong> No defendant name is displayed. CourtScope does not assign a disparity judgment to an individual case.</div><div class="grid grid-2"><article class="card"><h2>Case facts</h2><dl><dt>Court</dt><dd>{record.court}</dd><dt>Division</dt><dd>{record.division}</dd><dt>Disposition</dt><dd>{record.disposition}</dd><dt>Sentence</dt><dd>{record.sentenceType}{record.sentenceLengthMonths !== null ? ` · ${record.sentenceLengthMonths} months` : ''}</dd></dl></article><article class="card"><h2>Model and source</h2><dl><dt>Included in aggregate analysis</dt><dd>{record.includedInModel ? 'Yes' : 'No'}</dd><dt>Methodology</dt><dd>{record.methodologyVersion}</dd><dt>Source</dt><dd>{record.sourceId}</dd><dt>Last verified</dt><dd>{record.verifiedAt}</dd></dl></article></div><p><a href={`/${city.slug}/cases`}>Back to {city.name} case search</a></p></div></section>
+</BaseLayout>

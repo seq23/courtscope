@@ -1,1 +1,21 @@
-{"current":"0.1.0-fixture","versions":[{"version":"0.1.0-fixture","status":"fixture-only","released":"2026-07-11","title":"Fixture methodology contract","downloadable":false,"notes":"Defines interfaces only; no public scoring methodology is validated."}]}
+{
+  "current": "2.0.0-fixture",
+  "versions": [
+    {
+      "version": "2.0.0-fixture",
+      "status": "fixture-only",
+      "released": "2026-07-13",
+      "title": "Two-outcome Disparity Score methodology",
+      "downloadable": false,
+      "notes": "Implements a shared eight-year window, separate racial-group comparisons, incarceration and sentence-length components, directional highlights, and fail-closed publication gates. Real-court calibration remains pending."
+    },
+    {
+      "version": "0.1.0-fixture",
+      "status": "superseded-fixture",
+      "released": "2026-07-11",
+      "title": "Initial fixture methodology contract",
+      "downloadable": false,
+      "notes": "Superseded because it modeled incarceration only and used the old score direction."
+    }
+  ]
+}
