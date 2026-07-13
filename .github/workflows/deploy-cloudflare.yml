@@ -32,8 +32,11 @@ jobs:
           node-version: "22"
           cache: npm
 
+      - name: Install stable npm
+        run: npm install --global npm@11
+
       - name: Install locked dependencies
-        run: npm ci
+        run: npm ci --no-audit --no-fund
 
       - name: Validate repository
         run: npm run validate:all
