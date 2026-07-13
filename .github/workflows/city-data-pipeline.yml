@@ -53,11 +53,8 @@ jobs:
             python3 scripts/cities/process_incoming.py
           fi
 
-      - name: Run lean release validation
-        run: npm run validate:all
-
-      - name: Build application
-        run: npm run build
+      - name: Run browserless release verification
+        run: npm run verify
 
       - name: Commit derived receipts and releases
         run: |

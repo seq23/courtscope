@@ -34,6 +34,12 @@
       "blocking": true
     },
     {
+      "id": "city-publication-regression",
+      "command": "node scripts/test-city-publication-validator.mjs",
+      "class": "regression",
+      "blocking": true
+    },
+    {
       "id": "city-routes",
       "command": "node scripts/validate-city-routes.mjs",
       "class": "journey",
