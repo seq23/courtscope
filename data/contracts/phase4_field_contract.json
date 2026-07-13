@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.0.0",
+  "requiredEntities": [
+    "source_artifact",
+    "court_case",
+    "case_identifier",
+    "case_charge",
+    "case_disposition",
+    "sentence_event",
+    "sentence_component",
+    "judge",
+    "judge_alias",
+    "judge_term",
+    "court_division",
+    "demographic_observation",
+    "criminal_history_observation",
+    "record_provenance",
+    "record_quality_flag",
+    "ingestion_run",
+    "quarantine_record"
+  ],
+  "provenanceRequiredFields": [
+    "sourceArtifactId",
+    "sourceRecordLocator",
+    "sourceField",
+    "classification",
+    "transformationVersion",
+    "firstObservedAt",
+    "lastVerifiedAt"
+  ],
+  "classifications": [
+    "OBSERVED",
+    "DERIVED_HIGH_CONFIDENCE",
+    "INFERRED_REVIEW_REQUIRED",
+    "UNAVAILABLE"
+  ],
+  "publicProjectionProhibitedFields": [
+    "defendant_name",
+    "date_of_birth",
+    "street_address",
+    "booking_photo",
+    "email",
+    "phone",
+    "raw_person_identifier"
+  ]
+}

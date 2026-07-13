@@ -1,0 +1,4 @@
+{
+  "hard_blocks": ["unverifiable_source", "unauthorized_source", "unusable_case_identifiers", "judge_identity_collision", "missing_required_variables", "court_types_not_separable", "privacy_risk", "invalid_scoring", "secret_exposure", "corrupt_adapter", "corrupt_migration"],
+  "statuses": ["DRAFT", "SOURCES_UPLOADED", "MAPPING_REQUIRED", "DRY_RUN_READY", "DRY_RUN_FAILED", "VALIDATED", "ACTIVE", "PAUSED", "SOURCE_STALE", "BLOCKED"]
+}

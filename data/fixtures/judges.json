@@ -1,0 +1,6 @@
+[
+  {"slug":"a-morgan","name":"Alexis Morgan","shortName":"A. Morgan","court":"Shelby County Criminal Court","division":"Division 1","score":84,"label":"More Fair","dataStrength":"Strong","caseCount":742,"nextElectionYear":2030,"trend":"Improving","confidenceInterval":[80,88]},
+  {"slug":"d-reed","name":"Devin Reed","shortName":"D. Reed","court":"Shelby County Criminal Court","division":"Division 3","score":67,"label":"Moderately Fair","dataStrength":"Moderate","caseCount":388,"nextElectionYear":2030,"trend":"Stable","confidenceInterval":[61,73]},
+  {"slug":"j-carter","name":"Jordan Carter","shortName":"J. Carter","court":"Shelby County General Sessions Criminal Court","division":"Division 7","score":54,"label":"Less than Fair","dataStrength":"Limited","caseCount":126,"nextElectionYear":2028,"trend":"Worsening","confidenceInterval":[44,64]},
+  {"slug":"r-ellis","name":"Riley Ellis","shortName":"R. Ellis","court":"Shelby County General Sessions Criminal Court","division":"Division 10","score":null,"label":"Not Enough Data","dataStrength":"Not Enough Data","caseCount":41,"nextElectionYear":2028,"trend":"Stable"}
+]

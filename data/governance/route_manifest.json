@@ -1,0 +1,8 @@
+{
+  "version": "0.1.0",
+  "status": "STRUCTURAL",
+  "public_routes": ["/", "/judges", "/judges/[judge]", "/compare", "/cases", "/cases/[caseId]", "/methodology", "/data", "/data-sources", "/corrections", "/contact", "/records", "/legal/takedown", "/governance", "/add-cities"],
+  "admin_routes": ["/admin"],
+  "spanish_prefix": "/es",
+  "case_routes_noindex": true
+}

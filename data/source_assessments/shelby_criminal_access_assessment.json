@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0.0",
+  "assessmentDate": "2026-07-11",
+  "status": "PARTIAL_OFFICIAL_DATA_PENDING",
+  "findings": [
+    {
+      "sourceId": "shelby-criminal-case-info",
+      "decision": "DO_NOT_AUTOMATE_YET",
+      "reason": "Official site states case information is online, but portal endpoint, access terms, fields and bulk capability are not verified."
+    },
+    {
+      "sourceId": "shelby-criminal-prr",
+      "decision": "PRIMARY_BULK_ACQUISITION_LANE",
+      "reason": "Official public-records process exists and is appropriate for a machine-readable historical extract."
+    },
+    {
+      "sourceId": "tn-aoc-trial-judges",
+      "decision": "REFERENCE_ADAPTER",
+      "reason": "Useful for current official judge identity; insufficient alone for historical division attribution."
+    }
+  ],
+  "nextRequiredExternalAction": "Submit the prepared public-records request and ingest the official response using the Phase 4 importer."
+}

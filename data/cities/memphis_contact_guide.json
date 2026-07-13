@@ -1,0 +1,35 @@
+{
+  "verified_on": "2026-07-11",
+  "reverify_notice": "Government contacts can change. Reverify on the linked official page before sending a request.",
+  "jurisdictions": [
+    {
+      "id": "shelby-criminal",
+      "label": "Shelby County Criminal Court",
+      "clerk": "Heidi Kuhn",
+      "address": "201 Poplar Avenue, Suite 3034, Memphis, TN 38103",
+      "phones": [
+        "901-222-3200",
+        "901-222-3376"
+      ],
+      "email": "Heidi.Kuhn@shelbycountytn.gov",
+      "hours": "Monday\u2013Friday, 8:00 a.m.\u20134:30 p.m.",
+      "official_url": "https://www.shelbycountytn.gov/224/Criminal-Court",
+      "records_url": "https://www.criminalcourtclerkkuhn.com/prr"
+    },
+    {
+      "id": "shelby-general-sessions-criminal",
+      "label": "Shelby County General Sessions Criminal Division",
+      "clerk": "Tamara A. Sawyer",
+      "address": "201 Poplar Avenue, Suite LL-81, Memphis, TN 38103",
+      "phones": [
+        "901-222-3500",
+        "901-222-3600",
+        "901-222-3406"
+      ],
+      "email": "gsclerk@shelbycountytn.gov",
+      "hours": "Monday\u2013Friday, 8:00 a.m.\u20134:30 p.m.; 24-hour clerk office at 271 Poplar",
+      "official_url": "https://www.shelbygeneralsessions.com/31/Criminal-Division",
+      "records_url": "https://www.shelbycountytn.gov/Directory/Home/DepartmentListing?DID=270"
+    }
+  ]
+}

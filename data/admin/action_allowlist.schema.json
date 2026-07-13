@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CourtScope Admin Action",
+  "type": "object",
+  "required": ["id", "label", "mutatesGithub", "mutatesLiveSite", "confirmationRequired", "allowedPaths", "receiptType"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "label": {"type": "string"},
+    "mutatesGithub": {"type": "boolean"},
+    "mutatesLiveSite": {"type": "boolean"},
+    "confirmationRequired": {"type": "boolean"},
+    "allowedPaths": {"type": "array", "items": {"type": "string"}},
+    "forbiddenPaths": {"type": "array", "items": {"type": "string"}},
+    "receiptType": {"type": "string"}
+  },
+  "additionalProperties": false
+}

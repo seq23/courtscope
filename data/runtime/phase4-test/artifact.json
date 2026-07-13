@@ -1,0 +1,12 @@
+{
+  "id": "art_2bc7e8443bdc24ade85e",
+  "sourceId": "fixture-court-export",
+  "originalFilename": "official_extract_sample.json",
+  "storageKey": "raw-official/fixture-court-export/2bc7e8443bdc24ade85ecab90d0f001f0ef18fc93459abc0de3efb7189bac05a/official_extract_sample.json",
+  "sha256": "2bc7e8443bdc24ade85ecab90d0f001f0ef18fc93459abc0de3efb7189bac05a",
+  "sizeBytes": 1570,
+  "retrievedAt": "2026-07-11T23:21:31.095542Z",
+  "retrievalMethod": "authorized_manual_or_records_response_import",
+  "requestReference": null,
+  "immutable": true
+}

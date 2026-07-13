@@ -1,0 +1,14 @@
+{
+  "protected": [
+    "model/methodologies/**",
+    "migrations/**",
+    "src/pages/admin/**",
+    "functions/admin/**",
+    "data/governance/**"
+  ],
+  "generated_data_allowlist": [
+    "data/generated/**",
+    "public/downloads/**",
+    "data/receipts/**"
+  ]
+}

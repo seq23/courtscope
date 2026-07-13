@@ -1,0 +1,48 @@
+{
+  "classification": "SYNTHETIC_FIXTURE",
+  "warning": "This file only tests the official-record importer. It is not Shelby County evidence.",
+  "records": [
+    {
+      "case_number": "C-TEST-0001",
+      "indictment_number": "I-TEST-0001",
+      "court": "Shelby County Criminal Court",
+      "division": "Division I",
+      "sentencing_judge": "Fixture Judge One",
+      "charge_code": "TCA-TEST-1",
+      "charge_description": "Synthetic felony offense",
+      "offense_class": "Class C",
+      "disposition": "Guilty Plea",
+      "disposition_date": "2025-03-14",
+      "plea_trial": "PLEA",
+      "sentence_date": "2025-04-01",
+      "incarceration_months": "36",
+      "suspended_months": "12",
+      "probation_months": "24",
+      "race": "Black",
+      "gender": "Female",
+      "age_at_sentence": "31",
+      "prior_record_class": "Range I"
+    },
+    {
+      "case_number": "C-TEST-0002",
+      "indictment_number": "I-TEST-0002",
+      "court": "Shelby County Criminal Court",
+      "division": "Division II",
+      "sentencing_judge": "Fixture Judge Two",
+      "charge_code": "TCA-TEST-2",
+      "charge_description": "Synthetic felony offense",
+      "offense_class": "Class D",
+      "disposition": "Trial Conviction",
+      "disposition_date": "2025-05-10",
+      "plea_trial": "TRIAL",
+      "sentence_date": "2025-05-20",
+      "incarceration_months": "24",
+      "suspended_months": "0",
+      "probation_months": "0",
+      "race": "White",
+      "gender": "Male",
+      "age_at_sentence": "44",
+      "prior_record_class": "Range II"
+    }
+  ]
+}

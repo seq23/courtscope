@@ -1,0 +1,1 @@
+{"is_stopped":false,"reason":null,"updated_at":null,"effects":{"scheduled_publishing":"blocked_when_stopped","content_mutation":"blocked_when_stopped","distribution":"blocked_when_stopped","read_only_admin":"available"}}

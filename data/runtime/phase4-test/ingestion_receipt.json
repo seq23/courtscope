@@ -1,0 +1,19 @@
+{
+  "id": "run_301ff3dd7f8141a4930f",
+  "sourceId": "fixture-court-export",
+  "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+  "status": "SUCCESS",
+  "parserVersion": "official-extract-importer-1.0.0",
+  "schemaVersion": "phase4-1.0.0",
+  "startedAt": "2026-07-11T23:21:31.095542Z",
+  "finishedAt": "2026-07-11T23:21:31.095878Z",
+  "rowsRead": 2,
+  "casesCreated": 2,
+  "casesUpdated": 0,
+  "casesUnchanged": 0,
+  "recordsQuarantined": 0,
+  "warnings": [
+    "Judge identities remain unresolved until matched against verified historical terms."
+  ],
+  "rollbackReference": "art_2bc7e8443bdc24ade85e"
+}

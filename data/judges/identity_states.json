@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "1.0.0",
+  "matchStates": [
+    "EXACT_VERIFIED",
+    "ALIAS_VERIFIED",
+    "DIVISION_DATE_VERIFIED",
+    "SPECIAL_ASSIGNMENT_VERIFIED",
+    "AMBIGUOUS",
+    "UNRESOLVED",
+    "CONFLICT"
+  ],
+  "scoringEligible": [
+    "EXACT_VERIFIED",
+    "ALIAS_VERIFIED",
+    "DIVISION_DATE_VERIFIED",
+    "SPECIAL_ASSIGNMENT_VERIFIED"
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "automatic": ["broken_official_link", "stale_timestamp", "obvious_duplicate", "formatting", "high_confidence_mechanical_mapping"],
+  "owner_approval": ["judge_attribution", "demographic_match", "sentence_value", "published_score", "election_history", "methodology_input", "score_suppression", "score_restoration", "source_conflict"]
+}

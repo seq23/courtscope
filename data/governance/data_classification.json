@@ -1,0 +1,9 @@
+{
+  "classes": {
+    "PUBLIC_AGGREGATE": "Published judge, court, methodology, and aggregate data",
+    "PUBLIC_DEIDENTIFIED": "Case-level data with defendant names removed and small-cell controls",
+    "RESTRICTED_SOURCE": "Official source evidence not cleared for public redistribution",
+    "PRIVATE_REPORTER": "Correction reporter contact details",
+    "SECRET": "Credentials, password hashes, session secrets, and provider tokens"
+  }
+}

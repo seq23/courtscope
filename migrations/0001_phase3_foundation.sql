@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS sources (id TEXT PRIMARY KEY, name TEXT NOT NULL, classification TEXT NOT NULL, official_url TEXT, last_success TEXT, checksum TEXT);
+CREATE TABLE IF NOT EXISTS judges (id TEXT PRIMARY KEY, slug TEXT NOT NULL UNIQUE, display_name TEXT NOT NULL, court TEXT NOT NULL, division TEXT NOT NULL, next_election_year INTEGER);
+CREATE TABLE IF NOT EXISTS cases (id TEXT PRIMARY KEY, public_case_number TEXT NOT NULL UNIQUE, judge_id TEXT REFERENCES judges(id), court TEXT NOT NULL, division TEXT NOT NULL, disposition TEXT, sentence_type TEXT, sentence_length_months REAL, source_id TEXT REFERENCES sources(id), included_in_model INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS methodology_versions (version TEXT PRIMARY KEY, status TEXT NOT NULL, released_at TEXT NOT NULL, checksum TEXT);
+CREATE TABLE IF NOT EXISTS score_snapshots (id TEXT PRIMARY KEY, judge_id TEXT REFERENCES judges(id), methodology_version TEXT REFERENCES methodology_versions(version), score REAL, label TEXT NOT NULL, data_strength TEXT NOT NULL, case_count INTEGER NOT NULL, window_start TEXT, window_end TEXT, created_at TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS admin_receipts (id TEXT PRIMARY KEY, action_id TEXT NOT NULL, status TEXT NOT NULL, initiated_at TEXT NOT NULL, completed_at TEXT, summary TEXT NOT NULL);

@@ -1,0 +1,7 @@
+{
+  "method": "coarsened_exact_matching",
+  "strata_total": 24,
+  "strata_usable": 0,
+  "records_retained": 0,
+  "retention_rate": 0.0
+}

@@ -1,0 +1,1 @@
+{"release":"v1-prelaunch","status":"PRIVATE_PREVIEW_BLOCKED_BY_OFFICIAL_DATA","deployment_target":"Cloudflare Pages","required_checks":["astro_check","build","validators","accessibility","security","model_reproducibility","backup_restore","provider_receipts"],"public_launch_allowed":false}

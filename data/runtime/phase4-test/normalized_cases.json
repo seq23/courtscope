@@ -1,0 +1,78 @@
+[
+  {
+    "id": "case_b706ad4d5f14c9e8",
+    "publicCaseNumber": "C-TEST-0001",
+    "indictmentNumber": "I-TEST-0001",
+    "court": "Shelby County Criminal Court",
+    "division": "Division I",
+    "sentencingJudgeRaw": "Fixture Judge One",
+    "judgeMatchState": "UNRESOLVED",
+    "filingDate": null,
+    "dispositionDate": "2025-03-14",
+    "sentenceDate": "2025-04-01",
+    "disposition": "GUILTY_PLEA",
+    "pleaTrial": "PLEA",
+    "charge": {
+      "originalCode": "TCA-TEST-1",
+      "originalDescription": "Synthetic felony offense",
+      "offenseClass": "Class C",
+      "mappingStatus": "UNMAPPED",
+      "mappingVersion": "charge-map-0.1.0"
+    },
+    "sentence": {
+      "incarceration_months": 36.0,
+      "suspended_months": 12.0,
+      "probation_months": 24.0
+    },
+    "demographics": {
+      "race": "Black",
+      "gender": "Female",
+      "ageAtSentence": "31"
+    },
+    "criminalHistory": {
+      "classification": "Range I",
+      "availabilityStatus": "DIRECTLY_AVAILABLE"
+    },
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "modelCandidate": false
+  },
+  {
+    "id": "case_6b88039021c9d8af",
+    "publicCaseNumber": "C-TEST-0002",
+    "indictmentNumber": "I-TEST-0002",
+    "court": "Shelby County Criminal Court",
+    "division": "Division II",
+    "sentencingJudgeRaw": "Fixture Judge Two",
+    "judgeMatchState": "UNRESOLVED",
+    "filingDate": null,
+    "dispositionDate": "2025-05-10",
+    "sentenceDate": "2025-05-20",
+    "disposition": "TRIAL_CONVICTION",
+    "pleaTrial": "TRIAL",
+    "charge": {
+      "originalCode": "TCA-TEST-2",
+      "originalDescription": "Synthetic felony offense",
+      "offenseClass": "Class D",
+      "mappingStatus": "UNMAPPED",
+      "mappingVersion": "charge-map-0.1.0"
+    },
+    "sentence": {
+      "incarceration_months": 24.0,
+      "suspended_months": 0.0,
+      "probation_months": 0.0
+    },
+    "demographics": {
+      "race": "White",
+      "gender": "Male",
+      "ageAtSentence": "44"
+    },
+    "criminalHistory": {
+      "classification": "Range II",
+      "availabilityStatus": "DIRECTLY_AVAILABLE"
+    },
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "modelCandidate": false
+  }
+]

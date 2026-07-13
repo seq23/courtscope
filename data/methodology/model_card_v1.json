@@ -1,0 +1,10 @@
+{
+  "version":"1.0.0",
+  "status":"IMPLEMENTED_WITH_SYNTHETIC_VALIDATION_ONLY",
+  "purpose":"Estimate adjusted judge-level racial sentencing disparity without judging individual cases.",
+  "primary_outcome":"Incarceration to serve",
+  "adjustment_variables":["offense class","prior record","plea/trial","age band","gender"],
+  "estimator":"Stratified inverse-variance pooled log odds ratio with coarsened exact matching sensitivity report",
+  "publication_gates":{"minimum_total_cases":50,"minimum_subgroup_cases":10,"maximum_missing_rate":0.2,"maximum_score_interval_width":30},
+  "limitations":["Synthetic validation does not establish validity on Shelby County records","Prior-record availability may force model redesign","Normative fairness is not proven by statistical parity"]
+}

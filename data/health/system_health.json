@@ -1,0 +1,1 @@
+{"generatedAt":"2026-07-11T00:00:00Z","state":"FIXTURE_ONLY","sources":{"healthy":1,"stale":0,"failed":0},"records":{"fixtureCases":2,"realCases":0},"scores":{"fixture":3,"published":0,"notEnoughData":1},"warnings":["No live source integrations","No validated scoring model","No production admin actions"]}

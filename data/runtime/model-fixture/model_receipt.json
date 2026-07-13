@@ -1,0 +1,10 @@
+{
+  "run_id": "253a2e1469435aca",
+  "methodology_version": "1.0.0",
+  "input": "data/fixtures/model_records.json",
+  "input_sha256": "223741d7a83eebea6f0d0ff1de3f0407be6b301746183dc639ead4a0de37f454",
+  "records": 480,
+  "scores_published": 0,
+  "scores_withheld": 3,
+  "completed_at": "2026-07-11T22:52:35.500426+00:00"
+}

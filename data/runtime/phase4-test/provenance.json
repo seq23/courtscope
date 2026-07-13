@@ -1,0 +1,382 @@
+[
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "case_number",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "case_number",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "indictment_number",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "indictment_number",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "court",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "court",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "division",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "division",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "sentencing_judge",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "sentencing_judge",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "charge_code",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "charge_code",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "charge_description",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "charge_description",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "offense_class",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "offense_class",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "disposition",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "disposition",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "disposition_date",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "disposition_date",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "plea_trial",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "plea_trial",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "sentence_date",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "sentence_date",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "incarceration_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "incarceration_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "suspended_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "suspended_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "probation_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "probation_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "race",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "race",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "gender",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "gender",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "age_at_sentence",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "age_at_sentence",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_b706ad4d5f14c9e8",
+    "fieldName": "prior_record_class",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:1",
+    "sourceField": "prior_record_class",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "case_number",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "case_number",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "indictment_number",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "indictment_number",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "court",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "court",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "division",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "division",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "sentencing_judge",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "sentencing_judge",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "charge_code",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "charge_code",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "charge_description",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "charge_description",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "offense_class",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "offense_class",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "disposition",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "disposition",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "disposition_date",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "disposition_date",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "plea_trial",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "plea_trial",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "sentence_date",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "sentence_date",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "incarceration_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "incarceration_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "suspended_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "suspended_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "probation_months",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "probation_months",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "race",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "race",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "gender",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "gender",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "age_at_sentence",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "age_at_sentence",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  },
+  {
+    "entityType": "court_case",
+    "entityId": "case_6b88039021c9d8af",
+    "fieldName": "prior_record_class",
+    "sourceArtifactId": "art_2bc7e8443bdc24ade85e",
+    "sourceRecordLocator": "row:2",
+    "sourceField": "prior_record_class",
+    "classification": "OBSERVED",
+    "transformationVersion": "phase4-normalizer-1.0.0"
+  }
+]

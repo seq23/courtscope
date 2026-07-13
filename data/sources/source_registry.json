@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "2.0.0",
+  "jurisdiction": "Shelby County, Tennessee",
+  "court": "Criminal Court",
+  "sources": [
+    {
+      "id": "shelby-criminal-clerk-home",
+      "name": "Shelby County Criminal Court Clerk official website",
+      "owner": "Shelby County Criminal Court Clerk",
+      "officialUrl": "https://www.criminalcourtclerkkuhn.com/",
+      "accessMethod": "public website",
+      "classification": "OFFICIAL_REFERENCE",
+      "authorityTier": 1,
+      "automationStatus": "REFERENCE_ONLY",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "office contact",
+        "court links"
+      ],
+      "coverageGaps": [
+        "No verified bulk case dataset exposed"
+      ],
+      "limitations": [
+        "Reference source; not a case-data feed"
+      ]
+    },
+    {
+      "id": "shelby-criminal-case-info",
+      "name": "Criminal Case Information access",
+      "owner": "Shelby County Criminal Court Clerk",
+      "officialUrl": "https://www.criminalcourtclerkkuhn.com/courtroomtech",
+      "accessMethod": "official online case information; access method requires verification",
+      "classification": "OFFICIAL_CASE_PORTAL",
+      "authorityTier": 1,
+      "automationStatus": "ACCESS_REVIEW_REQUIRED",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Criminal case information availability stated by clerk"
+      ],
+      "coverageGaps": [
+        "Portal endpoint, terms, bulk capability and fields not yet verified"
+      ],
+      "limitations": [
+        "No automated collection until terms and authorized access are documented"
+      ]
+    },
+    {
+      "id": "shelby-criminal-prr",
+      "name": "Criminal Court Clerk Public Records Request process",
+      "owner": "Shelby County Criminal Court Clerk",
+      "officialUrl": "https://www.criminalcourtclerkkuhn.com/prr",
+      "accessMethod": "Tennessee Public Records Act request",
+      "classification": "OFFICIAL_RECORDS_REQUEST",
+      "authorityTier": 1,
+      "automationStatus": "REQUEST_PACKAGE_READY",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Formal public-records request policy"
+      ],
+      "coverageGaps": [
+        "Actual production extract pending request and response"
+      ],
+      "limitations": [
+        "Response format, fees, exemptions and delivery timing controlled by records custodian"
+      ]
+    },
+    {
+      "id": "shelby-county-criminal-court",
+      "name": "Shelby County Criminal Court official page",
+      "owner": "Shelby County Government",
+      "officialUrl": "https://www.shelbycountytn.gov/224/Criminal-Court",
+      "accessMethod": "public website",
+      "classification": "OFFICIAL_REFERENCE",
+      "authorityTier": 1,
+      "automationStatus": "REFERENCE_ONLY",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Court identity",
+        "case-number payment instructions"
+      ],
+      "coverageGaps": [
+        "No bulk case export"
+      ],
+      "limitations": [
+        "Reference source only"
+      ]
+    },
+    {
+      "id": "tn-aoc-trial-judges",
+      "name": "Tennessee Administrative Office of the Courts trial judge directory",
+      "owner": "Tennessee Administrative Office of the Courts",
+      "officialUrl": "https://www.tncourts.gov/courts/circuit-criminal-chancery-courts/judges",
+      "accessMethod": "public website",
+      "classification": "OFFICIAL_JUDGE_REFERENCE",
+      "authorityTier": 1,
+      "automationStatus": "ADAPTER_PLANNED",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Judge name",
+        "county",
+        "district",
+        "profile links"
+      ],
+      "coverageGaps": [
+        "Historical terms and division history require separate evidence"
+      ],
+      "limitations": [
+        "Current directory is not a complete historical assignment ledger"
+      ]
+    },
+    {
+      "id": "shelby-election-commission",
+      "name": "Shelby County Election Commission",
+      "owner": "Shelby County Election Commission",
+      "officialUrl": "https://www.electionsshelbytn.gov/",
+      "accessMethod": "public website and official election files",
+      "classification": "OFFICIAL_ELECTION_REFERENCE",
+      "authorityTier": 1,
+      "automationStatus": "PHASE_6_OR_LATER",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Election dates",
+        "results and ballot information where published"
+      ],
+      "coverageGaps": [
+        "Historical judicial term mapping not yet assembled"
+      ],
+      "limitations": [
+        "Election source does not replace court assignment evidence"
+      ]
+    },
+    {
+      "id": "fixture-court-export",
+      "name": "Synthetic official-format court extract",
+      "owner": "CourtScope fixture system",
+      "officialUrl": null,
+      "accessMethod": "generated test fixture",
+      "classification": "SYNTHETIC_FIXTURE",
+      "authorityTier": 0,
+      "automationStatus": "TEST_ONLY",
+      "lastVerified": "2026-07-11",
+      "fieldsObserved": [
+        "Importer test fields"
+      ],
+      "coverageGaps": [
+        "No real court data"
+      ],
+      "limitations": [
+        "Never admissible as evidence or score input"
+      ]
+    }
+  ]
+}

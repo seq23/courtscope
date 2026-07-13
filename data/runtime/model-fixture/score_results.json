@@ -1,0 +1,47 @@
+[
+  {
+    "judge_id": "judge-alpha",
+    "score": null,
+    "label": "Not Enough Data",
+    "data_strength": "Not Enough Data",
+    "case_count": 160,
+    "disparity_log_odds": 0.0,
+    "ci_low": 17.8,
+    "ci_high": 100.0,
+    "publication_status": "WITHHELD",
+    "reasons": [
+      "UNCERTAINTY_WIDTH"
+    ],
+    "methodology_version": "1.0.0"
+  },
+  {
+    "judge_id": "judge-bravo",
+    "score": null,
+    "label": "Not Enough Data",
+    "data_strength": "Not Enough Data",
+    "case_count": 160,
+    "disparity_log_odds": 0.0,
+    "ci_low": 17.8,
+    "ci_high": 100.0,
+    "publication_status": "WITHHELD",
+    "reasons": [
+      "UNCERTAINTY_WIDTH"
+    ],
+    "methodology_version": "1.0.0"
+  },
+  {
+    "judge_id": "judge-charlie",
+    "score": null,
+    "label": "Not Enough Data",
+    "data_strength": "Not Enough Data",
+    "case_count": 160,
+    "disparity_log_odds": 0.0,
+    "ci_low": 17.8,
+    "ci_high": 100.0,
+    "publication_status": "WITHHELD",
+    "reasons": [
+      "UNCERTAINTY_WIDTH"
+    ],
+    "methodology_version": "1.0.0"
+  }
+]
