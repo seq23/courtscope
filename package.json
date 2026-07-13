@@ -1,0 +1,40 @@
+{
+  "name": "courtscope",
+  "version": "1.1.0-prelaunch-repair",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "validate": "node scripts/validate-structure.mjs",
+    "validate:all": "npm run check && npm run validate && npm run validate:phase23 && npm run validate:phase4 && npm run test:phase4-import && npm run test:model && npm run validate:phases5-13 && npm run validate:repair && npm run validate:truth",
+    "exports:fixtures": "python3 scripts/build-fixture-exports.py",
+    "validate:phase23": "node scripts/validate-phase23.mjs",
+    "validate:phase4": "node scripts/validate-phase4.mjs",
+    "test:phase4-import": "rm -rf data/runtime/phase4-test && python3 scripts/phase4/import_official_extract.py data/fixtures/phase4/official_extract_sample.json --source-id fixture-court-export --out data/runtime/phase4-test && python3 scripts/phase4/validate_public_projection.py data/runtime/phase4-test/normalized_cases.json",
+    "test:model": "PYTHONPATH=model python3 model/run_model.py data/fixtures/model_records.json --out data/runtime/model-ci --version 1.0.0",
+    "validate:phases5-13": "node scripts/validate-phases5-13.mjs",
+    "validate:repair": "node scripts/validate-repair.mjs",
+    "validate:truth": "node scripts/validate-repo-truth.mjs"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "13.7.0",
+    "astro": "6.4.8",
+    "drizzle-orm": "0.45.2",
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@cloudflare/workers-types": "^5.20260711.1",
+    "@types/node": "^24.0.14",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
+  }
+}
