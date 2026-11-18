@@ -10,7 +10,8 @@
       "city-publication",
       "city-publication-regression",
       "city-routes",
-      "city-submissions"
+      "city-submissions",
+      "workflow-push"
     ],
     "release": [
       "safe-repair",
@@ -24,7 +25,8 @@
       "admin-pipeline",
       "model",
       "city-pipeline",
-      "phase4-import"
+      "phase4-import",
+      "workflow-push"
     ]
   },
   "findingResolution": {
