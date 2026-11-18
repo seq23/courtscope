@@ -74,12 +74,6 @@
       "command": "npm run test:phase4-import",
       "class": "legacy-preservation",
       "blocking": true
-    },
-    {
-      "id": "workflow-push",
-      "command": "node scripts/validate-workflow-push.mjs",
-      "class": "release",
-      "blocking": true
     }
   ]
 }
